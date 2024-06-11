@@ -2,24 +2,27 @@ import { User } from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateJWTTokenAndSetCookie } from "../utils/generateJWTToken.js";
 
+// user signup
 const signup = async (req, res) => {
   try {
     const { fullName, username, password, confirmPassword, gender } = req.body;
     // check for empty fields
     if (!fullName || !username || !password || !confirmPassword || !gender) {
-      res
+      return res
         .status(400)
         .json({ status: false, message: "All fields are required" });
     }
     // check for password match
     if (password !== confirmPassword) {
-      res.status(400).json({ status: false, message: "Password don't match" });
+      return res
+        .status(400)
+        .json({ status: false, message: "Password don't match" });
     }
 
     // check if any user don't exist with this username
     const user = await User.findOne({ username });
     if (user) {
-      res
+      return res
         .status(400)
         .json({ status: false, message: "This username doesn't exits" });
     }
@@ -68,4 +71,43 @@ const signup = async (req, res) => {
   }
 };
 
-export { signup };
+// user login
+const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ status: false, message: "All fields are required" });
+    }
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: false, message: "User doesn't exist" });
+    }
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res
+        .status(400)
+        .json({ status: false, message: "username or password is incorrect" });
+    }
+    generateJWTTokenAndSetCookie(user._id, res);
+    res.status(200).json({
+      status: true,
+      message: "User logged in successfully",
+      user: {
+        _id: user._id,
+        fullName: user.fullName,
+        username: user.username,
+        profilePic: user.profilePic,
+        gender: user.gender,
+      },
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+export { signup, login };
