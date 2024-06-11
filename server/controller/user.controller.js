@@ -110,4 +110,24 @@ const login = async (req, res) => {
   }
 };
 
-export { signup, login };
+// user logout
+const logout = async (req, res) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: false, message: "User doesn't found" });
+    }
+    // logout code here
+    res.cookie("jwt", "", { maxAge: 0 });
+    res
+      .status(200)
+      .json({ status: false, message: "User logout successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+export { signup, login, logout };
