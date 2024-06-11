@@ -24,8 +24,13 @@ app.get("/test", (req, res) => {
 
 // import router
 import userRouter from "./routes/user.routes.js";
+import messageRouter from "./routes/message.routes.js";
 
-// user middle ware
+// middleware -> router -> controller
+// user
 app.use("/api/user", userRouter);
+
+// message
+app.use("/api/messages", messageRouter);
 
 export { app };
