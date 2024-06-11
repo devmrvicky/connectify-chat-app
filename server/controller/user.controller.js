@@ -125,9 +125,23 @@ const logout = async (req, res) => {
       .status(200)
       .json({ status: false, message: "User logout successfully" });
   } catch (error) {
-    console.log(error.message);
+    console.log("error from logout controller: ", error.message);
     res.status(500).json({ status: false, message: error.message });
   }
 };
 
-export { signup, login, logout };
+// get all users for sidebar
+const getAllUsers = async (req, res) => {
+  try {
+    const loggedInUserId = req.user._id;
+    const users = await User.find({ _id: { $ne: loggedInUserId } }).select(
+      "-password"
+    );
+    res.status(200).json({ status: false, message: "get all users", users });
+  } catch (error) {
+    console.log("error from getAllUsers controller ", error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+export { signup, login, logout, getAllUsers };
