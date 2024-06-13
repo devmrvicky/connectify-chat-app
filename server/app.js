@@ -1,6 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { Server } from "socket.io";
+import { createServer } from "http";
 import dotenv from "dotenv";
 
 const app = express();
@@ -18,6 +20,33 @@ app.use(
   })
 );
 
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("a user connected ", socket.id);
+
+  const userId = socket.handshake.query.userId;
+  // console.log(userId);
+  if (userId != "undefined") {
+    setUserToList(userId, socket.id);
+  }
+  console.log("all users");
+  const users = getAllUsers();
+  socket.emit("getOnlineUsers", users);
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected ", socket.id);
+    deleteUserFromList(userId);
+    socket.emit("getOnlineUsers", getAllUsers());
+  });
+});
+
 // test route
 app.get("/test", (req, res) => {
   res.send("<h1>hello world!</h1>");
@@ -26,6 +55,11 @@ app.get("/test", (req, res) => {
 // import router
 import userRouter from "./routes/user.routes.js";
 import messageRouter from "./routes/message.routes.js";
+import {
+  deleteUserFromList,
+  getAllUsers,
+  setUserToList,
+} from "./service/user.service.js";
 
 // middleware -> router -> controller
 // user
@@ -34,4 +68,4 @@ app.use("/api/user", userRouter);
 // message
 app.use("/api/messages", messageRouter);
 
-export { app };
+export { app, server, io };

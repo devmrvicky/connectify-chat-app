@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
+import { useSocketContext } from "../context/SocketContext";
 
 const UserProfile = ({
   fullName,
@@ -14,6 +15,11 @@ const UserProfile = ({
     selectFriend: store.selectFriend,
     selectedFriend: store.selectedFriend,
   }));
+
+  const { onlineUsers } = useSocketContext();
+  console.log(onlineUsers);
+
+  const isOnline = onlineUsers.find((user) => user === _id);
 
   const handleSelectFriend = () => {
     if (isAuthProfile) return;
@@ -37,9 +43,8 @@ const UserProfile = ({
       }`}
       onClick={handleSelectFriend}
     >
-      <div className="avatar">
+      <div className={`avatar ${isOnline ? "online" : "offline"}`}>
         <div className="w-10 h-10 rounded-full">
-          {/* <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" /> */}
           <img src={`${profilePic}`} />
         </div>
       </div>
