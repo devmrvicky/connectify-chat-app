@@ -7,7 +7,7 @@ const MessagesContainer = () => {
   const noMessages = Boolean(messages.length);
   console.log(messages);
   return (
-    <div className="message-container flex-1 max-w-[900px] w-full mx-auto overflow-auto">
+    <div className="message-container flex-1 max-w-[900px] w-full mx-auto overflow-auto py-4">
       {!noMessages ? (
         <ChattingStartMessage />
       ) : (

@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import useStore from "../../zustand/store";
+import { formatDistanceToNow } from "date-fns";
 
 const Message = ({ senderId, receiverId, message, createdAt }) => {
   console.log({ senderId, receiverId, message, createdAt });
@@ -9,7 +10,7 @@ const Message = ({ senderId, receiverId, message, createdAt }) => {
   const chatType = authUser._id === senderId ? "chat-end" : "chat-start";
   const profilePic =
     authUser?._id === senderId
-      ? authUser.profilePIc
+      ? authUser.profilePic
       : selectedFriend.profilePic;
   return (
     <>
@@ -20,7 +21,9 @@ const Message = ({ senderId, receiverId, message, createdAt }) => {
           </div>
         </div>
         <div className="chat-bubble">{message}</div>
-        <div className="chat-footer opacity-50">{createdAt}</div>
+        <div className="chat-footer opacity-50">
+          {formatDistanceToNow(createdAt)}
+        </div>
       </div>
       {/* end chat */}
       {/* <div className="chat chat-end">
