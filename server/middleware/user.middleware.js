@@ -4,13 +4,18 @@ import { User } from "../model/user.model.js";
 const checkUserAuthentication = async (req, res, next) => {
   try {
     const { jwt: jwtToken } = req.cookies;
+    console.log("jwt token");
+    console.log(req.cookies);
     if (!jwtToken) {
       return res
         .status(400)
         .json({ status: false, message: "user unauthorized" });
     }
-    const { userId } = jwt.decode(jwtToken);
+    const { userId } = jwt.verify(jwtToken, process.env.JWT_SECRET);
+    console.log({ userId });
     const user = await User.findById(userId);
+    console.log("user");
+    console.log(user);
     if (!user) {
       return res
         .status(404)

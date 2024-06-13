@@ -123,7 +123,7 @@ const logout = async (req, res) => {
     res.cookie("jwt", "", { maxAge: 0 });
     res
       .status(200)
-      .json({ status: false, message: "User logout successfully" });
+      .json({ status: true, message: "User logout successfully" });
   } catch (error) {
     console.log("error from logout controller: ", error.message);
     res.status(500).json({ status: false, message: error.message });
@@ -137,7 +137,8 @@ const getAllUsers = async (req, res) => {
     const users = await User.find({ _id: { $ne: loggedInUserId } }).select(
       "-password"
     );
-    res.status(200).json({ status: false, message: "get all users", users });
+    console.log(users);
+    res.status(200).json({ status: true, message: "get all users", users });
   } catch (error) {
     console.log("error from getAllUsers controller ", error.message);
     res.status(500).json({ status: false, message: error.message });
