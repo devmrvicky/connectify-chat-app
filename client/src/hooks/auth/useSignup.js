@@ -1,10 +1,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { apiPost } from "../api/api";
+import { apiPost } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { handleInputError } from "../utils/handleInputError";
-import { setUserToClient } from "../utils/setUserToClient";
-import { useAuthContext } from "../context/AuthContext";
+import { handleInputError } from "../../utils/handleInputError";
+import { setUserToClient } from "../../utils/setUserToClient";
+import { useAuthContext } from "../../context/AuthContext";
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);

@@ -1,7 +1,7 @@
 import React from "react";
 import { InputField } from "../../components";
 import { useForm } from "react-hook-form";
-import useSignup from "../../hooks/useSignup";
+import useSignup from "../../hooks/auth/useSignup";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -20,10 +20,6 @@ const Signup = () => {
   });
 
   const { handleSignup } = useSignup();
-
-  // const signupUser = (data) => {
-  //   console.log(data);
-  // };
 
   return (
     <div>

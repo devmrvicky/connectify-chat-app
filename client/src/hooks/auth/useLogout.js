@@ -1,8 +1,8 @@
 import React from "react";
-import { apiPost } from "../api/api";
+import { apiPost } from "../../api/api";
 import { toast } from "react-hot-toast";
-import { useAuthContext } from "../context/AuthContext";
-import { removeUserFromClient } from "../utils/removeUserFromClient";
+import { useAuthContext } from "../../context/AuthContext";
+import { removeUserFromClient } from "../../utils/removeUserFromClient";
 
 const useLogout = () => {
   const { setAuthUser } = useAuthContext();

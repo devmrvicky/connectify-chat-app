@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { apiPost } from "../api/api";
-import { useAuthContext } from "../context/AuthContext";
-import { setUserToClient } from "../utils/setUserToClient";
+import { apiPost } from "../../api/api";
+import { useAuthContext } from "../../context/AuthContext";
+import { setUserToClient } from "../../utils/setUserToClient";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);

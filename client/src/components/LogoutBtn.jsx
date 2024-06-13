@@ -1,7 +1,6 @@
 import React from "react";
 import { IoLogOut } from "react-icons/io5";
-import { apiPost } from "../api/api";
-import useLogout from "../hooks/useLogout";
+import useLogout from "../hooks/auth/useLogout";
 
 const LogoutBtn = () => {
   const { logout } = useLogout();
