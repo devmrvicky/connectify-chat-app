@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
 
@@ -19,6 +19,10 @@ const UserProfile = ({
     if (isAuthProfile) return;
     selectFriend({ fullName, username, profilePic, gender, _id });
   };
+
+  useEffect(() => {
+    return () => selectFriend(null);
+  }, []);
 
   return (
     <div

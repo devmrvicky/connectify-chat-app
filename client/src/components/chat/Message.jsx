@@ -8,7 +8,9 @@ const Message = ({ senderId, receiverId, message, createdAt }) => {
   const selectedFriend = useStore((store) => store.selectedFriend);
   const chatType = authUser._id === senderId ? "chat-end" : "chat-start";
   const profilePic =
-    authUser._id === senderId ? authUser.profilePIc : selectedFriend.profilePic;
+    authUser?._id === senderId
+      ? authUser.profilePIc
+      : selectedFriend.profilePic;
   return (
     <>
       <div className={`chat ${chatType}`}>
