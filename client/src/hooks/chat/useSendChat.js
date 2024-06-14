@@ -22,10 +22,10 @@ const useSendChat = () => {
         throw new Error(data.message);
       }
       addMessage(data.message);
-      toast.success("message sent", {
-        position: "bottom-right",
-        id: "message sent",
-      });
+      // toast.success("message sent", {
+      //   position: "bottom-right",
+      //   id: "message sent",
+      // });
     } catch (error) {
       console.log(error.message);
       toast.error(error.message, {

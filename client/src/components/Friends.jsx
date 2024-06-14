@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiGet } from "../api/api";
 import UserProfile from "./UserProfile";
 import { useAuthContext } from "../context/AuthContext";

@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="flex h-full">
       <Aside />
-      <div className="divider divider-horizontal"></div>
+      <div className="divider divider-horizontal max-[620px]:hidden"></div>
       <ChattingArea />
     </div>
   );

@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <main className="bg-white p-4 h-screen w-full">
-      <div className=" max-w-[1200px] w-full h-full mx-auto p-2">
+      <div className="container max-w-[1200px] w-full h-full mx-auto p-2 max-[620px]:overflow-hidden">
         <Outlet />
         <Toaster />
       </div>
