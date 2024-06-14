@@ -14,7 +14,6 @@ const SocketContextProvider = ({ children }) => {
   const { authUser } = useAuthContext();
 
   useEffect(() => {
-    console.log(authUser);
     if (authUser) {
       const socket = io("http://localhost:8000", {
         query: {
@@ -22,12 +21,9 @@ const SocketContextProvider = ({ children }) => {
         },
       });
       setSocket(socket);
-      console.log("user connect ", socket.id);
 
       socket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
-        console.log("from socket context");
-        console.log(users);
       });
 
       return () => socket.close();
@@ -37,7 +33,7 @@ const SocketContextProvider = ({ children }) => {
         setSocket(null);
       }
     }
-  }, [authUser?._id]);
+  }, [authUser]);
 
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>

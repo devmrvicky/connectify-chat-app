@@ -13,7 +13,7 @@ const Friends = () => {
       try {
         setLoading(true);
         const data = await apiGet("user/all-users");
-        console.log(data);
+        
         if (!data.status) {
           throw new Error(data.message);
         }

@@ -4,7 +4,7 @@ import useStore from "../../zustand/store";
 
 const ChattingArea = () => {
   const selectedFriend = useStore((store) => store.selectedFriend);
-  console.log(selectedFriend);
+ 
   return !selectedFriend ? (
     <NoChatSelected />
   ) : (

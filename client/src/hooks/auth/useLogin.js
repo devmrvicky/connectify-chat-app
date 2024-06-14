@@ -20,7 +20,7 @@ const useLogin = () => {
         toast.error(data.message);
         throw new Error(data.message);
       }
-      console.log(data.user);
+      console.log("user login successfully " + data.user.fullName);
       setAuthUser(data.user);
       setUserToClient(data.user);
       toast.success(data.message);

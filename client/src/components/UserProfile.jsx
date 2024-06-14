@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
 import { useSocketContext } from "../context/SocketContext";
@@ -11,15 +11,14 @@ const UserProfile = ({
   _id,
   isAuthProfile = false,
 }) => {
+
   const { selectFriend, selectedFriend } = useStore((store) => ({
     selectFriend: store.selectFriend,
     selectedFriend: store.selectedFriend,
   }));
 
   const { onlineUsers } = useSocketContext();
-  console.log(onlineUsers);
-
-  const isOnline = onlineUsers.find((user) => user === _id);
+  const isOnline = onlineUsers.includes(_id);
 
   const handleSelectFriend = () => {
     if (isAuthProfile) return;

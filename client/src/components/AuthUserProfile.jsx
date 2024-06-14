@@ -4,7 +4,6 @@ import { useAuthContext } from "../context/AuthContext";
 
 const AuthUserProfile = () => {
   const { authUser } = useAuthContext();
-  console.log({ authUser });
   return <UserProfile {...authUser} isAuthProfile={true} />;
 };
 

@@ -36,14 +36,13 @@ io.on("connection", (socket) => {
   if (userId != "undefined") {
     setUserToList(userId, socket.id);
   }
-  console.log("all users");
   const users = getAllUsers();
-  socket.emit("getOnlineUsers", users);
+  io.emit("getOnlineUsers", users);
 
   socket.on("disconnect", () => {
     console.log("user disconnected ", socket.id);
     deleteUserFromList(userId);
-    socket.emit("getOnlineUsers", getAllUsers());
+    io.emit("getOnlineUsers", getAllUsers());
   });
 });
 
