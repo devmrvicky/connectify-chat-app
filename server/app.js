@@ -4,6 +4,11 @@ import cors from "cors";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import dotenv from "dotenv";
+import {
+  deleteUserFromList,
+  getAllUsers,
+  setUserToList,
+} from "./service/user.service.js";
 
 const app = express();
 
@@ -54,11 +59,6 @@ app.get("/test", (req, res) => {
 // import router
 import userRouter from "./routes/user.routes.js";
 import messageRouter from "./routes/message.routes.js";
-import {
-  deleteUserFromList,
-  getAllUsers,
-  setUserToList,
-} from "./service/user.service.js";
 
 // middleware -> router -> controller
 // user

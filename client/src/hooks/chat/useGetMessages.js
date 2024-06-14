@@ -4,9 +4,14 @@ import toast from "react-hot-toast";
 import useStore from "../../zustand/store";
 
 const useGetMessages = () => {
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
+  // const {messages, setMessages} = use
 
-  const selectedFriend = useStore((store) => store.selectedFriend);
+  const { selectedFriend, messages, setMessages } = useStore((store) => ({
+    selectedFriend: store.selectedFriend,
+    messages: store.messages,
+    setMessages: store.setMessages,
+  }));
 
   useEffect(() => {
     (async () => {

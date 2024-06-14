@@ -3,18 +3,17 @@ import { useAuthContext } from "../../context/AuthContext";
 import useStore from "../../zustand/store";
 import { formatDistanceToNow } from "date-fns";
 
-const Message = ({ senderId, receiverId, message, createdAt }) => {
-  console.log({ senderId, receiverId, message, createdAt });
+const Message = ({ senderId, receiverId, message, createdAt, lastMessageRef }) => {
   const { authUser } = useAuthContext();
   const selectedFriend = useStore((store) => store.selectedFriend);
-  const chatType = authUser._id === senderId ? "chat-end" : "chat-start";
+  const chatType = authUser?._id === senderId ? "chat-end" : "chat-start";
   const profilePic =
     authUser?._id === senderId
       ? authUser.profilePic
       : selectedFriend.profilePic;
   return (
     <>
-      <div className={`chat ${chatType}`}>
+      <div className={`chat ${chatType}`} ref={lastMessageRef}>
         <div className="chat-image avatar">
           <div className="w-6 rounded-full">
             <img alt="Tailwind CSS chat bubble component" src={profilePic} />

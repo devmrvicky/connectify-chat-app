@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const useSendChat = () => {
   const [loading, setLoading] = useState(false);
-  const selectedFriend = useStore((store) => store.selectedFriend);
+  const { selectedFriend, addMessage } = useStore((store) => store);
 
   const sendChat = async (message) => {
     try {
@@ -21,6 +21,7 @@ const useSendChat = () => {
         });
         throw new Error(data.message);
       }
+      addMessage(data.message);
       toast.success("message sent", {
         position: "bottom-right",
         id: "message sent",
