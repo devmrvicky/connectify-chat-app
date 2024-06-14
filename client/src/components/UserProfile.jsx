@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
 import { useSocketContext } from "../context/SocketContext";
+import avatarIcon from "../assets/avatar-icon.png";
 
 const UserProfile = ({
   fullName,
@@ -11,7 +12,6 @@ const UserProfile = ({
   _id,
   isAuthProfile = false,
 }) => {
-
   const { selectFriend, selectedFriend } = useStore((store) => ({
     selectFriend: store.selectFriend,
     selectedFriend: store.selectedFriend,
@@ -42,9 +42,15 @@ const UserProfile = ({
       }`}
       onClick={handleSelectFriend}
     >
-      <div className={`avatar ${isOnline ? "online" : "offline"}`}>
+      <div className={`avatar ${isOnline && !isAuthProfile ? "online" : ""}`}>
         <div className="w-10 h-10 rounded-full">
-          <img src={`${profilePic}`} />
+          <img
+            src={`${profilePic}`}
+            onError={(e) => {
+              e.preventDefault();
+              e.target.src = avatarIcon;
+            }}
+          />
         </div>
       </div>
       <div>
