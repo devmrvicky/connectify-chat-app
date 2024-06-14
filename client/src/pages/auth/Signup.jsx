@@ -5,11 +5,7 @@ import useSignup from "../../hooks/auth/useSignup";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       fullName: "",
       username: "",

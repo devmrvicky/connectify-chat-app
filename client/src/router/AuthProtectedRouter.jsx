@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { VscLoading } from "react-icons/vsc";
 
 const AuthProtectedRouter = ({ children, authentication = true }) => {
@@ -18,7 +18,6 @@ const AuthProtectedRouter = ({ children, authentication = true }) => {
     setLoading(false);
   }, [Boolean(authUser)]);
 
-  // return userAuthorized ? children : <Navigate to="/login" />;
   return loading ? (
     <div className="w-full h-full flex items-center justify-center">
       <VscLoading className="w-10 h-10 animate-spin" />

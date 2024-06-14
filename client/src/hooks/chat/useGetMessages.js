@@ -4,18 +4,17 @@ import toast from "react-hot-toast";
 import useStore from "../../zustand/store";
 
 const useGetMessages = () => {
-  // const [messages, setMessages] = useState([]);
-  // const {messages, setMessages} = use
+  const [loading, setLoading] = useState(false);
 
-  const { selectedFriend, messages, setMessages } = useStore((store) => ({
+  const { selectedFriend, setMessages } = useStore((store) => ({
     selectedFriend: store.selectedFriend,
-    messages: store.messages,
     setMessages: store.setMessages,
   }));
 
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const data = await apiGet(`messages/${selectedFriend._id}`);
         if (!data.status) {
           toast.error(data.message);
@@ -27,11 +26,13 @@ const useGetMessages = () => {
         toast.error(error.message, {
           position: "bottom-right",
         });
+      } finally {
+        setLoading(false);
       }
     })();
   }, [selectedFriend?._id]);
 
-  return { messages };
+  return { loading };
 };
 
 export default useGetMessages;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { apiPost } from "../../api/api";
 import { useAuthContext } from "../../context/AuthContext";

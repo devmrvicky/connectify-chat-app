@@ -6,7 +6,7 @@ const LogoutBtn = () => {
   const { logout } = useLogout();
   return (
     <button onClick={logout} className="ml-auto">
-      <IoLogOut className="w-6 h-6 rotate-180" />
+      <IoLogOut className="w-8 h-8 rotate-180" />
     </button>
   );
 };

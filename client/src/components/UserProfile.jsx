@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
 import { useSocketContext } from "../context/SocketContext";

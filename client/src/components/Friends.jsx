@@ -1,30 +1,38 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiGet } from "../api/api";
 import UserProfile from "./UserProfile";
-import { VscLoading } from "react-icons/vsc";
 import { useAuthContext } from "../context/AuthContext";
+import UserProfileSkeleton from "./skeleton/UserProfileSkeleton";
+import useStore from "../zustand/store";
 
 const Friends = () => {
   const [loading, setLoading] = useState(false);
   const [friends, setFriends] = useState([]);
   const { authUser } = useAuthContext();
+  const { searchedFriends } = useStore((store) => store);
+
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
         const data = await apiGet("user/all-users");
-        
+
         if (!data.status) {
           throw new Error(data.message);
         }
-        setFriends(data.users);
+        if (searchedFriends.length) {
+          setFriends(searchedFriends);
+        } else {
+          setFriends(data.users);
+        }
       } catch (error) {
         console.log(error.message);
       } finally {
         setLoading(false);
       }
     })();
-  }, [authUser?._id]);
+  }, [authUser?._id, searchedFriends.length]);
+
   return !loading ? (
     friends.length ? (
       friends.map((friend, idx) => (
@@ -41,9 +49,14 @@ const Friends = () => {
       </div>
     )
   ) : (
-    <div className="w-full h-full flex items-center justify-center">
-      <VscLoading className="w-10 h-10 animate-spin" />
-    </div>
+    // skeleton
+    <>
+      <UserProfileSkeleton />
+      <UserProfileSkeleton />
+      <UserProfileSkeleton />
+      <UserProfileSkeleton />
+      <UserProfileSkeleton />
+    </>
   );
 };
 

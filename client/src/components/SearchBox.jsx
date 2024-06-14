@@ -1,8 +1,32 @@
-import React from "react";
+import { useState } from "react";
+import useSearchUsers from "../hooks/user/useSearchUsers";
+import { MdClear } from "react-icons/md";
+import useStore from "../zustand/store";
 
 const SearchBox = () => {
+  const [searchStr, setSearchStr] = useState("");
+  const { searchFriend, clearSearchUser } = useSearchUsers();
+  const { searchedFriends, selectFriend } = useStore((store) => store);
+
+  const handleSearchFriend = (e) => {
+    e.preventDefault();
+    if (!searchStr) return;
+    searchFriend(searchStr);
+    selectFriend(null);
+  };
+
+  const searchOnChange = () => {
+    // rat racing condition handle in later
+    searchFriend(searchStr);
+  };
+
+  const handleClearSearch = () => {
+    setSearchStr("");
+    clearSearchUser();
+  };
+
   return (
-    <form action="">
+    <form action="" onSubmit={handleSearchFriend}>
       <label className="input input-bordered flex items-center gap-2 rounded-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +40,21 @@ const SearchBox = () => {
             clipRule="evenodd"
           />
         </svg>
-        <input type="text" className="grow" placeholder="Search friend" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="Search friend"
+          value={searchStr}
+          onChange={(e) => {
+            setSearchStr(e.target.value);
+            searchOnChange();
+          }}
+        />
+        {Boolean(searchedFriends.length) && (
+          <button type="button" onClick={handleClearSearch}>
+            <MdClear className="w-6 h-6" />
+          </button>
+        )}
       </label>
     </form>
   );
