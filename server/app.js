@@ -13,14 +13,16 @@ import {
 const app = express();
 
 dotenv.config({
-  path: "../.env",
+  path: "./.env",
 });
+
+const CLIENT_URL = process.env.CLIENT_URL;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: CLIENT_URL,
     credentials: true,
   })
 );
@@ -28,7 +30,7 @@ app.use(
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: CLIENT_URL,
     methods: ["GET", "POST"],
   },
 });
