@@ -6,4 +6,14 @@ export default defineConfig({
   build: {
     outDir: "dist",
   },
+  server: {
+    port: 3000,
+    proxy: {
+      "/socket.io": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/socket.io/, ""),
+      },
+    },
+  },
 });
