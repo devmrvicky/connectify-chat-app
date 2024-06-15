@@ -5,6 +5,7 @@ import avatarIcon from "../../assets/avatar-icon.png";
 import { IoChatbubbles } from "react-icons/io5";
 import { TfiAngleLeft } from "react-icons/tfi";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import ChatUserHead from "./ChatUserHead";
 
 const ChattingArea = () => {
   const { selectedFriend, selectFriend } = useStore((store) => store);
@@ -19,22 +20,7 @@ const ChattingArea = () => {
     <NoFriendSelected />
   ) : (
     <div className="flex w-full h-full flex-col ">
-      <div className="chat-head flex items-center gap-3">
-        {isSmallDevice && (
-          <button onClick={goBackToFriendsList}>
-            <TfiAngleLeft />
-          </button>
-        )}
-        <div className="avatar">
-          <div className="w-12 h-12 rounded-full">
-            <img
-              src={selectedFriend.profilePic}
-              onError={(e) => (e.target.src = avatarIcon)}
-            />
-          </div>
-        </div>
-        <p className="text-2xl">{selectedFriend.fullName}</p>
-      </div>
+      <ChatUserHead />
       <div className="divider divider-vertical m-0 mt-3 h-0"></div>
       <MessagesContainer />
       <div className="divider divider-vertical m-0 mb-3 h-0"></div>
