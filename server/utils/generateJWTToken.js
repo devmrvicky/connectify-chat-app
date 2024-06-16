@@ -10,7 +10,7 @@ const generateJWTTokenAndSetCookie = (userId, res) => {
     Credential: true,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production", // Set to true in production
-    sameSite: "Lax", // 'None' for cross-domain requests
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // 'None' for cross-domain requests
   });
 };
 
