@@ -16,7 +16,8 @@ dotenv.config({
   path: "./.env",
 });
 
-const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL = process.env.NODE_ENV === "production" ? process.env.CLIENT_URL : 'http://localhost:3000';
+
 const allowedOrigins = [
   "http://localhost:3000",
   "https://connectify-rosy.vercel.app",
@@ -37,6 +38,7 @@ app.use(
       }
       return callback(null, true);
     },
+    credentials: true
   })
 );
 
@@ -45,6 +47,7 @@ const io = new Server(server, {
   cors: {
     origin: CLIENT_URL,
     methods: ["GET", "POST"],
+    credentials: true
   },
 });
 

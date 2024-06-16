@@ -1,5 +1,10 @@
-const BASE_URL = `https://connectifyserver-wwog.onrender.com/api`;
+import { SERVER_URL } from "./serverUrl";
+
+console.log(SERVER_URL);
+
+// const BASE_URL = `https://connectifyserver-wwog.onrender.com/api`;
 // const BASE_URL = "http://localhost:8000/api";
+const BASE_URL = `${SERVER_URL}/api`;
 
 const apiGet = async (endpoint) => {
   try {
