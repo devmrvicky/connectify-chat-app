@@ -1,12 +1,11 @@
 import { Conversation } from "../model/conversation.model.js";
 import { Message } from "../model/message.model.js";
-import {getUserFromList} from "../service/user.service.js"
-import {io} from "../app.js"
+import { getUserFromList } from "../service/user.service.js";
+import { io } from "../app.js";
 
 const sendMessage = async (req, res) => {
   try {
     const { receiverId } = req.params;
-    console.log(receiverId);
     if (!receiverId) {
       return res
         .status(400)
@@ -47,9 +46,9 @@ const sendMessage = async (req, res) => {
 
     await Promise.all([newMessage.save(), conversation.save()]);
 
-    const receiverSocketId = getUserFromList(receiverId)
+    const receiverSocketId = getUserFromList(receiverId);
 
-    io.to(receiverSocketId).emit('newMessage', {message: newMessage})
+    io.to(receiverSocketId).emit("newMessage", { message: newMessage });
 
     res.status(201).json({ status: true, message: newMessage });
   } catch (error) {
@@ -71,6 +70,7 @@ const getMessages = async (req, res) => {
       status: true,
       message: "get conversation",
       messages: conversation?.messages || [],
+      lastMessage: conversation?.messages.at(-1),
     });
   } catch (error) {
     console.log(error.message);

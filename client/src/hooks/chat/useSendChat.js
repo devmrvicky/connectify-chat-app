@@ -9,7 +9,6 @@ const useSendChat = () => {
 
   const sendChat = async (message) => {
     try {
-      console.log(selectedFriend);
       setLoading(true);
       const data = await apiPost(`messages/send/${selectedFriend?._id}`, {
         message,
@@ -22,10 +21,6 @@ const useSendChat = () => {
         throw new Error(data.message);
       }
       addMessage(data.message);
-      // toast.success("message sent", {
-      //   position: "bottom-right",
-      //   id: "message sent",
-      // });
     } catch (error) {
       console.log(error.message);
       toast.error(error.message, {

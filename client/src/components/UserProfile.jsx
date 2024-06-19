@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
 import { useSocketContext } from "../context/SocketContext";
 import avatarIcon from "../assets/avatar-icon.png";
+import { formatDistance, subDays } from "date-fns";
+import { apiGet } from "../api/api";
 
 const UserProfile = ({
   fullName,
@@ -12,10 +14,11 @@ const UserProfile = ({
   _id,
   isAuthProfile = false,
 }) => {
-  const { selectFriend, selectedFriend } = useStore((store) => ({
-    selectFriend: store.selectFriend,
-    selectedFriend: store.selectedFriend,
-  }));
+  const [lastChat, setLastChat] = useState(null);
+
+  const { selectFriend, selectedFriend, messages, lastConversation } = useStore(
+    (store) => store
+  );
 
   const { onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(_id);
@@ -24,6 +27,22 @@ const UserProfile = ({
     if (isAuthProfile) return;
     selectFriend({ fullName, username, profilePic, gender, _id });
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await apiGet(`messages/${_id}`);
+      if (!data.status) {
+        toast.error(data.message);
+        throw new Error(data.message);
+      }
+
+      if (lastConversation && lastConversation.receiverId === _id) {
+        setLastChat(lastConversation);
+      } else {
+        setLastChat(data.lastMessage);
+      }
+    })();
+  }, [messages.length, lastConversation, lastConversation?.message]);
 
   useEffect(() => {
     return () => selectFriend(null);
@@ -53,9 +72,24 @@ const UserProfile = ({
           />
         </div>
       </div>
-      <div>
+      <div className="w-full">
         <p className="text-lg">{fullName}</p>
-        <span className="text-sm">{username}</span>
+        {!isAuthProfile && (
+          <div className="flex justify-between items-center w-full text-sm">
+            <p className="last-chat flex gap-1">
+              <span>
+                {lastChat?.message && lastChat?.receiverId === _id && "you : "}
+              </span>
+              <span>{lastChat?.message}</span>
+            </p>
+            <p className="ml-auto">
+              {lastChat?.updatedAt &&
+                formatDistance(subDays(lastChat?.updatedAt, 0), new Date(), {
+                  addSuffix: true,
+                })}
+            </p>
+          </div>
+        )}
       </div>
       {isAuthProfile ? <LogoutBtn /> : ""}
     </div>

@@ -8,7 +8,11 @@ const useStore = create((set) => ({
   setMessages: (messages) => set(() => ({ messages: messages })),
   addMessage: (message) =>
     set((state) => ({ messages: [...state.messages, message] })),
-  setSearchedFriends: (friends) => set(() => ({searchedFriends: friends}))
+  setSearchedFriends: (friends) => set(() => ({ searchedFriends: friends })),
+
+  lastConversation: null,
+  addLastConversation: (conversation) =>
+    set((state) => ({ lastConversation: conversation })),
 }));
 
 export default useStore;

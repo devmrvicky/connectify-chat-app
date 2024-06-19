@@ -9,6 +9,7 @@ const MessagesContainer = () => {
   const lastMessageRef = useRef(null);
   const messages = useStore((store) => store.messages);
   const { loading } = useGetMessages();
+  // console.log(lastChat);
   useListMessages();
   const noMessages = Boolean(messages.length);
 

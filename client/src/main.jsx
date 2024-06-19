@@ -10,10 +10,9 @@ import { SocketContextProvider } from "./context/SocketContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
-    <SocketContextProvider>
-
-      <RouterProvider router={router} />
-    </SocketContextProvider>
+      <SocketContextProvider>
+        <RouterProvider router={router} />
+      </SocketContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );
