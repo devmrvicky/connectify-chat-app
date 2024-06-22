@@ -13,6 +13,11 @@ const useStore = create((set) => ({
   lastConversation: null,
   addLastConversation: (conversation) =>
     set((state) => ({ lastConversation: conversation })),
+
+  // user signup status
+  USER_SIGNUP_STATUS: "UNAUTHORIZE", // "VERIFIED_AUTHORIZE","REQUEST_AUTHORIZE",    "AUTHORIZE"
+  changeSignupStatus: (status) =>
+    set((state) => ({ USER_SIGNUP_STATUS: status })),
 }));
 
 export default useStore;

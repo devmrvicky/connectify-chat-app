@@ -6,6 +6,9 @@ import {
 import { Home, Login, Signup } from "../pages";
 import App from "../App";
 import { AuthProtectedRouter } from "./AuthProtectedRouter";
+import SignupProtectedRouter from "./SignupProtectedRouter";
+import EmailPage from "../pages/auth/EmailPage";
+import VerifyOtp from "../pages/auth/VerifyOtp";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,10 +30,32 @@ const router = createBrowserRouter(
         }
       />
       <Route
+        path="send-otp"
+        element={
+          <AuthProtectedRouter authentication={false}>
+            <SignupProtectedRouter>
+              <EmailPage />
+            </SignupProtectedRouter>
+          </AuthProtectedRouter>
+        }
+      />
+      <Route
+        path="verify-otp"
+        element={
+          <AuthProtectedRouter authentication={false}>
+            <SignupProtectedRouter>
+              <VerifyOtp />
+            </SignupProtectedRouter>
+          </AuthProtectedRouter>
+        }
+      />
+      <Route
         path="signup"
         element={
           <AuthProtectedRouter authentication={false}>
-            <Signup />
+            <SignupProtectedRouter>
+              <Signup />
+            </SignupProtectedRouter>
           </AuthProtectedRouter>
         }
       />
