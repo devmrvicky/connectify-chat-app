@@ -66,7 +66,7 @@ const getEmailHTMLStr = (otp) => {
               <p>Hello,</p>
               <p>Your One-Time Password (OTP) is:</p>
               <div class="otp">${otp}</div>
-              <p>Please use this code to complete your verification. This code is valid for 10 minutes.</p>
+              <p>Please use this code to complete your verification. This code is valid for 5 minutes.</p>
           </div>
           <div class="footer">
               <p>If you did not request this code, please ignore this email.</p>
