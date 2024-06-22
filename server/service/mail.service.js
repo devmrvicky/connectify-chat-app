@@ -1,12 +1,17 @@
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "./.env",
+});
 
 let transporter;
 
 if (process.env.NODE_ENV === "production") {
-  // all emails are delivered to destination
   transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST || "smtp.sendgrid.net",
     port: process.env.MAIL_PORT || 587,
+    secure: process.env.MAIL_SECURE,
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,

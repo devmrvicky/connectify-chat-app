@@ -20,7 +20,7 @@ const useOTP = () => {
         });
         return res.status;
       }
-      console.log(res.otpBody.otp);
+      console.log(res.message);
       toast.success(res.message, {
         id: "otp-send",
       });

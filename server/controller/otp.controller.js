@@ -41,9 +41,7 @@ const createOtpDoc = async (req, res) => {
         .status(400)
         .json({ status: false, message: "can't generate otp" });
     }
-    res
-      .status(200)
-      .json({ status: true, message: "otp send successfully", otpBody });
+    res.status(200).json({ status: true, message: "otp send successfully" });
   } catch (error) {
     handleError(error, res);
   }

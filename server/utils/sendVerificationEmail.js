@@ -1,13 +1,14 @@
 import { mailSender } from "../service/mail.service.js";
+import { getEmailHTMLStr } from "./getEmailHTMLStr.js";
 
 // Define a function to send emails
 async function sendVerificationEmail(email, otp, res) {
   try {
+    const htmlBody = getEmailHTMLStr(otp);
     const mailResponse = await mailSender(
       email,
       "Verification Email",
-      `<h1>Please confirm your OTP</h1>
-       <p>Here is your OTP code: ${otp}</p>`
+      htmlBody
     );
     console.log("Email sent successfully: ", mailResponse);
   } catch (error) {
