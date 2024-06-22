@@ -8,6 +8,7 @@ const useLogout = () => {
 
   const logout = async () => {
     try {
+      removeUserFromClient();
       const res = await apiPost("user/logout");
       if (!res.status) {
         toast.error(res.message, {
