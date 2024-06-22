@@ -16,7 +16,10 @@ dotenv.config({
   path: "./.env",
 });
 
-const CLIENT_URL = process.env.NODE_ENV === "production" ? process.env.CLIENT_URL : 'http://localhost:3000';
+const CLIENT_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.CLIENT_URL
+    : "http://localhost:3000";
 
 const allowedOrigins = [
   "http://localhost:3000",
@@ -38,7 +41,7 @@ app.use(
       }
       return callback(null, true);
     },
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -47,7 +50,7 @@ const io = new Server(server, {
   cors: {
     origin: CLIENT_URL,
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true,
   },
 });
 
@@ -77,6 +80,7 @@ app.get("/test", (req, res) => {
 // import router
 import userRouter from "./routes/user.routes.js";
 import messageRouter from "./routes/message.routes.js";
+import otpRouter from "./routes/OTP.routes.js";
 
 // middleware -> router -> controller
 // user
@@ -84,5 +88,8 @@ app.use("/api/user", userRouter);
 
 // message
 app.use("/api/messages", messageRouter);
+
+// otp
+app.use("/api/otp", otpRouter);
 
 export { app, server, io };

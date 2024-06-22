@@ -1,5 +1,5 @@
 import express from "express";
-import { login, logout, signup } from "../controller/auth.controller.js";
+import { login, logout, signup, verifyAndLogin } from "../controller/auth.controller.js";
 import {
   getAllUsers,
   getUserTypingStatus,
@@ -12,6 +12,7 @@ const router = express.Router();
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", checkUserAuthentication, logout);
+router.post('/login-with-otp', verifyAndLogin)
 
 // user router
 router.get("/all-users", checkUserAuthentication, getAllUsers);

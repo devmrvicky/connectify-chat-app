@@ -1,11 +1,24 @@
 import { User } from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateJWTTokenAndSetCookie } from "../utils/generateJWTToken.js";
+import {
+  createOtpDoc,
+  verifyOtp,
+} from "./otp.controller.js";
+import { verifiedUsers } from "../service/user.service.js";
 
 // user signup
 const signup = async (req, res) => {
   try {
-    const { fullName, username, password, confirmPassword, gender } = req.body;
+    const {
+      fullName,
+      username,
+      password,
+      confirmPassword,
+      gender,
+      email,
+      phone,
+    } = req.body;
     // check for empty fields
     if (!fullName || !username || !password || !confirmPassword || !gender) {
       return res
@@ -32,9 +45,20 @@ const signup = async (req, res) => {
     const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
     const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
+    // get email or phone
+    // const {email, phone} = getEmailOrPhoneFromList()
+
     // hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
+
+    const isUserVerified = verifiedUsers.isUserVerified({ email, phone });
+    if (!isUserVerified) {
+      return res.status(400).json({
+        status: false,
+        message: "user is not verified. Please verify otp first.",
+      });
+    }
 
     const newUser = new User({
       fullName,
@@ -42,6 +66,8 @@ const signup = async (req, res) => {
       password: hashPassword,
       profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
       gender,
+      email,
+      phone,
     });
 
     if (!newUser) {
@@ -63,6 +89,8 @@ const signup = async (req, res) => {
         username: newUser.username,
         profilePic: newUser.profilePic,
         gender: newUser.gender,
+        email: newUser.email,
+        phone: newUser.phone,
       },
     });
   } catch (error) {
@@ -110,6 +138,68 @@ const login = async (req, res) => {
   }
 };
 
+const verifyUser = async (req, res) => {
+  try {
+    const { email, phone } = req.body;
+    if (!email && !phone) {
+      return res
+        .status(403)
+        .json({ status: false, message: "Please provide email or phone" });
+    }
+    console.log("email ", email);
+    // const user = await User.findOne({ $or: [{ email, phone }] });
+    const user = await User.find({ email });
+    console.log("user ", user);
+    return user;
+  } catch (error) {
+    console.log("error from logout controller: ", error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+// user login with otp
+const generateOtpForLogin = async (req, res) => {
+  try {
+    const user = await verifyUser(req, res);
+    console.log("from generate otp for login : ", user);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ status: false, message: "User doesn't exit" });
+    }
+    await createOtpDoc(req, res);
+  } catch (error) {
+    console.log("error from logout controller: ", error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+const verifyAndLogin = async (req, res) => {
+  try {
+    await verifyOtp(req, res);
+    const user = await verifyUser(req, res);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ status: false, message: "User doesn't exit" });
+    }
+    generateJWTTokenAndSetCookie(user._id, res);
+    res.status(200).json({
+      status: true,
+      message: "User logged in successfully",
+      user: {
+        _id: user._id,
+        fullName: user.fullName,
+        username: user.username,
+        profilePic: user.profilePic,
+        gender: user.gender,
+      },
+    });
+  } catch (error) {
+    console.log("error from logout controller: ", error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
+
 // user logout
 const logout = async (req, res) => {
   try {
@@ -128,4 +218,4 @@ const logout = async (req, res) => {
   }
 };
 
-export { signup, login, logout };
+export { signup, login, logout, generateOtpForLogin, verifyAndLogin };

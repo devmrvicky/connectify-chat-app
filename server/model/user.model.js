@@ -12,6 +12,30 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    email: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        },
+        message: props => `${props.value} is not a valid email!`
+      },
+      required: function() {
+        return !this.phone_number;
+      }
+    },
+    phone: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return /^\+?[1-9]\d{1,14}$/.test(v);
+        },
+        message: props => `${props.value} is not a valid phone number!`
+      },
+      required: function() {
+        return !this.email;
+      }
+    },
     password: {
       type: String,
       require: true,
@@ -29,6 +53,14 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre('save', function(next) {
+  if (!this.email && !this.phone) {
+    next(new Error('Either email or phone number must be provided.'));
+  } else {
+    next();
+  }
+});
 
 const User = mongoose.model("User", userSchema);
 
