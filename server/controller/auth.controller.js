@@ -86,8 +86,8 @@ const signup = async (req, res) => {
         username: newUser.username,
         profilePic: newUser.profilePic,
         gender: newUser.gender,
-        email: newUser.email,
-        phone: newUser.phone,
+        email: newUser?.email,
+        phone: newUser?.phone,
       },
     });
   } catch (error) {
@@ -125,6 +125,8 @@ const login = async (req, res) => {
         _id: user._id,
         fullName: user.fullName,
         username: user.username,
+        email: user?.email,
+        phone: user?.phone,
         profilePic: user.profilePic,
         gender: user.gender,
       },
@@ -190,6 +192,8 @@ const verifyAndLogin = async (req, res) => {
         _id: user._id,
         fullName: user.fullName,
         username: user.username,
+        email: user?.email,
+        phone: user?.phone,
         profilePic: user.profilePic,
         gender: user.gender,
       },

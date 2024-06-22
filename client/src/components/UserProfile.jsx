@@ -50,7 +50,7 @@ const UserProfile = ({
 
   return (
     <div
-      className={`flex  p-1 rounded gap-4 items-center w-full ${
+      className={`flex  p-2 rounded gap-4 items-center w-full ${
         isAuthProfile
           ? ""
           : `${
@@ -72,9 +72,9 @@ const UserProfile = ({
           />
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-0">
         <p className="text-lg">{fullName}</p>
-        {!isAuthProfile && (
+        {!isAuthProfile ? (
           <div className="flex justify-between items-center w-full text-sm">
             <p className="last-chat flex gap-1">
               <span>
@@ -89,9 +89,11 @@ const UserProfile = ({
                 })}
             </p>
           </div>
+        ) : (
+          <span className="text-xs">{username}</span>
         )}
       </div>
-      {isAuthProfile ? <LogoutBtn /> : ""}
+      {/* {isAuthProfile ? <LogoutBtn /> : ""} */}
     </div>
   );
 };

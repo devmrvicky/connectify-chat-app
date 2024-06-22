@@ -2,6 +2,7 @@ import { SearchBox } from "..";
 import useStore from "../../zustand/store";
 import AuthUserProfile from "../AuthUserProfile";
 import Friends from "../Friends";
+import Logo from "../Logo";
 
 const Aside = () => {
   const { selectedFriend } = useStore((store) => store);
@@ -12,7 +13,8 @@ const Aside = () => {
       } max-[620px]:bg-white max-[620px]:absolute z-10 max-[620px]:max-w-[100%] top-0 left-0 max-[620px]:p-4 transition-all`}
     >
       <div className="flex flex-col gap-2 w-full h-full max-[620px]:max-w-[500px] max-[620px]:mx-auto">
-        <AuthUserProfile />
+        {/* <AuthUserProfile /> */}
+        <Logo />
         <SearchBox />
         <div className="friends flex flex-col gap-2">
           <span>friends</span>

@@ -15,7 +15,7 @@ const Signup = () => {
     },
   });
 
-  const { handleSignup } = useSignup();
+  const { handleSignup, loading } = useSignup();
 
   return (
     <div>
@@ -32,6 +32,7 @@ const Signup = () => {
             name="fullName"
             placeholder="Enter your full name"
             register={register}
+            disabled={loading}
           />
           <InputField
             type="text"
@@ -39,6 +40,7 @@ const Signup = () => {
             name="username"
             placeholder="@username"
             register={register}
+            disabled={loading}
           />
           <InputField
             type="password"
@@ -46,6 +48,7 @@ const Signup = () => {
             name="password"
             placeholder="**********"
             register={register}
+            disabled={loading}
           />
           <InputField
             type="password"
@@ -53,6 +56,7 @@ const Signup = () => {
             name="confirmPassword"
             placeholder="**********"
             register={register}
+            disabled={loading}
             {...register("confirmPassword", { require: true })}
           />
           <div>
@@ -92,7 +96,9 @@ const Signup = () => {
           <button
             type="submit"
             className="btn w-full my-3 bg-green-500 text-black hover:bg-green-600"
+            disabled={loading}
           >
+          {loading && <span className="loading loading-spinner loading-md"></span>}
             Signup user
           </button>
         </form>

@@ -41,8 +41,10 @@ const PassLogin = () => {
       </p>
       <button
         type="submit"
-        className="btn w-full my-3 bg-green-500 text-black hover:bg-green-600"
+        className="btn w-full my-3 bg-green-500 text-black hover:bg-green-600 flex items-center gap-2"
+        disabled={loading}
       >
+      {loading && <span className="loading loading-spinner loading-md"></span>}
         Login user
       </button>
     </form>

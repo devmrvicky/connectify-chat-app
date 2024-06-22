@@ -16,7 +16,7 @@ const AuthProtectedRouter = ({ children, authentication = true }) => {
       navigate("/");
     }
     setLoading(false);
-  }, [Boolean(authUser)]);
+  }, [Boolean(authUser), navigate]);
 
   return loading ? (
     <div className="w-full h-full flex items-center justify-center">
