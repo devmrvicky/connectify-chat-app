@@ -76,43 +76,41 @@ const verifyOtp = async (req, res) => {
   try {
     const { otp, email, phone } = req.body;
     if (otp === "") {
-      return res
-        .status(403)
-        .json({ status: false, message: "You didn't provide otp" });
+      return { status: false, message: "You didn't provide otp" };
     }
     if (!email && !phone) {
-      return res.status(400).json({
+      return {
         status: false,
         message: "Either email or phone number must be provided.",
-      });
+      };
     }
     if (otp.length !== 6) {
-      return res
-        .status(403)
-        .json({ status: false, message: "length of otp must be 6" });
+      return { status: false, message: "length of otp must be 6" };
     }
     const otpBody = await OTP.findOne({ $or: [{ email, phone }] });
     if (!otpBody) {
-      return res.status(404).json({
+      return {
         status: false,
         message: "Didn't find otp. Please first send otp!",
-      });
+      };
     }
     if (otpBody.otp !== otp) {
-      return res
-        .status(400)
-        .json({ status: false, message: "Invalid otp provided" });
-    };
+      return { status: false, message: "Invalid otp provided" };
+    }
     await OTP.deleteOne({ $or: [{ email, phone }] });
+    return { status: true, message: "otp verified" };
   } catch (error) {
     console.log("error from verify otp ", error.message);
-    res.status(500).json({ status: false, message: error.message });
+    return { status: false, message: error.message };
   }
 };
 
 const verifyOtpAndSendRes = async (req, res) => {
   try {
-    await verifyOtp(req, res);
+    const result = await verifyOtp(req, res);
+    if (!result.status) {
+      return res.status(400).json({ status: false, message: result.message });
+    }
     const { email, phone } = req.body;
     verifiedUsers.setUser({ email, phone });
     res.status(200).json({ status: true, message: "otp verify successfully" });

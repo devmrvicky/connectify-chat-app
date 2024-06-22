@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { useOTP } from "../../hooks/auth/useOTP";
+import useStore from "../../zustand/store";
+import { useNavigate } from "react-router-dom";
 
 const VerifyOtp = () => {
+  const [otp, setOtp] = useState("");
+
+  const { verifying, verifyOtp } = useOTP();
+  const { changeUserStatus } = useStore((store) => store);
+
+  const navigate = useNavigate();
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    const res = await verifyOtp(otp, "otp/verify-otp");
+    if (res && res?.status) {
+      changeUserStatus("VERIFIED_AUTHORIZE");
+      navigate("/signup");
+    }
+  };
+
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <form className="max-w-[500px] w-full mx-auto flex flex-col gap-2">
+      <form
+        className="max-w-[500px] w-full mx-auto flex flex-col gap-2"
+        onSubmit={handleVerifyOtp}
+      >
         <div className="label">
           <span className="label-text">Enter OTP</span>
         </div>
@@ -20,9 +42,17 @@ const VerifyOtp = () => {
               clipRule="evenodd"
             />
           </svg>
-          <input type="text" className="grow" placeholder="******" />
+          <input
+            type="number"
+            className="grow"
+            placeholder="******"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            disabled={verifying}
+          />
         </label>
-        <button type="submit" className="btn btn-accent">
+        <button type="submit" className="btn btn-accent" disabled={verifying}>
+          {verifying && <span className="loading loading-spinner"></span>}
           Verify OTP
         </button>
       </form>

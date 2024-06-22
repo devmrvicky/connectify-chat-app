@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 const SignupProtectedRouter = ({ children }) => {
   const navigate = useNavigate();
-  const { USER_SIGNUP_STATUS } = useStore((store) => store);
+  const { USER_STATUS } = useStore((store) => store);
 
   useEffect(() => {
-    switch (USER_SIGNUP_STATUS) {
+    switch (USER_STATUS) {
       case "UNAUTHORIZE":
         return navigate("/send-otp");
         break;

@@ -1,10 +1,7 @@
 import { User } from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateJWTTokenAndSetCookie } from "../utils/generateJWTToken.js";
-import {
-  createOtpDoc,
-  verifyOtp,
-} from "./otp.controller.js";
+import { createOtpDoc, verifyOtp } from "./otp.controller.js";
 import { verifiedUsers } from "../service/user.service.js";
 
 // user signup
@@ -148,7 +145,7 @@ const verifyUser = async (req, res) => {
     }
     console.log("email ", email);
     // const user = await User.findOne({ $or: [{ email, phone }] });
-    const user = await User.find({ email });
+    const user = await User.findOne({ email });
     console.log("user ", user);
     return user;
   } catch (error) {
@@ -175,7 +172,10 @@ const generateOtpForLogin = async (req, res) => {
 };
 const verifyAndLogin = async (req, res) => {
   try {
-    await verifyOtp(req, res);
+    const result = await verifyOtp(req, res);
+    if (!result.status) {
+      return res.status(400).json({ status: false, message: result.message });
+    }
     const user = await verifyUser(req, res);
     if (!user) {
       return res
