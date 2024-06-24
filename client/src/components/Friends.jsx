@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { apiGet } from "../api/api";
-import UserProfile from "./UserProfile";
 import { useAuthContext } from "../context/AuthContext";
-import UserProfileSkeleton from "./skeleton/UserProfileSkeleton";
 import useStore from "../zustand/store";
+import FriendListItem from "../pages/friends/FriendListItem";
 
 const Friends = () => {
   const [loading, setLoading] = useState(false);
@@ -33,31 +32,7 @@ const Friends = () => {
     })();
   }, [authUser?._id, searchedFriends.length]);
 
-  return !loading ? (
-    friends.length ? (
-      friends.map((friend, idx) => (
-        <React.Fragment key={friend._id}>
-          <UserProfile {...friend} />
-          {friends.length - 1 > idx && (
-            <div className="divider divider-vertically m-0 h-0"></div>
-          )}
-        </React.Fragment>
-      ))
-    ) : (
-      <div className="w-full text-center">
-        <p className="py-3 text-xs ">you haven't any friend</p>
-      </div>
-    )
-  ) : (
-    // skeleton
-    <>
-      <UserProfileSkeleton />
-      <UserProfileSkeleton />
-      <UserProfileSkeleton />
-      <UserProfileSkeleton />
-      <UserProfileSkeleton />
-    </>
-  );
+  return <FriendListItem friends={friends} loading={loading} />;
 };
 
 export default Friends;

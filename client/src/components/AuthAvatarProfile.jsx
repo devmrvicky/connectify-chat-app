@@ -7,7 +7,7 @@ const AuthAvatarProfile = () => {
   const { authUser } = useAuthContext();
   return (
     <PopoverDemo>
-      <button>
+      <button className="tooltip" data-tip={`${authUser?.fullName}`}>
         <div className="avatar">
           <div className="w-12 rounded-full">
             <img

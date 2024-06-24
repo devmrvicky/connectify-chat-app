@@ -18,7 +18,7 @@ const Signup = () => {
   const { handleSignup, loading } = useSignup();
 
   return (
-    <div>
+    <div role="signup-page" className="w-full">
       <div className="max-w-[500px] w-full mx-auto flex flex-col gap-2">
         <h1 className="text-3xl text-center py-3">Signup user</h1>
         <form
@@ -98,7 +98,9 @@ const Signup = () => {
             className="btn w-full my-3 bg-green-500 text-black hover:bg-green-600"
             disabled={loading}
           >
-          {loading && <span className="loading loading-spinner loading-md"></span>}
+            {loading && (
+              <span className="loading loading-spinner loading-md"></span>
+            )}
             Signup user
           </button>
         </form>

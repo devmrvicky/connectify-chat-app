@@ -3,12 +3,21 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import { Home, Login, Signup } from "../pages";
+import {
+  Home,
+  Login,
+  Signup,
+  EmailPage,
+  VerifyOtp,
+  FriendsPage,
+  AllUsers,
+} from "../pages";
 import App from "../App";
 import { AuthProtectedRouter } from "./AuthProtectedRouter";
 import SignupProtectedRouter from "./SignupProtectedRouter";
-import EmailPage from "../pages/auth/EmailPage";
-import VerifyOtp from "../pages/auth/VerifyOtp";
+// import EmailPage from "../pages/auth/EmailPage";
+// import VerifyOtp from "../pages/auth/VerifyOtp";
+// import Friends from "../pages/friends/FriendsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,6 +68,16 @@ const router = createBrowserRouter(
           </AuthProtectedRouter>
         }
       />
+      <Route
+        path="friends"
+        element={
+          <AuthProtectedRouter authentication={true}>
+            <FriendsPage />
+          </AuthProtectedRouter>
+        }
+      >
+        <Route path="" element={<AllUsers />}></Route>
+      </Route>
     </Route>
   )
 );
