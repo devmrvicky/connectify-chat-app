@@ -81,6 +81,8 @@ app.get("/test", (req, res) => {
 import userRouter from "./routes/user.routes.js";
 import messageRouter from "./routes/message.routes.js";
 import otpRouter from "./routes/OTP.routes.js";
+import friendRouter from "./routes/friend.routes.js"
+import { checkUserAuthentication } from "./middleware/user.middleware.js";
 
 // middleware -> router -> controller
 // user
@@ -91,5 +93,8 @@ app.use("/api/messages", messageRouter);
 
 // otp
 app.use("/api/otp", otpRouter);
+
+// friend
+app.use("/api/friend", checkUserAuthentication, friendRouter)
 
 export { app, server, io };
