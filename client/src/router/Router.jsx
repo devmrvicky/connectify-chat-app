@@ -15,6 +15,7 @@ import {
 import App from "../App";
 import { AuthProtectedRouter } from "./AuthProtectedRouter";
 import SignupProtectedRouter from "./SignupProtectedRouter";
+import FriendRequests from "../pages/friends/FriendRequests";
 // import EmailPage from "../pages/auth/EmailPage";
 // import VerifyOtp from "../pages/auth/VerifyOtp";
 // import Friends from "../pages/friends/FriendsPage";
@@ -75,8 +76,10 @@ const router = createBrowserRouter(
             <FriendsPage />
           </AuthProtectedRouter>
         }
+        exact={true}
       >
         <Route path="" element={<AllUsers />}></Route>
+        <Route path="requests" element={<FriendRequests />}></Route>
       </Route>
     </Route>
   )

@@ -3,6 +3,7 @@ import { apiGet } from "../api/api";
 import { useAuthContext } from "../context/AuthContext";
 import useStore from "../zustand/store";
 import FriendListItem from "../pages/friends/FriendListItem";
+import UserProfileLayout from "./layout/UserProfileLayout";
 
 const Friends = () => {
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,13 @@ const Friends = () => {
     })();
   }, [authUser?._id, searchedFriends.length]);
 
-  return <FriendListItem friends={friends} loading={loading} />;
+  return (
+    <UserProfileLayout
+      friends={friends}
+      loading={loading}
+      emptyUsersMessage="Didn't find any active user"
+    />
+  );
 };
 
 export default Friends;

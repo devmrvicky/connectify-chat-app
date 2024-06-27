@@ -31,4 +31,27 @@ const apiPost = async (endpoint, body = {}) => {
   return await res.json();
 };
 
-export { apiGet, apiPost };
+const apiPut = async (endpoint, body = {}) => {
+  const res = await fetch(`${BASE_URL}/${endpoint}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+    credentials: "include",
+  });
+  return await res.json();
+};
+
+const apiDelete = async (endpoint) => {
+  const res = await fetch(`${BASE_URL}/${endpoint}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+    },
+    credentials: "include",
+  });
+  return await res.json();
+};
+
+export { apiGet, apiPost, apiPut, apiDelete };

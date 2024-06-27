@@ -66,7 +66,8 @@ const receiveFriendRequests = async (req, res) => {
     }
     let friendRequests = await Friend.find({
       $or: [{ receiverId, request: "pending" }],
-    });
+    }).populate("senderId");
+    console.log(friendRequests);
     if (!friendRequests) {
       return res
         .status(400)
@@ -110,6 +111,7 @@ const acceptFriendRequest = async (req, res) => {
       { $or: [{ receiverId, senderId, request: "pending" }] },
       { request: "confirm" }
     );
+    // create contact list
     res.status(200).json({
       status: true,
       message: "accept friend request",
@@ -124,15 +126,17 @@ const acceptFriendRequest = async (req, res) => {
 // get all friends
 const getAllFriends = async (req, res) => {
   try {
-    const receiverId = req.user._id;
-    if (!receiverId) {
+    const authId = req.user._id;
+    if (!authId) {
       return res
         .status(400)
         .json({ status: false, message: "You are unauthorized." });
     }
     let friends = await Friend.find({
-      $or: [{ receiverId, request: "confirm" }],
-    });
+      $or: [{ receiverId: authId }, { senderId: authId }],
+    }).populate(["senderId", "receiverId"]);
+
+    console.log("from get all friends", friends);
     if (!friends) {
       return res
         .status(400)
@@ -157,6 +161,7 @@ const removeFromFriendRequests = async (req, res) => {
         .json({ status: false, message: "Request sender friend didn't find" });
     }
     const receiverId = req.user._id;
+    console.log({ receiverId });
     if (!receiverId) {
       return res
         .status(400)
