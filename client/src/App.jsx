@@ -6,7 +6,7 @@ import { useAuthContext } from "./context/AuthContext";
 function App() {
   const { authUser } = useAuthContext();
   return (
-    <main className=" p-4 h-screen w-full bg-black">
+    <main className=" p-4 h-screen w-full bg-white dark:bg-black">
       <div className="container max-w-[1200px] w-full h-full mx-auto p-2 max-[620px]:overflow-hidden flex">
         {authUser && <AsideMenus />}
         <Outlet />

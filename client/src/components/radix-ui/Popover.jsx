@@ -4,6 +4,7 @@ import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
 import LogoutBtn from "../LogoutBtn";
 import AuthUserProfile from "../AuthUserProfile";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import ThemeController from "./ThemeController";
 
 const PopoverDemo = ({ children }) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
@@ -18,6 +19,10 @@ const PopoverDemo = ({ children }) => {
           sideOffset={5}
         >
           <AuthUserProfile />
+          <div className="divider my-2 divider-start">
+            <span className="text-sm">options</span>
+          </div>
+          <ThemeController />
           <div className="divider m-0"></div>
           <div className="flex justify-between w-full p-2">
             <span>Logout</span>

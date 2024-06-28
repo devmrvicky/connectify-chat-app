@@ -41,7 +41,7 @@ const FriendSideBar = ({ willHideSideBar = true }) => {
       hideCondition={selectedFriendPage}
       className={
         willHideSideBar &&
-        "max-[800px]:max-w-[250px] max-[720px]:hidden max-[420px]:block max-[420px]:bg-white max-[420px]:absolute z-10 max-[420px]:max-w-[100%] top-0 left-0 max-[420px]:p-4 max-[420px]:pb-0"
+        "max-[800px]:max-w-[250px] max-[720px]:hidden max-[420px]:block max-[420px]:bg-white dark:max-[420px]:bg-black max-[420px]:absolute z-10 max-[420px]:max-w-[100%] top-0 left-0 max-[420px]:p-4 max-[420px]:pb-0"
       }
     >
       <ul className="flex flex-col flex-1 h-full w-full py-2 gap-3">
