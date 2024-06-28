@@ -5,7 +5,7 @@ import useStore from "../zustand/store";
 const MenuItems = ({ menus, className = "" }) => {
   const { changeCurrentActivePage } = useStore((store) => store);
   return (
-    <ul className={`flex gap-5 h-full flex-1 justify-center ${className}`}>
+    <ul className={`flex  gap-5 h-full flex-1 justify-center ${className}`}>
       {menus.map((menu) => (
         <li
           key={menu.name}

@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { apiDelete, apiGet, apiPost, apiPut } from "../../api/api";
 import { useState } from "react";
+import { useFriendStore } from "../../zustand/store";
 
 const useFriendRequest = () => {
   const [sendingRequest, setSendingRequest] = useState(false);
@@ -8,6 +9,8 @@ const useFriendRequest = () => {
   const [removingRequest, setRemovingRequest] = useState(false);
   const [gettingRequests, setGettingRequests] = useState(false);
   const [friendRequests, setFriendRequests] = useState([]);
+
+  const { setAllFriendsRequest } = useFriendStore((store) => store);
 
   const sendFriendRequest = async (receiverId) => {
     try {
@@ -82,6 +85,7 @@ const useFriendRequest = () => {
         });
       }
       setFriendRequests(res.friendRequests);
+      setAllFriendsRequest(res.friendRequests);
     } catch (error) {
       return toast.error(res.message, {
         id: "requests error",

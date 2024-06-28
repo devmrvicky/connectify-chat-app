@@ -3,17 +3,19 @@ import FriendListItem from "./FriendListItem";
 import { apiGet } from "../../api/api";
 import UserProfileLayout from "../../components/layout/UserProfileLayout";
 import { useAuthContext } from "../../context/AuthContext";
+import { useFriendStore } from "../../zustand/store";
 
 const MyContacts = () => {
   const [loading, setLoading] = useState(false);
-  const [myFriends, setMyFriends] = useState([]);
   const { authUser } = useAuthContext();
+
+  const { myContacts, setMyContacts } = useFriendStore((store) => store);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       const data = await apiGet("friend/get-all-friends");
-      setMyFriends(
+      setMyContacts(
         data?.friends.map((friend) =>
           friend.senderId._id === authUser?._id
             ? friend.receiverId
@@ -26,7 +28,7 @@ const MyContacts = () => {
 
   return (
     <UserProfileLayout
-      friends={myFriends}
+      friends={myContacts}
       loading={loading}
       isFriend={true}
       isContact={true}

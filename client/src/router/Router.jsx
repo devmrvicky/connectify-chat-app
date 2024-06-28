@@ -11,6 +11,7 @@ import {
   VerifyOtp,
   FriendsPage,
   AllUsers,
+  SendedFriendRequests,
 } from "../pages";
 import App from "../App";
 import { AuthProtectedRouter } from "./AuthProtectedRouter";
@@ -80,6 +81,10 @@ const router = createBrowserRouter(
       >
         <Route path="" element={<AllUsers />}></Route>
         <Route path="requests" element={<FriendRequests />}></Route>
+        <Route
+          path="send-friend-requests"
+          element={<SendedFriendRequests />}
+        ></Route>
       </Route>
     </Route>
   )

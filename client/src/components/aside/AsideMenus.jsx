@@ -29,15 +29,23 @@ const AsideMenus = () => {
     },
     {
       name: "Notification",
-      path: "/notifications",
-      activeIcon: <AiFillBell className="w-8 h-8 text-zinc-300" />,
-      icon: <AiOutlineBell className="w-8 h-8" />,
+      // path: "/notifications",
+      path: "/",
+      activeIcon: (
+        <AiFillBell className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
+      ),
+      icon: (
+        <AiOutlineBell className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
+      ),
     },
     {
       name: "setting",
-      path: "/setting",
-      icon: <PiGear className="w-8 h-8" />,
-      activeIcon: <PiGearFill className="w-8 h-8 text-zinc-300" />,
+      // path: "/setting",
+      path: "/",
+      icon: <PiGear className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />,
+      activeIcon: (
+        <PiGearFill className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
+      ),
     },
   ];
 

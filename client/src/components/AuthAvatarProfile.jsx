@@ -9,13 +9,15 @@ const AuthAvatarProfile = () => {
     <PopoverDemo>
       <button className="tooltip" data-tip={`${authUser?.fullName}`}>
         <div className="avatar">
-          <div className="w-12 rounded-full">
+          <div className="w-10 rounded-full">
             <img
               src={authUser?.profilePic}
               onError={(e) => {
                 e.preventDefault();
                 e.target.src = avatarIcon;
               }}
+              alt="profile avatar"
+              className="w-full"
             />
           </div>
         </div>

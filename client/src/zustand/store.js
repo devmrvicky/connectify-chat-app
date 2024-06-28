@@ -29,4 +29,68 @@ const useStore = create((set) => ({
     set(() => ({ selectedFriendPage: friendPage })),
 }));
 
+const useFriendStore = create((set) => ({
+  // fields
+  allFriends: [],
+  allFriendsRequest: [],
+  myAllFriends: [],
+  myContacts: [],
+  allFriendsRequestSend: [],
+
+  // methods
+  // get all
+  setAllFriends: (allFriends) => set(() => ({ allFriends })),
+  setAllFriendsRequest: (allFriendsRequest) =>
+    set(() => ({ allFriendsRequest })),
+  setMyAllFriends: (myAllFriends) => set(() => ({ myAllFriends })),
+  setAllFriendsRequestSend: (allFriendsRequestSend) =>
+    set(() => ({ allFriendsRequestSend })),
+  setMyContacts: (myContacts) => set(() => ({ myContacts })),
+
+  // add one
+  addFriend: (friend) =>
+    set((state) => ({ allFriends: [...state.allFriends, friend] })),
+  addFriendRequest: (friend) =>
+    set((state) => ({
+      allFriendsRequest: [...state.allFriendsRequest, friend],
+    })),
+  addMyFriend: (friend) =>
+    set((state) => ({ myAllFriends: [...state.myAllFriends, friend] })),
+  addFriendRequestSend: (friend) =>
+    set((state) => ({
+      allFriendsRequestSend: [...state.allFriendsRequestSend, friend],
+    })),
+  addMyContact: (friend) =>
+    set((state) => ({
+      myContacts: [...state.myContacts, friend],
+    })),
+
+  // remove one
+  removeFriend: (friendId) =>
+    set((state) => ({
+      allFriends: state.allFriends.filter((friend) => friend._id !== friendId),
+    })),
+  removeFriendRequest: (friendId) =>
+    set((state) => ({
+      allFriendsRequest: state.allFriendsRequest.filter(
+        (friend) => friend._id !== friendId
+      ),
+    })),
+  removeFriendRequestSend: (friendId) =>
+    set((state) => ({
+      allFriendsRequestSend: state.allFriendsRequestSend.filter(
+        (friend) => friend._id !== friendId
+      ),
+    })),
+  removeMyFriend: (friendId) =>
+    set((state) => ({
+      allMyFriends: allMyFriends.filter((friend) => friend._id !== friendId),
+    })),
+  removeMyContact: (friendId) =>
+    set((state) => ({
+      myContacts: myContacts.filter((friend) => friend._id !== friendId),
+    })),
+}));
+
 export default useStore;
+export { useFriendStore };

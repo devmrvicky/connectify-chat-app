@@ -1,4 +1,5 @@
 import { Friend } from "../model/friend.model.js";
+import { User } from "../model/user.model.js";
 import { handleError } from "../utils/handleError.js";
 
 // send friend requests
@@ -18,7 +19,10 @@ const sendFriendRequests = async (req, res) => {
         .json({ status: false, message: "You are unauthorized." });
     }
     const friendRequest = await Friend.findOne({
-      $or: [{ receiverId, senderId }],
+      $or: [
+        { receiverId, senderId },
+        { receiverId: senderId, senderId: receiverId },
+      ],
     });
     if (friendRequest) {
       if (friendRequest.request === "pending") {
@@ -37,12 +41,14 @@ const sendFriendRequests = async (req, res) => {
       senderId,
       request: "pending",
     });
+
     if (newFriendRequest) {
+      let requestedFriend = await User.findById({ _id: receiverId });
       console.log("send friend requests");
       return res.status(200).json({
         status: true,
         message: "friend request send successfully",
-        request: newFriendRequest,
+        request: { ...newFriendRequest, requestedFriend },
       });
     } else {
       console.log("failed to send friend requests");
@@ -79,6 +85,34 @@ const receiveFriendRequests = async (req, res) => {
       friendRequests,
     });
     console.log("receive friend requests");
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+// receive all sended friend requests
+const getAllSendedRequests = async (req, res) => {
+  try {
+    const senderId = req.user._id;
+    if (!senderId) {
+      return res
+        .status(400)
+        .json({ status: false, message: "You are unauthorized." });
+    }
+    let friendRequests = await Friend.find({
+      $or: [{ senderId, request: "pending" }],
+    }).populate("receiverId");
+    console.log(friendRequests);
+    if (!friendRequests) {
+      return res
+        .status(400)
+        .json({ status: false, message: "Invalid request fields" });
+    }
+    res.status(200).json({
+      status: true,
+      message: "get all sended friend requests",
+      friendRequests,
+    });
+    console.log("receive all sended friend requests");
   } catch (error) {
     handleError(error, res);
   }
@@ -133,7 +167,10 @@ const getAllFriends = async (req, res) => {
         .json({ status: false, message: "You are unauthorized." });
     }
     let friends = await Friend.find({
-      $or: [{ receiverId: authId }, { senderId: authId }],
+      $or: [
+        { receiverId: authId, request: "confirm" },
+        { senderId: authId, request: "confirm" },
+      ],
     }).populate(["senderId", "receiverId"]);
 
     console.log("from get all friends", friends);
@@ -167,11 +204,20 @@ const removeFromFriendRequests = async (req, res) => {
         .status(400)
         .json({ status: false, message: "You are unauthorized." });
     }
-    await Friend.findOneAndDelete({ $or: [{ receiverId, senderId }] });
+    await Friend.findOneAndDelete({
+      $or: [
+        { receiverId, senderId },
+        { receiverId: senderId, senderId: receiverId },
+      ],
+    });
     console.log("friend removed");
     return res
       .status(200)
-      .json({ status: true, message: "friend removed successfully" });
+      .json({
+        status: true,
+        message: "friend removed successfully",
+        removedFriendId: receiverId,
+      });
   } catch (error) {
     handleError(error, res);
   }
@@ -183,4 +229,5 @@ export {
   getAllFriends,
   acceptFriendRequest,
   removeFromFriendRequests,
+  getAllSendedRequests,
 };

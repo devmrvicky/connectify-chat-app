@@ -4,13 +4,14 @@ import {
   receiveFriendRequests,
   getAllFriends,
   acceptFriendRequest,
-  removeFromFriendRequests,
+  removeFromFriendRequests,getAllSendedRequests
 } from "../controller/friend.controller.js";
 
 const router = express.Router();
 
 router.post("/send-request/:receiverId", sendFriendRequests);
 router.get("/receive-requests", receiveFriendRequests);
+router.get("/get-all-sended-requests", getAllSendedRequests);
 router.put("/accept-request/:senderId", acceptFriendRequest);
 router.get("/get-all-friends", getAllFriends);
 router.delete("/remove-request/:senderId", removeFromFriendRequests);

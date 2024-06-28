@@ -13,6 +13,7 @@ const FriendProfile = ({
   username,
   isFriend = false,
   isFriendRequest = false,
+  isSendFriendRequest = false,
 }) => {
   const {
     sendingRequest,
@@ -49,16 +50,29 @@ const FriendProfile = ({
               friend
             </span>
           )}
+          {isSendFriendRequest && (
+            <span
+              className="badge badge-accent text-[10px] tooltip"
+              data-tip="pending"
+            >
+              pending
+            </span>
+          )}
         </p>
         <span className="text-lg text-zinc-400">{username}</span>
       </div>
       <div className="btns flex items-center gap-2">
         {!isFriendRequest ? (
           <>
-            <button className="btn btn-secondary tooltip" data-tip="remove">
+            <button
+              className="btn btn-secondary tooltip"
+              data-tip="remove"
+              disabled={removingRequest}
+              onClick={() => removeFriendRequest(_id)}
+            >
               <HiOutlineUserRemove className="w-6 h-6" />
             </button>
-            {!isFriend && (
+            {(!isFriend || isSendFriendRequest) && (
               <button
                 className="btn btn-primary tooltip"
                 data-tip="add"

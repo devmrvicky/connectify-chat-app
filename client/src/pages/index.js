@@ -6,5 +6,15 @@ import VerifyOtp from "./auth/VerifyOtp";
 
 import FriendsPage from "./friends/FriendsPage";
 import AllUsers from "./friends/AllUsers";
+import SendedFriendRequests from "./friends/SendedFriendRequests";
 
-export { Home, Login, Signup, FriendsPage, AllUsers, EmailPage, VerifyOtp };
+export {
+  Home,
+  Login,
+  Signup,
+  FriendsPage,
+  AllUsers,
+  SendedFriendRequests,
+  EmailPage,
+  VerifyOtp,
+};

@@ -6,7 +6,6 @@ import MenuItems from "./MenuItems";
 import AuthAvatarProfile from "./AuthAvatarProfile";
 
 const BottomMenus = () => {
-
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
 
   const menus = [
@@ -15,10 +14,9 @@ const BottomMenus = () => {
       path: "/",
       icon: <HiOutlineChat className="w-8 h-8" />,
       activeIcon: <HiChat className="w-8 h-8 text-zinc-300" />,
-
     },
     {
-      name: "Add friends",
+      name: "Friends",
       path: "/friends",
       icon: <RiUserAddLine className="w-8 h-8" />,
       activeIcon: <RiUserAddFill className="w-8 h-8 text-zinc-300" />,

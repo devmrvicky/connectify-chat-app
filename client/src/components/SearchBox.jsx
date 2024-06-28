@@ -26,7 +26,11 @@ const SearchBox = () => {
   };
 
   return (
-    <form action="" onSubmit={handleSearchFriend}>
+    <form
+      action=""
+      onSubmit={handleSearchFriend}
+      className="max-[420px]:hidden"
+    >
       <label className="input input-bordered flex items-center gap-2 rounded-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"

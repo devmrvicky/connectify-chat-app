@@ -9,6 +9,7 @@ const UserProfileLayout = ({
   isContact = false,
   isFriend = false,
   isFriendRequest = false,
+  isSendFriendRequest = false,
   emptyUsersMessage = "didn't find any friend",
 }) => {
   return !loading ? (
@@ -18,7 +19,12 @@ const UserProfileLayout = ({
           {isContact ? (
             <UserProfile {...friend} />
           ) : (
-            <FriendProfile {...friend} isFriend={isFriend} isFriendRequest={isFriendRequest} />
+            <FriendProfile
+              {...friend}
+              isFriend={isFriend}
+              isFriendRequest={isFriendRequest}
+              isSendFriendRequest={isSendFriendRequest}
+            />
           )}
           {friends.length - 1 > idx && (
             <div className="divider divider-vertically m-0 h-0"></div>

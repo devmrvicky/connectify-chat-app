@@ -24,14 +24,20 @@ const SideBarLayout = ({
   const menus = [
     {
       name: "Search",
-      path: "/search",
-      activeIcon: <CiSearch className="w-7 h-7 text-zinc-300" />,
+      // path: "/search",
+      path: "/",
+      activeIcon: (
+        <CiSearch className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />
+      ),
       icon: <CiSearch className="w-7 h-7" />,
     },
     {
       name: "Notification",
-      path: "/notifications",
-      activeIcon: <AiFillBell className="w-7 h-7 text-zinc-300" />,
+      // path: "/notifications",
+      path: "/",
+      activeIcon: (
+        <AiFillBell className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />
+      ),
       icon: <AiOutlineBell className="w-7 h-7" />,
     },
   ];
@@ -49,14 +55,18 @@ const SideBarLayout = ({
           <Logo />
           {isSmallDevice && (
             <>
-              <MenuItems menus={menus} className="justify-end" />
+              <MenuItems
+                menus={menus}
+                className="max-[420px]:justify-end max-[420px]:gap-0"
+              />
               <button type="button">
                 <CgMoreVerticalAlt className="w-7 h-7" />
               </button>
             </>
           )}
         </div>
-        {searchBox && <SearchBox />}
+        <div className="divider m-0 mt-2"></div>
+        {isSmallDevice && searchBox && <SearchBox />}
         <div className="side-bar-content flex flex-col w-full h-full gap-2">
           <span>{sidebarContentTitle}</span>
           {children}

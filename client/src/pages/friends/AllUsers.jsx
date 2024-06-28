@@ -23,7 +23,7 @@ const AllUsers = () => {
       <div className="w-full flex items-center gap-3 border-b border-zinc-400">
         <NavLink
           to="?tab=my-friends"
-          className={`text-xl p-3 my-3 mt-5 ${
+          className={`text-xl p-3 my-1 ${
             tab === "my-friends" ? "text-zinc-200" : "text-zinc-400"
           }`}
         >
@@ -31,7 +31,7 @@ const AllUsers = () => {
         </NavLink>
         <NavLink
           to="?tab=find-friends"
-          className={`text-xl p-3 my-3 mt-5  ${
+          className={`text-xl p-3 my-1  ${
             tab === "find-friends" ? "text-zinc-200" : "text-zinc-400"
           }`}
         >
