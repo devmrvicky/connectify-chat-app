@@ -14,7 +14,7 @@ const ChatUserHead = () => {
 
   const { isTyping } = useGetTypingStatus();
 
-  const isSmallDevice = useMediaQuery("only screen and (max-width : 620px)");
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
 
   const goBackToFriendsList = () => {
     selectFriend(null);

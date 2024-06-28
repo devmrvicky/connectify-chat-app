@@ -8,6 +8,7 @@ const MyContacts = () => {
   const [loading, setLoading] = useState(false);
   const [myFriends, setMyFriends] = useState([]);
   const { authUser } = useAuthContext();
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -22,6 +23,7 @@ const MyContacts = () => {
       setLoading(false);
     })();
   }, []);
+
   return (
     <UserProfileLayout
       friends={myFriends}

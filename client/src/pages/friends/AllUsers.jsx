@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Friends from "../../components/Friends";
 import MyFriends from "./MyFriends";
 
@@ -7,11 +7,16 @@ const AllUsers = () => {
   const [tab, setTab] = useState("my-friends");
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const searchQuery = new URLSearchParams(location.search);
     setTab(searchQuery.get("tab"));
   }, [location.search]);
+
+  useEffect(() => {
+    navigate("/friends?tab=my-friends");
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col">

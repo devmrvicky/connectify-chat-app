@@ -50,7 +50,7 @@ const UserProfile = ({
 
   return (
     <div
-      className={`flex  p-2 rounded gap-4 items-center w-full ${
+      className={`flex  p-2 rounded gap-4 items-center w-full cursor-pointer ${
         isAuthProfile
           ? ""
           : `${

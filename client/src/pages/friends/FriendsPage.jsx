@@ -4,18 +4,39 @@ import MainContentLayout from "../../components/layout/MainContentLayout";
 import { peopleSvg } from "../../assets";
 import { SearchBox } from "../../components";
 import { Outlet, useNavigate } from "react-router-dom";
+import useStore from "../../zustand/store";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { TfiAngleLeft } from "react-icons/tfi";
 
 const FriendsPage = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    navigate("?tab=my-friends");
-  }, []);
+
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
+
+  const { selectFriendPage } = useStore((store) => store);
+
+  const navigateBack = () => {
+    navigate("/friends");
+    selectFriendPage(null);
+  };
+
+  // useEffect(() => {
+  //   navigate("/friends?tab=my-friends");
+  // }, []);
+
   return (
     <MainContentLayout>
       <FriendSideBar />
       <div className="flex flex-col w-full h-full">
         <div className="flex flex-col gap-3 py-2">
-          <p className="text-xl font-medium">All friends</p>
+          <div className="friend-page-head flex gap-2 items-center">
+            {isSmallDevice && (
+              <button onClick={navigateBack}>
+                <TfiAngleLeft />
+              </button>
+            )}
+            <p className="text-xl font-medium">All friends</p>
+          </div>
           <SearchBox />
         </div>
         <Outlet />

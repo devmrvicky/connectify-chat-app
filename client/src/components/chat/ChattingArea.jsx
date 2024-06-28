@@ -1,20 +1,11 @@
 import React from "react";
 import { MessagesContainer, ChatInput } from "..";
 import useStore from "../../zustand/store";
-import avatarIcon from "../../assets/avatar-icon.png";
 import { IoChatbubbles } from "react-icons/io5";
-import { TfiAngleLeft } from "react-icons/tfi";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import ChatUserHead from "./ChatUserHead";
 
 const ChattingArea = () => {
-  const { selectedFriend, selectFriend } = useStore((store) => store);
-
-  const isSmallDevice = useMediaQuery("only screen and (max-width : 620px)");
-
-  const goBackToFriendsList = () => {
-    selectFriend(null);
-  };
+  const { selectedFriend } = useStore((store) => store);
 
   return !selectedFriend ? (
     <NoFriendSelected />

@@ -16,11 +16,17 @@ const useStore = create((set) => ({
 
   // user signup status
   USER_STATUS: "UNAUTHORIZE", // "VERIFIED_AUTHORIZE","REQUEST_AUTHORIZE",    "AUTHORIZE"
-  changeUserStatus: (status) =>
-    set((state) => ({ USER_STATUS: status })),
+  changeUserStatus: (status) => set((state) => ({ USER_STATUS: status })),
 
   currentEmail: null,
-  changeCurrentEmail: (email) => set(() => ({currentEmail: email}))
+  changeCurrentEmail: (email) => set(() => ({ currentEmail: email })),
+
+  currentActivePage: "chat",
+  changeCurrentActivePage: (activePage) =>
+    set(() => ({ currentActivePage: activePage ? activePage : "home" })),
+  selectedFriendPage: null,
+  selectFriendPage: (friendPage) =>
+    set(() => ({ selectedFriendPage: friendPage })),
 }));
 
 export default useStore;
