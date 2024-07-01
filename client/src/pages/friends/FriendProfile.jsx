@@ -68,7 +68,12 @@ const FriendProfile = ({
               className="btn btn-secondary tooltip"
               data-tip="remove"
               disabled={removingRequest}
-              onClick={() => removeFriendRequest(_id)}
+              onClick={() =>
+                removeFriendRequest(
+                  _id,
+                  isFriend ? "remove-my-friend" : "remove-friend-request"
+                )
+              }
             >
               <HiOutlineUserRemove className="w-6 h-6" />
             </button>
@@ -90,7 +95,19 @@ const FriendProfile = ({
         ) : (
           <>
             <button
-              className="btn btn-primary tooltip"
+              className="btn btn-secondary tooltip"
+              data-tip="reject"
+              onClick={() => removeFriendRequest(_id, "reject-friend-request")}
+              disabled={removingRequest}
+            >
+              {removingRequest ? (
+                <span className="loading loading-spinner loading-md"></span>
+              ) : (
+                <SlUserUnfollow className="w-6 h-6" />
+              )}
+            </button>
+            <button
+              className="btn btn-success tooltip"
               data-tip="accept"
               onClick={() => acceptFriendRequest(_id)}
               disabled={acceptingRequest}
@@ -99,18 +116,6 @@ const FriendProfile = ({
                 <span className="loading loading-spinner loading-md"></span>
               ) : (
                 <SlUserFollowing className="w-6 h-6" />
-              )}
-            </button>
-            <button
-              className="btn btn-success tooltip"
-              data-tip="reject"
-              onClick={() => removeFriendRequest(_id)}
-              disabled={removingRequest}
-            >
-              {removingRequest ? (
-                <span className="loading loading-spinner loading-md"></span>
-              ) : (
-                <SlUserUnfollow className="w-6 h-6" />
               )}
             </button>
           </>

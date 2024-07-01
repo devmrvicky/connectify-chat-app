@@ -4,8 +4,7 @@ import UserProfileLayout from "../../components/layout/UserProfileLayout";
 import { useFriendStore } from "../../zustand/store";
 
 const FriendRequests = () => {
-  const { gettingRequests, friendRequests, receiveFriendRequests } =
-    useFriendRequest();
+  const { gettingRequests, receiveFriendRequests } = useFriendRequest();
 
   const { allFriendsRequest } = useFriendStore((store) => store);
 
@@ -13,7 +12,7 @@ const FriendRequests = () => {
     (async () => {
       await receiveFriendRequests();
     })();
-  }, []);
+  }, [allFriendsRequest.length]);
 
   return (
     <div className="flex flex-col w-full h-full">

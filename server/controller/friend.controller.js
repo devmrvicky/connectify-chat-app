@@ -1,6 +1,8 @@
 import { Friend } from "../model/friend.model.js";
 import { User } from "../model/user.model.js";
+import { getUserFromList } from "../service/user.service.js";
 import { handleError } from "../utils/handleError.js";
+import { io } from "../app.js";
 
 // send friend requests
 const sendFriendRequests = async (req, res) => {
@@ -45,6 +47,16 @@ const sendFriendRequests = async (req, res) => {
     if (newFriendRequest) {
       let requestedFriend = await User.findById({ _id: receiverId });
       console.log("send friend requests");
+      // use socket.io
+      const receiverSocketId = getUserFromList(receiverId);
+      const senderUser = await User.findById({ _id: senderId });
+      const request = {
+        ...newFriendRequest,
+        senderId: senderUser,
+      };
+      io.to(receiverSocketId).emit("new-friend-request", {
+        request,
+      });
       return res.status(200).json({
         status: true,
         message: "friend request send successfully",
@@ -211,13 +223,13 @@ const removeFromFriendRequests = async (req, res) => {
       ],
     });
     console.log("friend removed");
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: "friend removed successfully",
-        removedFriendId: receiverId,
-      });
+    const senderSocketId = getUserFromList(senderId);
+    io.to(senderSocketId).emit("remove-friend-request", { receiverId });
+    return res.status(200).json({
+      status: true,
+      message: "friend removed successfully",
+      removedFriendId: receiverId,
+    });
   } catch (error) {
     handleError(error, res);
   }

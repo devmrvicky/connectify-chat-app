@@ -7,6 +7,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import useStore from "../../zustand/store";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { TfiAngleLeft } from "react-icons/tfi";
+import { useFriendRequestsUpdate } from "../../hooks/friend/useFriendRequestsUpdate";
 
 const FriendsPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const FriendsPage = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
 
   const { selectFriendPage } = useStore((store) => store);
+
+  useFriendRequestsUpdate();
 
   const navigateBack = () => {
     navigate("/friends");

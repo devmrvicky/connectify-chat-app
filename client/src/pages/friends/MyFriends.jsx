@@ -10,6 +10,7 @@ const MyFriends = () => {
   const { authUser } = useAuthContext();
 
   const { myAllFriends, setMyAllFriends } = useFriendStore((store) => store);
+  console.log(myAllFriends);
 
   useEffect(() => {
     (async () => {
@@ -24,7 +25,7 @@ const MyFriends = () => {
       );
       setLoading(false);
     })();
-  }, []);
+  }, [myAllFriends.length]);
 
   return (
     <UserProfileLayout

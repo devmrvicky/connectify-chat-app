@@ -70,25 +70,30 @@ const useFriendStore = create((set) => ({
     set((state) => ({
       allFriends: state.allFriends.filter((friend) => friend._id !== friendId),
     })),
-  removeFriendRequest: (friendId) =>
-    set((state) => ({
-      allFriendsRequest: state.allFriendsRequest.filter(
-        (friend) => friend._id !== friendId
-      ),
-    })),
+  rejectFriendRequest: (friendId) =>
+    set((state) => {
+      // console.log(friendId);
+      return {
+        allFriendsRequest: state.allFriendsRequest.filter(
+          (friendRequest) => friendRequest.senderId._id !== friendId
+        ),
+      };
+    }),
   removeFriendRequestSend: (friendId) =>
     set((state) => ({
       allFriendsRequestSend: state.allFriendsRequestSend.filter(
-        (friend) => friend._id !== friendId
+        (friend) => friend.receiverId._id !== friendId
       ),
     })),
   removeMyFriend: (friendId) =>
     set((state) => ({
-      allMyFriends: allMyFriends.filter((friend) => friend._id !== friendId),
+      allMyFriends: state.allMyFriends.filter(
+        (friend) => friend._id !== friendId
+      ),
     })),
   removeMyContact: (friendId) =>
     set((state) => ({
-      myContacts: myContacts.filter((friend) => friend._id !== friendId),
+      myContacts: state.myContacts.filter((friend) => friend._id !== friendId),
     })),
 }));
 

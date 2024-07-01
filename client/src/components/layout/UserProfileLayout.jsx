@@ -13,8 +13,8 @@ const UserProfileLayout = ({
   emptyUsersMessage = "didn't find any friend",
 }) => {
   return !loading ? (
-    friends.length ? (
-      friends.map((friend, idx) => (
+    friends?.length ? (
+      friends?.map((friend, idx) => (
         <React.Fragment key={friend._id}>
           {isContact ? (
             <UserProfile {...friend} />
