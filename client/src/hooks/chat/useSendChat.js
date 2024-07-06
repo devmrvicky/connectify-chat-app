@@ -2,6 +2,7 @@ import useStore from "../../zustand/store";
 import { apiPost } from "../../api/api";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
+import popSound from "../../assets/sound/pop.mp3";
 
 const useSendChat = () => {
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,8 @@ const useSendChat = () => {
         throw new Error(data.message);
       }
       addMessage(data.message);
+      const audio = new Audio(popSound);
+      await audio.play();
     } catch (error) {
       console.log(error.message);
       toast.error(error.message, {
