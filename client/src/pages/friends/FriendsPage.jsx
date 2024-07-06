@@ -23,10 +23,6 @@ const FriendsPage = () => {
     selectFriendPage(null);
   };
 
-  // useEffect(() => {
-  //   navigate("/friends?tab=my-friends");
-  // }, []);
-
   return (
     <MainContentLayout>
       <FriendSideBar />

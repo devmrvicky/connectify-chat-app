@@ -29,8 +29,7 @@ const AsideMenus = () => {
     },
     {
       name: "Notification",
-      // path: "/notifications",
-      path: "/",
+      path: "/notifications",
       activeIcon: (
         <AiFillBell className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
       ),
