@@ -3,14 +3,19 @@ import { apiDelete, apiGet, apiPost, apiPut } from "../../api/api";
 import { useState } from "react";
 import { useFriendStore } from "../../zustand/store";
 
+// this costume hook is responsible for sending requests, receiving requests, removing request
 const useFriendRequest = () => {
   const [sendingRequest, setSendingRequest] = useState(false);
   const [acceptingRequest, setAcceptingRequest] = useState(false);
   const [removingRequest, setRemovingRequest] = useState(false);
   const [gettingRequests, setGettingRequests] = useState(false);
 
-  const { setAllFriendsRequest, rejectFriendRequest, removeFriendRequestSend } =
-    useFriendStore((store) => store);
+  const {
+    setAllFriendsRequest,
+    rejectFriendRequest,
+    removeFriendRequestSend,
+    removeMyFriend,
+  } = useFriendStore((store) => store);
 
   const sendFriendRequest = async (receiverId) => {
     try {
@@ -55,6 +60,8 @@ const useFriendRequest = () => {
     }
   };
 
+  // this function responsible for removing (rejecting) friend request and also from my friends list locally
+  // It takes an id and a remove type(like what do you want rejecting friend request, removing sended friend requests or remove from my friend list )
   const removeAndRejectFriendRequestFromLocal = (id, removeType) => {
     switch (removeType) {
       case "reject-friend-request":
@@ -72,13 +79,15 @@ const useFriendRequest = () => {
     }
   };
 
+  // this function is responsible for removing and rejecting friend request (received or sended). from database and also from local (for this it will call removeAndRejectFriendRequestFromLocal function)
   const removeFriendRequest = async (senderId, removeType) => {
     try {
       setRemovingRequest(true);
       // console.log(removeType);
       // return;
       const res = await apiDelete(`friend/remove-request/${senderId}`);
-      if (!res.status) {
+      console.log(res);
+      if (!res?.status) {
         return toast.error(res.message, {
           id: "remove request error",
         });
@@ -88,7 +97,7 @@ const useFriendRequest = () => {
       });
       removeAndRejectFriendRequestFromLocal(senderId, removeType);
     } catch (error) {
-      toast.error(res.message, {
+      toast.error(error.message, {
         id: "remove request error",
       });
     } finally {

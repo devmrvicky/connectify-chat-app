@@ -157,6 +157,11 @@ const acceptFriendRequest = async (req, res) => {
       { $or: [{ receiverId, senderId, request: "pending" }] },
       { request: "confirm" }
     );
+    const senderSocketId = getUserFromList(senderId);
+    const acceptedFriend = await User.findById({ _id: senderId });
+    io.to(senderSocketId).emit("accept-friend-request", {
+      friend: acceptedFriend,
+    });
     // create contact list
     res.status(200).json({
       status: true,

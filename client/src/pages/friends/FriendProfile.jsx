@@ -6,6 +6,7 @@ import { useFriendRequest } from "../../hooks/friend/useFriendRequest";
 import { SlUserFollowing } from "react-icons/sl";
 import { SlUserUnfollow } from "react-icons/sl";
 import Avatar from "../../components/Avatar";
+import { useFriendStore } from "../../zustand/store";
 
 // this is most complex and confusing component because is is handling more conditions
 // controller buttons for deferent conditions will be deferent deferent like for
@@ -30,22 +31,13 @@ const FriendProfile = ({
     removeFriendRequest,
   } = useFriendRequest();
 
+  const { rejectFriendRequest } = useFriendStore((store) => store);
+
   return (
     <div
       className={`flex  p-4 rounded gap-4 items-center w-full hover:bg-zinc-400/10`}
     >
       <Avatar profilePic={profilePic} dimension="w-14 h-14" />
-      {/* <div className={`avatar`}>
-        <div className="w-14 h-14 rounded-full">
-          <img
-            src={`${profilePic}`}
-            onError={(e) => {
-              e.preventDefault();
-              e.target.src = avatarIcon;
-            }}
-          />
-        </div>
-      </div> */}
       <div className="w-full flex flex-col gap-0">
         <p className="text-xl flex items-center gap-1">
           <span>{fullName}</span>
@@ -116,7 +108,10 @@ const FriendProfile = ({
             <button
               className="btn btn-success tooltip"
               data-tip="accept"
-              onClick={() => acceptFriendRequest(_id)}
+              onClick={() => {
+                acceptFriendRequest(_id);
+                rejectFriendRequest(_id);
+              }}
               disabled={acceptingRequest}
             >
               {acceptingRequest ? (

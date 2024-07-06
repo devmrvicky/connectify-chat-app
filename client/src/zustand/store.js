@@ -87,7 +87,7 @@ const useFriendStore = create((set) => ({
     })),
   removeMyFriend: (friendId) =>
     set((state) => ({
-      allMyFriends: state.allMyFriends.filter(
+      myAllFriends: state.myAllFriends.filter(
         (friend) => friend._id !== friendId
       ),
     })),
