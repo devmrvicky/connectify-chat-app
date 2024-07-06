@@ -21,7 +21,11 @@ const ChatInput = () => {
   };
 
   let timeoutId;
-
+  // this useEffect will run on every change on chat input
+  // send typing status 'true' when user starts writing in chat input
+  // after 2 second when user stops writing in chat input send again typing status 'false'
+  // in both case server send your typing status as res to end user
+  // this will not cause of rat condition because we have handle rat condition care fully
   useEffect(() => {
     (async () => {
       clearTimeout(timeoutId);

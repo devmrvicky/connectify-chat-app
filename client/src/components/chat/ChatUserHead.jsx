@@ -1,10 +1,10 @@
 import React from "react";
 import useStore from "../../zustand/store";
-import avatarIcon from "../../assets/avatar-icon.png";
 import { TfiAngleLeft } from "react-icons/tfi";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useSocketContext } from "../../context/SocketContext";
 import useGetTypingStatus from "../../hooks/chat/useGetTypingStatus";
+import Avatar from "../Avatar";
 
 const ChatUserHead = () => {
   const { selectedFriend, selectFriend } = useStore((store) => store);
@@ -26,14 +26,7 @@ const ChatUserHead = () => {
           <TfiAngleLeft />
         </button>
       )}
-      <div className="avatar">
-        <div className="w-12 h-12 rounded-full">
-          <img
-            src={selectedFriend.profilePic}
-            onError={(e) => (e.target.src = avatarIcon)}
-          />
-        </div>
-      </div>
+      <Avatar profilePic={selectedFriend.profilePic} dimension="w-12 h-12" />
       <div className="user-status">
         <p className="text-2xl">{selectedFriend.fullName}</p>
         {isOnline && !isTyping && <span className="text-sm">online</span>}

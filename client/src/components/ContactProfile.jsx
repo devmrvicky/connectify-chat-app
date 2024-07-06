@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import LogoutBtn from "./LogoutBtn";
 import useStore from "../zustand/store";
 import { useSocketContext } from "../context/SocketContext";
-import avatarIcon from "../assets/avatar-icon.png";
 import { formatDistance, subDays } from "date-fns";
 import { apiGet } from "../api/api";
+import Avatar from "./Avatar";
 
-const UserProfile = ({
+const ContactProfile = ({
   fullName,
   username,
   profilePic,
@@ -16,9 +15,7 @@ const UserProfile = ({
 }) => {
   const [lastChat, setLastChat] = useState(null);
 
-  const { selectFriend, selectedFriend, messages, lastConversation } = useStore(
-    (store) => store
-  );
+  const { selectFriend, selectedFriend, messages } = useStore((store) => store);
 
   const { onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(_id);
@@ -36,13 +33,11 @@ const UserProfile = ({
         throw new Error(data.message);
       }
 
-      if (lastConversation && lastConversation.receiverId === _id) {
-        setLastChat(lastConversation);
-      } else {
-        setLastChat(data.lastMessage);
-      }
+      // console.log({ lastMessage: data.lastMessage });
+      // this last chat is showing on contact profile
+      setLastChat(data.lastMessage);
     })();
-  }, [messages.length, lastConversation, lastConversation?.message]);
+  }, [messages.length]);
 
   useEffect(() => {
     return () => selectFriend(null);
@@ -61,17 +56,11 @@ const UserProfile = ({
       }`}
       onClick={handleSelectFriend}
     >
-      <div className={`avatar ${isOnline && !isAuthProfile ? "online" : ""}`}>
-        <div className="w-10 h-10 rounded-full">
-          <img
-            src={`${profilePic}`}
-            onError={(e) => {
-              e.preventDefault();
-              e.target.src = avatarIcon;
-            }}
-          />
-        </div>
-      </div>
+      <Avatar
+        profilePic={profilePic}
+        isOnline={isOnline}
+        isAuthProfile={isAuthProfile}
+      />
       <div className="w-full flex flex-col gap-0">
         <p className="text-lg">{fullName}</p>
         {!isAuthProfile ? (
@@ -93,9 +82,8 @@ const UserProfile = ({
           <span className="text-xs">{username}</span>
         )}
       </div>
-      {/* {isAuthProfile ? <LogoutBtn /> : ""} */}
     </div>
   );
 };
 
-export default UserProfile;
+export default ContactProfile;

@@ -5,7 +5,13 @@ import { HiOutlineUserAdd } from "react-icons/hi";
 import { useFriendRequest } from "../../hooks/friend/useFriendRequest";
 import { SlUserFollowing } from "react-icons/sl";
 import { SlUserUnfollow } from "react-icons/sl";
+import Avatar from "../../components/Avatar";
 
+// this is most complex and confusing component because is is handling more conditions
+// controller buttons for deferent conditions will be deferent deferent like for
+// if users are friend then show only 'remove' button
+// if users are in friend request then show 'accept' and 'reject' button
+// if users are in send friend request then show 'remove'
 const FriendProfile = ({
   _id,
   profilePic,
@@ -28,7 +34,8 @@ const FriendProfile = ({
     <div
       className={`flex  p-4 rounded gap-4 items-center w-full hover:bg-zinc-400/10`}
     >
-      <div className={`avatar`}>
+      <Avatar profilePic={profilePic} dimension="w-14 h-14" />
+      {/* <div className={`avatar`}>
         <div className="w-14 h-14 rounded-full">
           <img
             src={`${profilePic}`}
@@ -38,7 +45,7 @@ const FriendProfile = ({
             }}
           />
         </div>
-      </div>
+      </div> */}
       <div className="w-full flex flex-col gap-0">
         <p className="text-xl flex items-center gap-1">
           <span>{fullName}</span>

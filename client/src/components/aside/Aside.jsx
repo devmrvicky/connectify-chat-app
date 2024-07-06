@@ -2,6 +2,7 @@ import MyContacts from "../../pages/friends/MyContacts";
 import useStore from "../../zustand/store";
 import SideBarLayout from "../layout/SideBarLayout";
 
+// this is side bar for chat page '/'. Here all contacts will be listed
 const Aside = () => {
   const { selectedFriend } = useStore((store) => store);
 

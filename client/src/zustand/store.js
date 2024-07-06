@@ -10,9 +10,9 @@ const useStore = create((set) => ({
     set((state) => ({ messages: [...state.messages, message] })),
   setSearchedFriends: (friends) => set(() => ({ searchedFriends: friends })),
 
-  lastConversation: null,
-  addLastConversation: (conversation) =>
-    set((state) => ({ lastConversation: conversation })),
+  // lastConversation: null,
+  // addLastConversation: (conversation) =>
+  //   set((state) => ({ lastConversation: conversation })),
 
   // user signup status
   USER_STATUS: "UNAUTHORIZE", // "VERIFIED_AUTHORIZE","REQUEST_AUTHORIZE",    "AUTHORIZE"

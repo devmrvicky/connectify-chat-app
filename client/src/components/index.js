@@ -1,5 +1,5 @@
 import Aside from "./aside/Aside.jsx";
-import UserProfile from "./UserProfile.jsx";
+import UserProfile from "./ContactProfile.jsx";
 import SearchBox from "./SearchBox.jsx";
 import Message from "./chat/Message.jsx";
 import MessagesContainer from "./chat/MessagesContainer.jsx";

@@ -3,6 +3,8 @@ import { useAuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { VscLoading } from "react-icons/vsc";
 
+// AuthProtectedRouter protect routers. It checks if user authorized to use this router then show this particular page or user is not authorized then navigate to '/login' router
+// it makes sure that only authorized or we can say logged in user can access a particular router otherwise navigate to '/login' page
 const AuthProtectedRouter = ({ children, authentication = true }) => {
   const [loading, setLoading] = useState(true);
   const { authUser } = useAuthContext();
