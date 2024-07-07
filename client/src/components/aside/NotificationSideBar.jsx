@@ -5,6 +5,7 @@ import { TfiAngleRight } from "react-icons/tfi";
 import { NavLink } from "react-router-dom";
 import { MdMarkUnreadChatAlt } from "react-icons/md";
 import { HiUser } from "react-icons/hi2";
+import useStore from "../../zustand/store";
 
 const NotificationSideBar = () => {
   const menus = [
@@ -25,6 +26,8 @@ const NotificationSideBar = () => {
     //   icon: <CiChat1 className="w-6 h-6 mr-2" />,
     // },
   ];
+
+  const { unreadMessages } = useStore((store) => store);
   return (
     <SideBarLayout
       sidebarContentTitle="Notification categories"
@@ -44,9 +47,16 @@ const NotificationSideBar = () => {
             >
               <span>{menu.icon}</span>
               <span>{menu.name}</span>
-
-              <span className="ml-auto">
-                <TfiAngleRight className="w-4 h-4" />
+              {menu.name === "Chats" && Boolean(unreadMessages.length) && (
+                <span
+                  className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center tooltip ml-auto"
+                  data-tip={`${unreadMessages.length} unread message`}
+                >
+                  {unreadMessages.length}
+                </span>
+              )}
+              <span className="">
+                <TfiAngleRight className="w-4 h-4 ml-2" />
               </span>
             </NavLink>
           </li>

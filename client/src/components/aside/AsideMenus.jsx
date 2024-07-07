@@ -48,6 +48,8 @@ const AsideMenus = () => {
     },
   ];
 
+  // const {unreadMessages} = useStore(store => store)
+
   return (
     <div className="w-[50px] h-full flex flex-col gap-5 justify-center items-center max-[420px]:hidden">
       <SideBarDrawer />

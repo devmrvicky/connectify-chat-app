@@ -3,14 +3,29 @@ import { NavLink } from "react-router-dom";
 import useStore from "../zustand/store";
 
 const MenuItems = ({ menus, className = "" }) => {
-  const { changeCurrentActivePage } = useStore((store) => store);
+  const { changeCurrentActivePage, unreadMessages } = useStore(
+    (store) => store
+  );
+  const totalNotifications = unreadMessages.length;
   return (
     <ul className={`flex  gap-5 h-full flex-1 justify-center ${className}`}>
       {menus.map((menu) => (
         <li
           key={menu.name}
-          className={`${menu.name === "setting" && "mt-auto"} `}
+          className={`${menu.name === "setting" && "mt-auto"} indicator`}
         >
+          {/* unread messages indication */}
+          {menu.name === "Chat" && Boolean(unreadMessages.length) && (
+            <span className="indicator-item badge rounded-full badge-primary">
+              {unreadMessages.length > 99 ? "99+" : unreadMessages.length}
+            </span>
+          )}
+          {/* all notifications indication */}
+          {menu.name === "Notification" && Boolean(totalNotifications) && (
+            <span className="indicator-item badge rounded-full badge-primary">
+              {totalNotifications > 99 ? "99+" : totalNotifications}
+            </span>
+          )}
           <NavLink
             to={menu.path}
             className={`w-10 h-10 rounded-full  text-zinc-500 hover:text-zinc-300 flex items-center justify-center tooltip`}
