@@ -4,32 +4,32 @@ import useStore from "../../zustand/store";
 import receiveMsgSound from "../../assets/sound/receive-msg.mp3";
 import { useAuthContext } from "../../context/AuthContext";
 
+// this hook called by home component
 const useListMessages = () => {
   const { socket } = useSocketContext();
-  const { addMessage, selectedFriend } = useStore((store) => store);
+  const { addMessage, selectedFriend, messages, addUnreadMessage } = useStore(
+    (store) => store
+  );
 
   const { authUser } = useAuthContext();
 
   useEffect(() => {
-    socket?.on("newMessage", async ({ message }) => {
-      console.log(
-        { senderId: message.senderId },
-        { receiverId: message.receiverId },
-        { id: selectedFriend?._id },
-        message.senderId === selectedFriend?._id
-      );
+    const updateNewMessage = async ({ message }) => {
       if (message.senderId === selectedFriend?._id) {
-        console.log(message);
         addMessage(message);
         const audio = new Audio(receiveMsgSound);
         await audio.play();
+      } else {
+        console.log(message);
+        addUnreadMessage(message);
       }
-    });
+    };
+    socket?.on("newMessage", updateNewMessage);
 
     return () => {
-      socket?.off("newMessage");
+      socket?.off("newMessage", updateNewMessage);
     };
-  }, [socket, selectedFriend?._id]);
+  }, [socket, selectedFriend?._id, messages.length]);
 };
 
 export default useListMessages;

@@ -27,6 +27,26 @@ const useStore = create((set) => ({
   selectedFriendPage: null,
   selectFriendPage: (friendPage) =>
     set(() => ({ selectedFriendPage: friendPage })),
+
+  // unread messages
+  unreadMessages: [],
+  setUnreadMessages: (unreadMessages) => set(() => ({ unreadMessages })),
+  addUnreadMessage: (unreadMessage) =>
+    set((state) => ({
+      unreadMessages: [...state.unreadMessages, unreadMessage],
+    })),
+  removeUnreadMessage: (id) =>
+    set((state) => ({
+      unreadMessages: state.unreadMessages.filter(
+        (unreadMessage) => unreadMessage._id !== id
+      ),
+    })),
+  removeAllUnreadMessages: (id) =>
+    set((state) => ({
+      unreadMessages: state.unreadMessages.filter(
+        (unreadMessage) => unreadMessage.senderId !== id
+      ),
+    })),
 }));
 
 const useFriendStore = create((set) => ({

@@ -45,7 +45,7 @@ const SideBarLayout = ({
 
   return (
     <aside
-      className={`max-w-[280px]  h-full overflow-auto w-full  ${
+      className={`max-w-[280px]  h-full w-full  ${
         hideCondition && isSmallDevice && "-translate-x-[110%]"
       }  transition-all ${className}`}
     >

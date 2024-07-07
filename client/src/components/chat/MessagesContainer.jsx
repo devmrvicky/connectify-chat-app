@@ -2,15 +2,27 @@ import React, { useEffect, useRef } from "react";
 import { Message } from "..";
 import useGetMessages from "../../hooks/chat/useGetMessages";
 import useStore from "../../zustand/store";
-import useListMessages from "../../hooks/chat/useListMessages";
 import ChatSkeleton from "../skeleton/ChatSkeleton";
+import MessagesGroup from "./MessagesGroup";
 
 const MessagesContainer = () => {
   const lastMessageRef = useRef(null);
-  const messages = useStore((store) => store.messages);
+  const { messages, unreadMessages } = useStore((store) => store);
   const { loading } = useGetMessages();
-  // console.log(lastChat);
-  useListMessages();
+  /*
+  {
+  date: [{...message}, {...message}],
+  date2: [{...message}, {...message}]
+  }
+
+  or
+
+  [
+  [{...message}, {...message}],
+  [{...message}, {...message}]
+  ]
+  */
+
   const noMessages = Boolean(messages.length);
 
   useEffect(() => {
@@ -26,13 +38,17 @@ const MessagesContainer = () => {
       ) : (
         <>
           {!loading ? (
-            messages.map((message) => (
-              <Message
-                key={message._id}
-                {...message}
-                lastMessageRef={lastMessageRef}
-              />
-            ))
+            messages.map((message) => {
+              return (
+                <>
+                  <Message
+                    key={message._id}
+                    {...message}
+                    lastMessageRef={lastMessageRef}
+                  />
+                </>
+              );
+            })
           ) : (
             <ChatSkeleton />
           )}
