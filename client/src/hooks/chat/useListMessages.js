@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useSocketContext } from "../../context/SocketContext";
-import useStore from "../../zustand/store";
+import useStore, { useFriendStore } from "../../zustand/store";
 import receiveMsgSound from "../../assets/sound/receive-msg.mp3";
-import { useAuthContext } from "../../context/AuthContext";
+import newNotificationSound from "../../assets/sound/new-notification.mp3";
+import toast from "react-hot-toast";
+import MessageToast from "../../components/MessageToast";
 
 // this hook called by home component
 const useListMessages = () => {
@@ -10,8 +12,7 @@ const useListMessages = () => {
   const { addMessage, selectedFriend, messages, addUnreadMessage } = useStore(
     (store) => store
   );
-
-  const { authUser } = useAuthContext();
+  const { myContacts } = useFriendStore((store) => store);
 
   useEffect(() => {
     const updateNewMessage = async ({ message }) => {
@@ -22,6 +23,8 @@ const useListMessages = () => {
       } else {
         console.log(message);
         addUnreadMessage(message);
+        const audio = new Audio(newNotificationSound);
+        await audio.play();
       }
     };
     socket?.on("newMessage", updateNewMessage);

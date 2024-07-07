@@ -18,12 +18,8 @@ import { AuthProtectedRouter } from "./AuthProtectedRouter";
 import SignupProtectedRouter from "./SignupProtectedRouter";
 import FriendRequests from "../pages/friends/FriendRequests";
 import NotificationsPage from "../pages/notifications/NotificationsPage";
-import ChatNotification from "../pages/notifications/ChatNotification";
 import ChatNotifications from "../pages/notifications/ChatNotifications";
 import FriendNotifications from "../pages/notifications/FriendNotifications";
-// import EmailPage from "../pages/auth/EmailPage";
-// import VerifyOtp from "../pages/auth/VerifyOtp";
-// import Friends from "../pages/friends/FriendsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
