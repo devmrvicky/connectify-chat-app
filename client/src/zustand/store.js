@@ -115,6 +115,31 @@ const useFriendStore = create((set) => ({
     set((state) => ({
       myContacts: state.myContacts.filter((friend) => friend._id !== friendId),
     })),
+
+  // friend request notification
+  friendRequestNotifications: [],
+  // add friend request notification
+  addFriendRequestNotification: (notification) =>
+    set((state) => ({
+      friendRequestNotifications: [
+        notification,
+        ...state.friendRequestNotifications,
+      ],
+    })),
+  // remove friend request notification
+  removeFriendRequestNotification: (id) =>
+    set((state) => ({
+      friendRequestNotifications: state.friendRequestNotifications.filter(
+        (notification) => notification._id !== id
+      ),
+    })),
+  // remove individual type of friend request notification (type should be 'friend-request', "accepted-friend-request", "rejected-friend-request", "remove-my-friend", "remove-sended-friend-request")
+  removeIndividualTypeOfNotifications: (type) =>
+    set((state) => ({
+      friendRequestNotifications: state.friendRequestNotifications.filter(
+        (notification) => notification.type !== type
+      ),
+    })),
 }));
 
 export default useStore;

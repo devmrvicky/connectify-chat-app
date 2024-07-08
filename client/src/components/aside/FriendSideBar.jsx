@@ -8,10 +8,18 @@ import { PiUserList } from "react-icons/pi";
 import { RiUserReceived2Line } from "react-icons/ri";
 import { TbUsersGroup } from "react-icons/tb";
 import { TbUsers } from "react-icons/tb";
-import useStore from "../../zustand/store";
+import useStore, { useFriendStore } from "../../zustand/store";
+import TotalNotificationNoIndicator from "../TotalNotificationNoIndicator";
 
 const FriendSideBar = ({ willHideSideBar = true }) => {
   const { selectedFriendPage, selectFriendPage } = useStore((store) => store);
+  const { friendRequestNotifications } = useFriendStore((store) => store);
+  const myFriendNotifications = friendRequestNotifications.filter(
+    (notification) => notification.type === "accepted-friend-request"
+  );
+  const friendRequestsNotification = friendRequestNotifications.filter(
+    (notification) => notification.type === "friend-request"
+  );
 
   const menus = [
     {
@@ -58,11 +66,25 @@ const FriendSideBar = ({ willHideSideBar = true }) => {
             >
               <span>{menu.icon}</span>
               <span>{menu.name}</span>
-              {menu.name !== "Home" && (
-                <span className="ml-auto">
-                  <TfiAngleRight className="w-4 h-4" />
-                </span>
-              )}
+              <div className="ml-auto flex items-center">
+                {menu.name === "Friends" && (
+                  <TotalNotificationNoIndicator
+                    totalNotifications={myFriendNotifications}
+                    tooltip="new friend"
+                  />
+                )}
+                {menu.name === "Friend requests" && (
+                  <TotalNotificationNoIndicator
+                    totalNotifications={friendRequestsNotification}
+                    tooltip="friend request"
+                  />
+                )}
+                {menu.name !== "Home" && (
+                  <span className="">
+                    <TfiAngleRight className="w-4 h-4 ml-2" />
+                  </span>
+                )}
+              </div>
             </NavLink>
           </li>
         ))}

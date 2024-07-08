@@ -9,7 +9,8 @@ const MyFriends = () => {
   const [loading, setLoading] = useState(false);
   const { authUser } = useAuthContext();
 
-  const { myAllFriends, setMyAllFriends } = useFriendStore((store) => store);
+  const { myAllFriends, setMyAllFriends, removeIndividualTypeOfNotifications } =
+    useFriendStore((store) => store);
   console.log(myAllFriends);
 
   useEffect(() => {
@@ -26,6 +27,10 @@ const MyFriends = () => {
       setLoading(false);
     })();
   }, [myAllFriends.length]);
+
+  useEffect(() => {
+    removeIndividualTypeOfNotifications("accepted-friend-request");
+  }, []);
 
   return (
     <UserProfileLayout

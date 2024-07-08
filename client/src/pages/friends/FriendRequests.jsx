@@ -6,13 +6,18 @@ import { useFriendStore } from "../../zustand/store";
 const FriendRequests = () => {
   const { gettingRequests, receiveFriendRequests } = useFriendRequest();
 
-  const { allFriendsRequest } = useFriendStore((store) => store);
+  const { allFriendsRequest, removeIndividualTypeOfNotifications } =
+    useFriendStore((store) => store);
 
   useEffect(() => {
     (async () => {
       await receiveFriendRequests();
     })();
   }, [allFriendsRequest.length]);
+
+  useEffect(() => {
+    removeIndividualTypeOfNotifications("friend-request");
+  }, []);
 
   return (
     <div className="flex flex-col w-full h-full">

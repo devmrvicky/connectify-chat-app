@@ -85,7 +85,7 @@ const useFriendRequest = () => {
       setRemovingRequest(true);
       // console.log(removeType);
       // return;
-      const res = await apiDelete(`friend/remove-request/${senderId}`);
+      const res = await apiDelete(`friend/remove-request/${senderId}`, {removeActionType: removeType});
       console.log(res);
       if (!res?.status) {
         return toast.error(res.message, {

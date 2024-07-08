@@ -5,7 +5,8 @@ import { TfiAngleRight } from "react-icons/tfi";
 import { NavLink } from "react-router-dom";
 import { MdMarkUnreadChatAlt } from "react-icons/md";
 import { HiUser } from "react-icons/hi2";
-import useStore from "../../zustand/store";
+import useStore, { useFriendStore } from "../../zustand/store";
+import TotalNotificationNoIndicator from "../TotalNotificationNoIndicator";
 
 const NotificationSideBar = () => {
   const menus = [
@@ -28,6 +29,7 @@ const NotificationSideBar = () => {
   ];
 
   const { unreadMessages } = useStore((store) => store);
+  const { friendRequestNotifications } = useFriendStore((store) => store);
   return (
     <SideBarLayout
       sidebarContentTitle="Notification categories"
@@ -47,17 +49,23 @@ const NotificationSideBar = () => {
             >
               <span>{menu.icon}</span>
               <span>{menu.name}</span>
-              {menu.name === "Chats" && Boolean(unreadMessages.length) && (
-                <span
-                  className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center tooltip ml-auto"
-                  data-tip={`${unreadMessages.length} unread message`}
-                >
-                  {unreadMessages.length}
+              <div className="ml-auto flex items-center">
+                {menu.name === "Chats" && (
+                  <TotalNotificationNoIndicator
+                    totalNotifications={unreadMessages}
+                    tooltip="new chat"
+                  />
+                )}
+                {menu.name === "Friend requests" && (
+                  <TotalNotificationNoIndicator
+                    totalNotifications={friendRequestNotifications}
+                    tooltip="new friend notification"
+                  />
+                )}
+                <span className="">
+                  <TfiAngleRight className="w-4 h-4 ml-2" />
                 </span>
-              )}
-              <span className="">
-                <TfiAngleRight className="w-4 h-4 ml-2" />
-              </span>
+              </div>
             </NavLink>
           </li>
         ))}

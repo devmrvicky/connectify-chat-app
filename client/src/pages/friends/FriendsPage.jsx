@@ -16,7 +16,7 @@ const FriendsPage = () => {
 
   const { selectFriendPage } = useStore((store) => store);
 
-  useFriendRequestsUpdate();
+  // useFriendRequestsUpdate();
 
   const navigateBack = () => {
     navigate("/friends");

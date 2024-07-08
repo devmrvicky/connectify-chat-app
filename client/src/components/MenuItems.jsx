@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useStore from "../zustand/store";
+import useStore, { useFriendStore } from "../zustand/store";
 
 const MenuItems = ({ menus, className = "" }) => {
   const { changeCurrentActivePage, unreadMessages } = useStore(
     (store) => store
   );
-  const totalNotifications = unreadMessages.length;
+  const { friendRequestNotifications } = useFriendStore((store) => store);
+  const totalNotifications =
+    unreadMessages.length + friendRequestNotifications.length;
   return (
     <ul className={`flex  gap-5 h-full flex-1 justify-center ${className}`}>
       {menus.map((menu) => (
@@ -15,16 +17,18 @@ const MenuItems = ({ menus, className = "" }) => {
           className={`${menu.name === "setting" && "mt-auto"} indicator`}
         >
           {/* unread messages indication */}
-          {menu.name === "Chat" && Boolean(unreadMessages.length) && (
-            <span className="indicator-item badge rounded-full badge-primary">
-              {unreadMessages.length > 99 ? "99+" : unreadMessages.length}
-            </span>
+          {menu.name === "Chat" && (
+            <NotificationIndicator totalNotifications={unreadMessages.length} />
+          )}
+          {/* friend requests indication */}
+          {menu.name === "Friends" && (
+            <NotificationIndicator
+              totalNotifications={friendRequestNotifications.length}
+            />
           )}
           {/* all notifications indication */}
-          {menu.name === "Notification" && Boolean(totalNotifications) && (
-            <span className="indicator-item badge rounded-full badge-primary">
-              {totalNotifications > 99 ? "99+" : totalNotifications}
-            </span>
+          {menu.name === "Notification" && (
+            <NotificationIndicator totalNotifications={totalNotifications} />
           )}
           <NavLink
             to={menu.path}
@@ -37,6 +41,16 @@ const MenuItems = ({ menus, className = "" }) => {
         </li>
       ))}
     </ul>
+  );
+};
+
+const NotificationIndicator = ({ menu, menuName, totalNotifications = 0 }) => {
+  return (
+    Boolean(totalNotifications) && (
+      <span className="indicator-item badge rounded-full badge-primary">
+        {totalNotifications > 99 ? "99+" : totalNotifications}
+      </span>
+    )
   );
 };
 
