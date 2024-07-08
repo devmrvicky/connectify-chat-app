@@ -3,6 +3,7 @@ import SideBarLayout from "../layout/SideBarLayout";
 import useStore from "../../zustand/store";
 import MyContacts from "../../pages/friends/MyContacts";
 import FriendSideBar from "./FriendSideBar";
+import NotificationSideBar from "./NotificationSideBar";
 
 const SideBarDrawer = () => {
   const { currentActivePage } = useStore((store) => store);
@@ -38,6 +39,9 @@ const SideBarDrawer = () => {
           )}
           {currentActivePage === "friends" && (
             <FriendSideBar willHideSideBar={false} />
+          )}
+          {currentActivePage === "notification" && (
+            <NotificationSideBar willHideSideBar={false} />
           )}
         </ul>
       </div>

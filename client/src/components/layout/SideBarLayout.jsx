@@ -32,8 +32,7 @@ const SideBarLayout = ({
     },
     {
       name: "Notification",
-      // path: "/notifications",
-      path: "/",
+      path: "/notifications",
       activeIcon: (
         <AiFillBell className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />
       ),

@@ -27,6 +27,9 @@ const useStore = create((set) => ({
   selectedFriendPage: null,
   selectFriendPage: (friendPage) =>
     set(() => ({ selectedFriendPage: friendPage })),
+  selectedNotificationSubPage: null,
+  selectNotificationSubPage: (notificationSubPage) =>
+    set(() => ({ selectedNotificationSubPage: notificationSubPage })),
 
   // unread messages
   unreadMessages: [],
