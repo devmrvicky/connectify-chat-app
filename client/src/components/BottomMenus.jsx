@@ -12,20 +12,24 @@ const BottomMenus = () => {
     {
       name: "Chat",
       path: "/",
-      icon: <HiOutlineChat className="w-8 h-8" />,
-      activeIcon: <HiChat className="w-8 h-8 text-zinc-300" />,
+      icon: <HiOutlineChat className="w-8 h-8 text-light-text2" />,
+      activeIcon: (
+        <HiChat className="w-8 h-8 dark:text-light-text text-dark-text" />
+      ),
     },
     {
       name: "Friends",
       path: "/friends",
-      icon: <RiUserAddLine className="w-8 h-8" />,
-      activeIcon: <RiUserAddFill className="w-8 h-8 text-zinc-300" />,
+      icon: <RiUserAddLine className="w-8 h-8 text-light-text2" />,
+      activeIcon: (
+        <RiUserAddFill className="w-8 h-8 dark:text-light-text text-dark-text" />
+      ),
     },
   ];
 
   return (
     isSmallDevice && (
-      <div className="w-full border-t flex items-center justify-center py-1">
+      <div className="w-full flex items-center justify-center py-1">
         <MenuItems
           menus={menus}
           className="gap-0 flex-1 items-center justify-between"

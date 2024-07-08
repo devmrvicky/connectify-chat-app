@@ -40,7 +40,9 @@ const FriendProfile = ({
       <Avatar profilePic={profilePic} dimension="w-14 h-14" />
       <div className="w-full flex flex-col gap-0">
         <p className="text-xl flex items-center gap-1">
-          <span>{fullName}</span>
+          <span className=" text-dark-text2 dark:text-light-text">
+            {fullName}
+          </span>
           {isFriend && (
             <span
               className="badge badge-accent text-[10px] tooltip"
@@ -58,7 +60,7 @@ const FriendProfile = ({
             </span>
           )}
         </p>
-        <span className="text-lg text-zinc-400">{username}</span>
+        <span className="text-lg text-light-text2">{username}</span>
       </div>
       <div className="btns flex items-center gap-2">
         {!isFriendRequest ? (

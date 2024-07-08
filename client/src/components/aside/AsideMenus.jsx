@@ -18,33 +18,33 @@ const AsideMenus = () => {
     {
       name: "Chat",
       path: "/",
-      icon: <HiOutlineChat className="w-8 h-8" />,
-      activeIcon: <HiChat className="w-8 h-8 text-zinc-300" />,
+      icon: <HiOutlineChat className="w-8 h-8 text-light-text2" />,
+      activeIcon: (
+        <HiChat className="w-8 h-8 dark:text-light-text text-dark-text" />
+      ),
     },
     {
       name: "Friends",
       path: "/friends",
-      icon: <RiUserAddLine className="w-8 h-8" />,
-      activeIcon: <RiUserAddFill className="w-8 h-8 text-zinc-300" />,
+      icon: <RiUserAddLine className="w-8 h-8 text-light-text2" />,
+      activeIcon: (
+        <RiUserAddFill className="w-8 h-8 dark:text-light-text text-dark-text" />
+      ),
     },
     {
       name: "Notification",
       path: "/notifications",
       activeIcon: (
-        <AiFillBell className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
+        <AiFillBell className="w-8 h-8 text-dark-text dark:text-light-text" />
       ),
-      icon: (
-        <AiOutlineBell className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
-      ),
+      icon: <AiOutlineBell className="w-8 h-8 text-light-text2" />,
     },
     {
       name: "setting",
       // path: "/setting",
       path: "/",
-      icon: <PiGear className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />,
-      activeIcon: (
-        <PiGearFill className="w-8 h-8 text-zinc-300 dark:text-zinc-600" />
-      ),
+      icon: <PiGear className="w-8 h-8 text-light-text2" />,
+      activeIcon: <PiGearFill className="w-8 h-8 text-light-text2" />,
     },
   ];
 

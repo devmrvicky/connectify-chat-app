@@ -59,8 +59,8 @@ const FriendSideBar = ({ willHideSideBar = true }) => {
               to={menu.path}
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 min-[420px]:bg-zinc-200/20 cursor-pointer"
-                  : "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 cursor-pointer"
+                  ? "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 min-[420px]:bg-zinc-200/20 cursor-pointer text-dark-text2 dark:text-light-text"
+                  : "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 cursor-pointer text-light-text2"
               }
               onClick={() => selectFriendPage(menu.name)}
             >

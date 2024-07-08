@@ -1,7 +1,13 @@
 import React from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import useStore from "../../zustand/store";
-import { formatDistanceToNow } from "date-fns";
+import {
+  format,
+  formatDistanceToNow,
+  formatRelative,
+  getHours,
+  getMinutes,
+} from "date-fns";
 import avatarIcon from "../../assets/avatar-icon.png";
 
 const Message = ({
@@ -29,7 +35,12 @@ const Message = ({
           />
         </div>
       </div>
-      <div className="chat-bubble">{message}</div>
+      <div className="chat-bubble bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 flex flex-col">
+        <span>{message}</span>
+        <span className="text-[10px] ml-auto text-zinc-500">
+          {format(createdAt, "hh:mm aa")}
+        </span>
+      </div>
       <div className="chat-footer opacity-50">
         {formatDistanceToNow(createdAt)}
       </div>

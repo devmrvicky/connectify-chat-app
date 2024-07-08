@@ -10,6 +10,14 @@ export default {
         ...blackA,
         ...mauve,
         ...violet,
+        "light-bg": "#fff",
+        "light-bg2": "rgb(161 161 170 / 0.5)",
+        "dark-bg": "#000",
+        "dark-bg2": "#22222e",
+        "light-text": "#fff",
+        "light-text2": "#ada9ba",
+        "dark-text": "#000",
+        "dark-text2": "#22222e",
       },
       keyframes: {
         slideUpAndFade: {

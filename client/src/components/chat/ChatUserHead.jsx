@@ -28,7 +28,9 @@ const ChatUserHead = () => {
       )}
       <Avatar profilePic={selectedFriend.profilePic} dimension="w-12 h-12" />
       <div className="user-status">
-        <p className="text-2xl">{selectedFriend.fullName}</p>
+        <p className="text-2xl dark:text-light-text2 text-dark-text2">
+          {selectedFriend.fullName}
+        </p>
         {isOnline && !isTyping && <span className="text-sm">online</span>}
         {isTyping && <span className="text-sm text-green-500">typing...</span>}
       </div>

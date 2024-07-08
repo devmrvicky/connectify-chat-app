@@ -31,7 +31,7 @@ const SearchBox = () => {
       onSubmit={handleSearchFriend}
       className="max-[420px]:hidden"
     >
-      <label className="input input-bordered flex items-center gap-2 rounded-full">
+      <label className="input input-bordered flex items-center gap-2 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"

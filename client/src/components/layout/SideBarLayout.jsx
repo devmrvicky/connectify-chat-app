@@ -28,15 +28,17 @@ const SideBarLayout = ({
       activeIcon: (
         <CiSearch className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />
       ),
-      icon: <CiSearch className="w-7 h-7" />,
+      icon: <CiSearch className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />,
     },
     {
       name: "Notification",
       path: "/notifications",
       activeIcon: (
-        <AiFillBell className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />
+        <AiFillBell className="w-7 h-7 text-dark-text dark:text-light-text" />
       ),
-      icon: <AiOutlineBell className="w-7 h-7" />,
+      icon: (
+        <AiOutlineBell className="w-7 h-7 text-dark-text dark:text-light-text2" />
+      ),
     },
   ];
 
@@ -48,8 +50,8 @@ const SideBarLayout = ({
         hideCondition && isSmallDevice && "-translate-x-[110%]"
       }  transition-all ${className}`}
     >
-      <div className="flex flex-col gap-2 w-full h-full max-[720px]:max-w-[500px] max-[720px]:mx-auto">
-        <div className="aside-head flex">
+      <div className="flex flex-col w-full h-full max-[720px]:max-w-[500px] max-[720px]:mx-auto">
+        <div className="aside-head flex max-[420px]:mb-[10px]">
           <Logo />
           {/* on small devices these menus items will be show */}
           {isSmallDevice && (
@@ -59,15 +61,18 @@ const SideBarLayout = ({
                 className="max-[420px]:justify-end max-[420px]:gap-0"
               />
               <button type="button">
-                <CgMoreVerticalAlt className="w-7 h-7" />
+                <CgMoreVerticalAlt className="w-7 h-7 text-zinc-300 dark:text-zinc-600" />
               </button>
             </>
           )}
         </div>
-        <div className="divider m-0 mt-2"></div>
+        <div className="divider m-0"></div>
         <div className="side-bar-content flex flex-col w-full h-full gap-2">
-          <span>{sidebarContentTitle}</span>
+          <span className="dark:text-light-text2 text-lg">
+            {sidebarContentTitle}
+          </span>
           {children}
+          <div className="divider vertical-divider m-0 h-0"></div>
           <BottomMenus />
         </div>
       </div>

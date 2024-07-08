@@ -63,7 +63,7 @@ const ContactProfile = ({
 
   return (
     <div
-      className={`contact-profile flex  p-2 rounded gap-4 items-center w-full cursor-pointer ${
+      className={`contact-profile flex  p-2 py-3 rounded gap-4 items-center w-full cursor-pointer ${
         isAuthProfile
           ? ""
           : `${
@@ -79,9 +79,11 @@ const ContactProfile = ({
         isOnline={isOnline}
         isAuthProfile={isAuthProfile}
       />
-      <div className="w-full flex flex-col gap-0">
+      <div className="w-full flex flex-col gap-2">
         <div className=" flex justify-between items-center">
-          <p className="text-lg">{fullName}</p>
+          <p className="text-base dark:text-light-text text-dark-text2">
+            {fullName}
+          </p>
           {Boolean(unreadMessage.length) && (
             <span
               className="w-5 h-5 rounded-full bg-green-600 text-white flex items-center justify-center tooltip"
@@ -92,68 +94,24 @@ const ContactProfile = ({
           )}
         </div>
         {!isAuthProfile ? (
-          <>
-            <div className="flex justify-between items-center w-full text-sm">
-              <p className="last-chat flex gap-1">
-                <span>
-                  {lastChat?.message &&
-                    lastChat?.receiverId === _id &&
-                    "you : "}
-                </span>
-                <span>{lastChat?.message}</span>
-              </p>
-              <p className="ml-auto">
-                {lastChat?.updatedAt &&
-                  formatDistance(subDays(lastChat?.updatedAt, 0), new Date(), {
-                    addSuffix: true,
-                  })}
-              </p>
-            </div>
-            {/* selectedFriend?._id === _id ? (
-            <div className="flex justify-between items-center w-full text-sm">
-              <p className="last-chat flex gap-1">
-                <span>
-                  {lastChat?.message &&
-                    lastChat?.receiverId === _id &&
-                    "you : "}
-                </span>
-                <span>{lastChat?.message}</span>
-              </p>
-              <p className="ml-auto">
-                {lastChat?.updatedAt &&
-                  formatDistance(subDays(lastChat?.updatedAt, 0), new Date(), {
-                    addSuffix: true,
-                  })}
-              </p>
-            </div>
-          ) : (
-            <div className="flex justify-between items-center w-full text-sm">
-              <p className="last-chat flex gap-1">
-                <span>
-                  {lastChat?.message &&
-                    lastChat?.receiverId === _id &&
-                    "you : "}
-                </span>
-                <span>{unreadMessage[unreadMessage.length - 1]?.message}</span>
-              </p>
-              <p className="ml-auto">
-                <span>
-                  {unreadMessage[unreadMessage.length - 1]?.updatedAt &&
-                    formatDistance(
-                      subDays(
-                        unreadMessage[unreadMessage.length - 1]?.updatedAt,
-                        0
-                      ),
-                      new Date(),
-                      {
-                        addSuffix: true,
-                      }
-                    )}
-                </span>
-              </p>
-            </div>
-          ) */}
-          </>
+          <div className="flex justify-between items-center w-full text-sm">
+            <p className="last-chat flex gap-1">
+              <span>
+                {lastChat?.message && lastChat?.receiverId === _id && "you : "}
+              </span>
+              <span>
+                {lastChat?.message.length >= 15
+                  ? lastChat?.message.slice(0, 12) + "..."
+                  : lastChat?.message}
+              </span>
+            </p>
+            <p className="ml-auto text-xs">
+              {lastChat?.updatedAt &&
+                formatDistance(subDays(lastChat?.updatedAt, 0), new Date(), {
+                  addSuffix: true,
+                })}
+            </p>
+          </div>
         ) : (
           <span className="text-xs">{username}</span>
         )}

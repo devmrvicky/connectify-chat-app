@@ -20,11 +20,13 @@ const AllUsers = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="w-full flex items-center gap-3 border-b border-zinc-400">
+      <div className="w-full flex items-center gap-3 border-b ">
         <NavLink
           to="?tab=my-friends"
           className={`text-xl p-3 my-1 ${
-            tab === "my-friends" ? "text-zinc-200" : "text-zinc-400"
+            tab === "my-friends"
+              ? "text-dark-text2 dark:text-light-text"
+              : "text-light-text2"
           }`}
         >
           My Friends
@@ -32,12 +34,15 @@ const AllUsers = () => {
         <NavLink
           to="?tab=find-friends"
           className={`text-xl p-3 my-1  ${
-            tab === "find-friends" ? "text-zinc-200" : "text-zinc-400"
+            tab === "find-friends"
+              ? "text-dark-text2 dark:text-light-text"
+              : "text-light-text2"
           }`}
         >
           Find Friends
         </NavLink>
       </div>
+      <div className="divider divider-vertically m-0 h-0"></div>
       <div className="flex flex-col w-full h-full">
         {tab === "find-friends" && <Friends />}
         {tab === "my-friends" && <MyFriends />}
