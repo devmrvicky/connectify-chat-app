@@ -49,7 +49,10 @@ const ChatInput = () => {
   }, [chat]);
 
   return (
-    <form className="max-w-[900px] w-full mx-auto " onSubmit={handleSubmit}>
+    <form
+      className="max-w-[900px] w-full mx-auto my-auto"
+      onSubmit={handleSubmit}
+    >
       <label className="input input-bordered flex items-center gap-2 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
         <CiMicrophoneOn className="w-6 h-6" />
         <input

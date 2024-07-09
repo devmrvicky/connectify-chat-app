@@ -36,7 +36,7 @@ const Message = ({
         </div>
       </div>
       <div className="chat-bubble bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 flex flex-col">
-        <span>{message}</span>
+        <span className="break-words">{message}</span>
         <span className="text-[10px] ml-auto text-zinc-500">
           {format(createdAt, "hh:mm aa")}
         </span>

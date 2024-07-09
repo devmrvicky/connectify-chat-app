@@ -37,10 +37,13 @@ const FriendProfile = ({
     <div
       className={`flex  p-4 rounded gap-4 items-center w-full hover:bg-zinc-400/10`}
     >
-      <Avatar profilePic={profilePic} dimension="w-14 h-14" />
+      <Avatar
+        profilePic={profilePic}
+        dimension="w-14 h-14 max-[420px]:w-11 max-[420px]:h-11"
+      />
       <div className="w-full flex flex-col gap-0">
         <p className="text-xl flex items-center gap-1">
-          <span className=" text-dark-text2 dark:text-light-text">
+          <span className=" text-dark-text2 dark:text-light-text max-[420px]:text-base">
             {fullName}
           </span>
           {isFriend && (
@@ -60,7 +63,9 @@ const FriendProfile = ({
             </span>
           )}
         </p>
-        <span className="text-lg text-light-text2">{username}</span>
+        <span className="text-lg max-[420px]:text-sm text-light-text2">
+          {username}
+        </span>
       </div>
       <div className="btns flex items-center gap-2">
         {!isFriendRequest ? (
@@ -76,7 +81,7 @@ const FriendProfile = ({
                 )
               }
             >
-              <HiOutlineUserRemove className="w-6 h-6" />
+              <HiOutlineUserRemove className="w-6 h-6 max-[420px]:w-4 max-[420px]:h-4" />
             </button>
             {(!isFriend || isSendFriendRequest) && (
               <button
@@ -88,7 +93,7 @@ const FriendProfile = ({
                 {sendingRequest ? (
                   <span className="loading loading-spinner loading-md"></span>
                 ) : (
-                  <HiOutlineUserAdd className="w-6 h-6" />
+                  <HiOutlineUserAdd className="w-6 h-6 max-[420px]:w-4 max-[420px]:h-4" />
                 )}
               </button>
             )}
@@ -104,7 +109,7 @@ const FriendProfile = ({
               {removingRequest ? (
                 <span className="loading loading-spinner loading-md"></span>
               ) : (
-                <SlUserUnfollow className="w-6 h-6" />
+                <SlUserUnfollow className="w-6 h-6 max-[420px]:w-4 max-[420px]:h-4" />
               )}
             </button>
             <button
@@ -119,7 +124,7 @@ const FriendProfile = ({
               {acceptingRequest ? (
                 <span className="loading loading-spinner loading-md"></span>
               ) : (
-                <SlUserFollowing className="w-6 h-6" />
+                <SlUserFollowing className="w-6 h-6 max-[420px]:w-4 max-[420px]:h-4" />
               )}
             </button>
           </>

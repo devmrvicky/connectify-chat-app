@@ -11,7 +11,7 @@ function App() {
   useListMessages();
   useFriendRequestsUpdate();
   return (
-    <main className=" p-4 h-screen w-full bg-light-bg dark:bg-dark-bg">
+    <main className=" p-4 max-[420px]:p-0 h-screen w-full bg-light-bg dark:bg-dark-bg">
       <div className="container max-w-[1200px] w-full h-full mx-auto p-2 max-[620px]:overflow-hidden flex">
         {authUser && <AsideMenus />}
         <Outlet />

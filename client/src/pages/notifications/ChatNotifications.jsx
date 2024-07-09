@@ -31,10 +31,10 @@ const ChatNotifications = () => {
             handleRemoveNotification={() =>
               handleRemoveNotification(unreadMessage._id)
             }
-            profilePic={sender.profilePic}
+            profilePic={sender?.profilePic}
           >
             <p className="">
-              <i>"{sender.fullName}"</i> has send message:{" "}
+              <i>"{sender?.fullName}"</i> has send message:{" "}
               <b>"{unreadMessage.message}"</b>
             </p>
           </NotificationItemLayout>

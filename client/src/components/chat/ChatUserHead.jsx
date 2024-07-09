@@ -23,10 +23,13 @@ const ChatUserHead = () => {
     <div className="chat-head flex items-center gap-3 h-[50px]">
       {isSmallDevice && (
         <button onClick={goBackToFriendsList}>
-          <TfiAngleLeft />
+          <TfiAngleLeft className="w-6 h-6" />
         </button>
       )}
-      <Avatar profilePic={selectedFriend.profilePic} dimension="w-12 h-12" />
+      <Avatar
+        profilePic={selectedFriend.profilePic}
+        dimension="w-12 h-12 max-[420px]:w-10 max-[420px]:h-10"
+      />
       <div className="user-status">
         <p className="text-2xl dark:text-light-text2 text-dark-text2">
           {selectedFriend.fullName}

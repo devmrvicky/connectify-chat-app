@@ -48,7 +48,7 @@ const SideBarLayout = ({
     <aside
       className={`max-w-[280px]  h-full w-full  ${
         hideCondition && isSmallDevice && "-translate-x-[110%]"
-      }  transition-all ${className}`}
+      }  transition-all max-[420px]:p-[8px] max-[420px]:pb-0 ${className}`}
     >
       <div className="flex flex-col w-full h-full max-[720px]:max-w-[500px] max-[720px]:mx-auto">
         <div className="aside-head flex max-[420px]:mb-[10px]">

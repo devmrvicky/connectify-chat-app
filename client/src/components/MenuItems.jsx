@@ -44,10 +44,10 @@ const MenuItems = ({ menus, className = "" }) => {
   );
 };
 
-const NotificationIndicator = ({ menu, menuName, totalNotifications = 0 }) => {
+const NotificationIndicator = ({ totalNotifications = 0 }) => {
   return (
     Boolean(totalNotifications) && (
-      <span className="indicator-item badge rounded-full badge-primary">
+      <span className="indicator-item badge rounded-full badge-primary max-[420px]:top-[10px] max-[420px]:left-[10px] max-[420px]:rounded-full max-[420px]:w-[10px]">
         {totalNotifications > 99 ? "99+" : totalNotifications}
       </span>
     )

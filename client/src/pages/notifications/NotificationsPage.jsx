@@ -8,20 +8,24 @@ import useStore from "../../zustand/store";
 
 const NotificationsPage = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
-  const { selectNotificationSubPage } = useStore((store) => store);
+  const { selectNotificationSubPage, selectedNotificationSubPage } = useStore(
+    (store) => store
+  );
 
   return (
     <MainContentLayout>
       <NotificationSideBar />
       <div className="flex flex-col w-full h-full">
         <div className="flex flex-col gap-3 py-2">
-          <div className="friend-page-head flex gap-2 items-center">
+          <div className="friend-page-head flex gap-2 items-center text-dark-text2 dark:text-light-text2 py-2">
             {isSmallDevice && (
               <button onClick={() => selectNotificationSubPage(null)}>
-                <TfiAngleLeft />
+                <TfiAngleLeft className="w-5 h-5" />
               </button>
             )}
-            <p className="text-xl font-medium">All notifications</p>
+            <p className="text-xl font-medium ">
+              {selectedNotificationSubPage}
+            </p>
           </div>
           {/* <SearchBox /> */}
         </div>

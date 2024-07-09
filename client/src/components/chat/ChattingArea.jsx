@@ -10,7 +10,7 @@ const ChattingArea = () => {
   return !selectedFriend ? (
     <NoFriendSelected />
   ) : (
-    <div className="flex w-full h-full flex-col ">
+    <div className="flex w-full h-full flex-col relative">
       <ChatUserHead />
       <div className="divider divider-vertical m-0 mt-3 h-0"></div>
       <MessagesContainer />

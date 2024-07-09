@@ -40,7 +40,7 @@ const NotificationSideBar = ({ willHideSideBar = true }) => {
       hideCondition={selectedNotificationSubPage}
       className={
         willHideSideBar &&
-        "max-[800px]:max-w-[250px] max-[720px]:hidden max-[420px]:block max-[420px]:bg-white dark:max-[420px]:bg-black max-[420px]:absolute z-10 max-[420px]:max-w-[100%] top-0 left-0 max-[420px]:p-4 max-[420px]:pb-0"
+        "max-[800px]:max-w-[250px] max-[720px]:hidden max-[420px]:block max-[420px]:bg-white dark:max-[420px]:bg-black max-[420px]:absolute z-10 max-[420px]:max-w-[100%] top-0 left-0"
       }
     >
       <ul className="flex flex-col flex-1 h-full w-full py-2 gap-3">
@@ -50,8 +50,8 @@ const NotificationSideBar = ({ willHideSideBar = true }) => {
               to={menu.path}
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 min-[420px]:bg-zinc-200/20 cursor-pointer"
-                  : "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 cursor-pointer"
+                  ? "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 min-[420px]:bg-zinc-200/20 cursor-pointer text-dark-text2 dark:text-light-text"
+                  : "flex items-center p-2 py-3 rounded hover:bg-zinc-200/20 cursor-pointer text-light-text2"
               }
               onClick={() => selectNotificationSubPage(menu.name)}
             >
