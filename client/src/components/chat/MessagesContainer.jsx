@@ -43,7 +43,8 @@ const MessagesContainer = () => {
                 <>
                   <Message
                     key={message._id}
-                    {...message}
+                    // {...message}
+                    message={message}
                     lastMessageRef={lastMessageRef}
                   />
                 </>
