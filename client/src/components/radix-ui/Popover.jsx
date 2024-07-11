@@ -5,6 +5,7 @@ import LogoutBtn from "../LogoutBtn";
 import AuthUserProfile from "../AuthUserProfile";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import ThemeController from "./ThemeController";
+import { Flex } from "@radix-ui/themes";
 
 const PopoverDemo = ({ children }) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
@@ -44,4 +45,16 @@ const PopoverDemo = ({ children }) => {
   );
 };
 
+const PopoverContent = ({ children }) => {
+  return (
+    <Popover.Root>
+      <Popover.Trigger>{children[0]}</Popover.Trigger>
+      <Popover.Content width="360px" sideOffset={20}>
+        {children[1]}
+      </Popover.Content>
+    </Popover.Root>
+  );
+};
+
 export default PopoverDemo;
+export { PopoverContent };

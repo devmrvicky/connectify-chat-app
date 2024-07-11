@@ -4,8 +4,16 @@ import { RiSendPlaneFill } from "react-icons/ri";
 import useSendChat from "../../hooks/chat/useSendChat";
 import { VscLoading } from "react-icons/vsc";
 import useGetTypingStatus from "../../hooks/chat/useGetTypingStatus";
+import { LuFolderSymlink } from "react-icons/lu";
+import { PopoverContent } from "../radix-ui/Popover";
+import { Button } from "@radix-ui/themes";
+import FileShareBtns from "../FileShareBtns";
+import ImgSendWindow from "../ImgSendWindow";
 
 const ChatInput = () => {
+  const [isFileChooses, setIsFileChooses] = useState(false);
+  const [imgObj, setImgObj] = useState(null);
+
   const [isInput, setIsInput] = useState(false);
   const [chat, setChat] = useState("");
   const chatInputRef = useRef(null);
@@ -18,6 +26,22 @@ const ChatInput = () => {
     if (!chat) return;
     sendChat(chat);
     setChat("");
+  };
+
+  const handleChooseImg = (e) => {
+    // console.dir(e);
+    const imgFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(imgFile);
+    reader.onload = () => {
+      setIsFileChooses(true);
+
+      setImgObj({ src: reader.result, name: imgFile.name, size: imgFile.size });
+    };
+  };
+
+  const closeFileShareWindow = () => {
+    setIsFileChooses(false);
   };
 
   let timeoutId;
@@ -54,7 +78,22 @@ const ChatInput = () => {
       onSubmit={handleSubmit}
     >
       <label className="input input-bordered flex items-center gap-2 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
-        <CiMicrophoneOn className="w-6 h-6" />
+        {isFileChooses && (
+          <ImgSendWindow {...imgObj} closeWindow={closeFileShareWindow} />
+        )}
+        <button
+          type="button"
+          className="mr-2 tooltip before:bottom-12"
+          // data-tip="voice message"
+        >
+          <CiMicrophoneOn className="w-6 h-6" />
+        </button>
+        <PopoverContent>
+          <Button variant="soft" type="button">
+            <LuFolderSymlink className="w-5 h-5" />
+          </Button>
+          <FileShareBtns handleOnChange={handleChooseImg} />
+        </PopoverContent>
         <input
           type="text"
           className="grow"
@@ -63,7 +102,12 @@ const ChatInput = () => {
           onChange={(e) => setChat(e.target.value)}
           ref={chatInputRef}
         />
-        <button type="submit" disabled={loading}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="tooltip before:bottom-12"
+          data-tip="send"
+        >
           {loading ? (
             <VscLoading className="w-6 h-6 animate-spin" />
           ) : (
