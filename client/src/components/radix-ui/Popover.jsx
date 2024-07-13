@@ -1,11 +1,10 @@
 import React from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import LogoutBtn from "../LogoutBtn";
 import AuthUserProfile from "../AuthUserProfile";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import ThemeController from "./ThemeController";
-import { Flex } from "@radix-ui/themes";
 
 const PopoverDemo = ({ children }) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
