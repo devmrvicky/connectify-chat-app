@@ -12,9 +12,28 @@ const messageSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    message: {
+    type: {
       type: String,
       required: true,
+      enum: ["text", "img", "video"],
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ["pending", "success", "failed"],
+    },
+    messageId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    imgSrc: {
+      type: String,
+    },
+    caption: String,
+    fileName: String,
+    message: {
+      type: String,
     },
   },
   { timestamps: true }

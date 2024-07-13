@@ -9,8 +9,10 @@ import { PopoverContent } from "../radix-ui/Popover";
 import { Button } from "@radix-ui/themes";
 import FileShareBtns from "../FileShareBtns";
 import ImgSendWindow from "../ImgSendWindow";
+import imageCompression from "browser-image-compression";
 
 const ChatInput = () => {
+  const [imageFile, setImageFile] = useState("");
   const [isFileChooses, setIsFileChooses] = useState(false);
   const [imgObj, setImgObj] = useState(null);
 
@@ -20,25 +22,53 @@ const ChatInput = () => {
   const { sendChat, loading } = useSendChat();
   const { sendTypingStatus } = useGetTypingStatus();
 
+  const imgFileRef = useRef(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     chatInputRef.current.focus();
     if (!chat) return;
-    sendChat(chat);
+    sendChat({ message: chat, type: "text" });
     setChat("");
   };
 
-  const handleChooseImg = (e) => {
-    // console.dir(e);
+  async function handleChooseAndCompressImg(e) {
     const imgFile = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(imgFile);
-    reader.onload = () => {
-      setIsFileChooses(true);
-
-      setImgObj({ src: reader.result, name: imgFile.name, size: imgFile.size });
+    console.log("originalFile instanceof Blob", imgFile instanceof Blob); // true
+    console.log(`originalFile size ${imgFile.size / 1024 / 1024} MB`);
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
     };
-  };
+    try {
+      const compressedFile = await imageCompression(imgFile, options);
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      ); // true
+      console.log(
+        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      ); // smaller than maxSizeMB
+
+      setImageFile(compressedFile);
+
+      // console.log(compressedFile); // Blob {name: 'warm-brown-and-cold-colour-palettes.jpg', lastModified: 1720412425444, size: 205705, type: 'image/jpeg'}
+
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onload = () => {
+        setIsFileChooses(true);
+        setImgObj({
+          src: reader.result,
+          name: compressedFile.name,
+          size: compressedFile.size,
+        });
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const closeFileShareWindow = () => {
     setIsFileChooses(false);
@@ -79,7 +109,11 @@ const ChatInput = () => {
     >
       <label className="input input-bordered flex items-center gap-2 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
         {isFileChooses && (
-          <ImgSendWindow {...imgObj} closeWindow={closeFileShareWindow} />
+          <ImgSendWindow
+            {...imgObj}
+            closeWindow={closeFileShareWindow}
+            imgFile={imageFile}
+          />
         )}
         <button
           type="button"
@@ -92,7 +126,9 @@ const ChatInput = () => {
           <Button variant="soft" type="button">
             <LuFolderSymlink className="w-5 h-5" />
           </Button>
-          <FileShareBtns handleOnChange={handleChooseImg} />
+          <form action="post" enctype="multipart/form-data" ref={imgFileRef}>
+            <FileShareBtns handleOnChange={handleChooseAndCompressImg} />
+          </form>
         </PopoverContent>
         <input
           type="text"

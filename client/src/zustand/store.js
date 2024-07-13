@@ -8,6 +8,21 @@ const useStore = create((set) => ({
   setMessages: (messages) => set(() => ({ messages: messages })),
   addMessage: (message) =>
     set((state) => ({ messages: [...state.messages, message] })),
+  updateLastMessage: (updatedMessage) =>
+    set((state) => {
+      if (state.messages.length === 0) return;
+
+      const lastIndex = state.messages.length - 1;
+
+      if (state.messages[lastIndex].messageId === updatedMessage.messageId) {
+        state.messages[lastIndex] = {
+          ...state.messages[lastIndex],
+          ...updatedMessage,
+        };
+        console.log(state.messages);
+      }
+      return { messages: state.messages };
+    }),
   setSearchedFriends: (friends) => set(() => ({ searchedFriends: friends })),
 
   // lastConversation: null,

@@ -4,6 +4,7 @@ import { useSocketContext } from "../context/SocketContext";
 import { formatDistance, subDays } from "date-fns";
 import { apiGet } from "../api/api";
 import Avatar from "./Avatar";
+import { FaImage } from "react-icons/fa6";
 
 const ContactProfile = ({
   fullName,
@@ -45,7 +46,7 @@ const ContactProfile = ({
         toast.error(data.message);
         throw new Error(data.message);
       }
-
+      console.log(data);
       // console.log({ lastMessage: data.lastMessage });
       // this last chat is showing on contact profile
       // if user have unread messages then user's last is last message from unread messages
@@ -97,12 +98,21 @@ const ContactProfile = ({
           <div className="flex justify-between items-center w-full text-sm">
             <p className="last-chat flex gap-1">
               <span>
-                {lastChat?.message && lastChat?.receiverId === _id && "you : "}
+                {(lastChat?.imgSrc || lastChat?.message) &&
+                  lastChat?.receiverId === _id &&
+                  "you : "}
               </span>
-              <span>
-                {lastChat?.message.length >= 15
-                  ? lastChat?.message.slice(0, 12) + "..."
-                  : lastChat?.message}
+              <span className="flex items-center gap-2">
+                {lastChat?.type === "text" &&
+                  (lastChat?.message.length >= 15
+                    ? lastChat?.message.slice(0, 12) + "..."
+                    : lastChat?.message)}
+                {lastChat?.type === "img" && (
+                  <>
+                    <FaImage />
+                    <span>image</span>
+                  </>
+                )}
               </span>
             </p>
             <p className="ml-auto text-xs">

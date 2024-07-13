@@ -1,7 +1,4 @@
-import React, { useState } from "react";
 import { FaFileImage } from "react-icons/fa6";
-import { MdAudiotrack } from "react-icons/md";
-import { MdOutlineOndemandVideo } from "react-icons/md";
 
 const FileShareBtns = ({ handleOnChange }) => {
   return (
@@ -9,7 +6,8 @@ const FileShareBtns = ({ handleOnChange }) => {
       <ShareBtn
         icon={<FaFileImage className="w-5 h-5" />}
         btnName="images"
-        acceptedFile="image/png, image/jpeg"
+        name="imgFile"
+        acceptedFile="image/*"
         handleOnChange={handleOnChange}
       />
       {/* <ShareBtn
@@ -32,6 +30,7 @@ const ShareBtn = ({
   disabled = false,
   acceptedFile,
   handleOnChange,
+  name,
 }) => {
   return (
     <label
@@ -40,7 +39,7 @@ const ShareBtn = ({
     >
       <input
         type="file"
-        name="image-file"
+        name={name}
         id="image-file"
         className="hidden"
         accept={acceptedFile}

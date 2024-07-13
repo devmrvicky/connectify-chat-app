@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import NotificationItemLayout from "../../components/layout/NotificationItemLayout";
 import useStore, { useFriendStore } from "../../zustand/store";
+import { FaImage } from "react-icons/fa6";
 
 const ChatNotifications = () => {
   const navigate = useNavigate();
@@ -33,9 +34,16 @@ const ChatNotifications = () => {
             }
             profilePic={sender?.profilePic}
           >
-            <p className="">
-              <i>"{sender?.fullName}"</i> has send message:{" "}
-              <b>"{unreadMessage.message}"</b>
+            <p className="flex items-center gap-2">
+              <i>"{sender?.fullName}"</i> has send
+              {unreadMessage?.type === "text" && (
+                <b> message: "{unreadMessage.message}"</b>
+              )}
+              {unreadMessage?.type === "img" && (
+                <span className="flex items-center gap-2">
+                  a image <FaImage />
+                </span>
+              )}
             </p>
           </NotificationItemLayout>
         );

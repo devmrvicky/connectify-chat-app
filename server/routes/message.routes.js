@@ -1,10 +1,26 @@
 import express from "express";
-import { getMessages, sendMessage } from "../controller/message.controller.js";
+import {
+  getMessages,
+  sendMessage,
+  // uploadFile,
+} from "../controller/message.controller.js";
 import { checkUserAuthentication } from "../middleware/user.middleware.js";
+import { upload } from "../middleware/multer.middleware.js";
 
 const router = express.Router();
 
-router.post("/send/:receiverId", checkUserAuthentication, sendMessage);
+router.post(
+  "/send/:receiverId",
+  checkUserAuthentication,
+  upload.single("imgFile"),
+  sendMessage
+);
+// router.post(
+//   "/file/upload",
+//   checkUserAuthentication,
+//   upload.single("imgFile"),
+//   uploadFile
+// );
 router.get("/:id", checkUserAuthentication, getMessages);
 
 export default router;

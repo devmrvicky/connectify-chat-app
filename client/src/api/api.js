@@ -23,7 +23,7 @@ const apiPost = async (endpoint, body = {}) => {
   const res = await fetch(`${BASE_URL}/${endpoint}`, {
     method: "POST",
     headers: {
-      "content-type": "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
     credentials: "include",
@@ -43,7 +43,7 @@ const apiPut = async (endpoint, body = {}) => {
   return await res.json();
 };
 
-const apiDelete = async (endpoint, body={}) => {
+const apiDelete = async (endpoint, body = {}) => {
   const res = await fetch(`${BASE_URL}/${endpoint}`, {
     method: "DELETE",
     headers: {

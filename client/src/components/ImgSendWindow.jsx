@@ -2,22 +2,25 @@ import React, { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 import useStore from "../zustand/store";
+import { useAuthContext } from "../context/AuthContext";
+import useSendChat from "../hooks/chat/useSendChat";
 
-const ImgSendWindow = ({ name, size, src, closeWindow }) => {
+const ImgSendWindow = ({ name, size, src, closeWindow, imgFile }) => {
+  console.log(imgFile);
   const [caption, setCaption] = useState("");
 
-  const { addMessage } = useStore((store) => store);
+  const { sendChat } = useSendChat();
 
   const handleSendImg = () => {
+    if (!name || !src) return;
     const imgObj = {
-      senderId: Date.now(),
       type: "img",
-      name,
-      src,
+      fileName: name,
+      imgSrc: src,
+      imgFile,
       caption,
-      createdAt: new Date(),
     };
-    addMessage(imgObj);
+    sendChat(imgObj);
     closeWindow();
   };
 
