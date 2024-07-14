@@ -18,6 +18,7 @@ const useListMessages = () => {
     const updateNewMessage = async ({ message }) => {
       if (message.senderId === selectedFriend?._id) {
         addMessage(message);
+        // if message type is img then set message id to localStorage as
         const audio = new Audio(receiveMsgSound);
         await audio.play();
       } else {

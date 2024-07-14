@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoPng from "../../public/chat.png";
+import logoPng from "../assets/chat.png";
 
 const Logo = () => {
   return (

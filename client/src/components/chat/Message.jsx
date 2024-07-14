@@ -5,13 +5,21 @@ import { format, formatDistanceToNow } from "date-fns";
 import avatarIcon from "../../assets/avatar-icon.png";
 import { FaUpload, FaXmark } from "react-icons/fa6";
 import { MdOutlineWatchLater } from "react-icons/md";
-import { BiCheckDouble } from "react-icons/bi";
+import { BiCheckDouble, BiDownload } from "react-icons/bi";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { useCheckDownloadedAssets } from "../../hooks/chat/useCheckDownloadedAssets";
 
 // here message will be display according to message type (text, image, video, audio)
 
 const Message = ({ lastMessageRef, message }) => {
   const { authUser } = useAuthContext();
   const selectedFriend = useStore((store) => store.selectedFriend);
+
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
+
+  const { downloadedAssets } = useCheckDownloadedAssets();
+  const isDownloadedAsset = downloadedAssets.includes(message._id);
+
   const chatType =
     authUser?._id === message.senderId ? "chat-end" : "chat-start";
   const profilePic =
@@ -21,25 +29,27 @@ const Message = ({ lastMessageRef, message }) => {
 
   return (
     <div className={`chat ${chatType}`} ref={lastMessageRef}>
-      <div className="chat-image avatar">
-        <div className="w-6 rounded-full">
-          <img
-            alt="Tailwind CSS chat bubble component"
-            src={profilePic}
-            onError={(e) => (e.target.src = avatarIcon)}
-          />
+      {!isSmallDevice && (
+        <div className="chat-image avatar">
+          <div className="w-6 rounded-full">
+            <img
+              alt="Tailwind CSS chat bubble component"
+              src={profilePic}
+              onError={(e) => (e.target.src = avatarIcon)}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div
         className={`chat-bubble ${
-          message.type === "img" ? "p-0 pr-1 rounded-sm" : ""
+          message.type === "img" ? "p-1 rounded-sm" : ""
         } bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 flex flex-col relative`}
       >
         {message.type === "text" && (
           <span className="break-words">{message.message}</span>
         )}
         {message.type === "img" && (
-          <div className="w-full max-w-[250px] h-auto relative mb-0 rounded-l-sm overflow-hidden">
+          <div className="w-full min-w-[200px] max-w-[250px] h-auto max-h-[300px] relative mb-0 rounded-l-sm overflow-hidden">
             {message?.status === "pending" && (
               <div className="uploading-indicator absolute top-0 left-0 w-full h-full bg-dark-bg2/50 z-10 flex items-center justify-center">
                 <span className="loading loading-spinner w-[60px]"></span>
@@ -62,6 +72,17 @@ const Message = ({ lastMessageRef, message }) => {
                 </button>
               </div>
             )}
+            {!isDownloadedAsset && message?.senderId !== authUser?._id && (
+              <button
+                type="button"
+                className="absolute bottom-2 left-2 flex items-center gap-1 bg-dark-bg2/50 text-light-text/80 backdrop-blur-md px-3 py-2 rounded-full"
+              >
+                <BiDownload className="w-4 h-4" />
+                {/* <span className="text-xs">
+                  {message?.size ? message?.size : "download"}
+                </span> */}
+              </button>
+            )}
             <img
               src={message.imgSrc}
               alt={message?.fileName}
@@ -78,7 +99,7 @@ const Message = ({ lastMessageRef, message }) => {
           className={`text-[10px] ml-auto text-zinc-500 flex items-center ${
             message.type === "img" &&
             !message.caption &&
-            "absolute z-10 bottom-1 right-2 text-light-text bg-light-text2 backdrop-sm px-2 py-1 rounded-full"
+            "absolute z-10 bottom-2 right-2 text-light-text bg-light-text2/50 backdrop-blur-md px-2 py-1 rounded-full"
           }`}
         >
           {format(message.createdAt, "hh:mm aa")}

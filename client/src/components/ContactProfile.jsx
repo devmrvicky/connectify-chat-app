@@ -5,6 +5,7 @@ import { formatDistance, subDays } from "date-fns";
 import { apiGet } from "../api/api";
 import Avatar from "./Avatar";
 import { FaImage } from "react-icons/fa6";
+import { BiCheckDouble } from "react-icons/bi";
 
 const ContactProfile = ({
   fullName,
@@ -96,11 +97,12 @@ const ContactProfile = ({
         </div>
         {!isAuthProfile ? (
           <div className="flex justify-between items-center w-full text-sm">
-            <p className="last-chat flex gap-1">
+            <p className="last-chat flex gap-1 items-center">
               <span>
                 {(lastChat?.imgSrc || lastChat?.message) &&
-                  lastChat?.receiverId === _id &&
-                  "you : "}
+                  lastChat?.receiverId === _id && (
+                    <BiCheckDouble className="w-5 h-5" />
+                  )}
               </span>
               <span className="flex items-center gap-2">
                 {lastChat?.type === "text" &&
