@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
-import useStore from "../zustand/store";
-import { useAuthContext } from "../context/AuthContext";
 import useSendChat from "../hooks/chat/useSendChat";
 
 const ImgSendWindow = ({ name, size, src, closeWindow, imgFile }) => {

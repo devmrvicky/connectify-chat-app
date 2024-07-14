@@ -6,7 +6,6 @@ import { VscLoading } from "react-icons/vsc";
 import useGetTypingStatus from "../../hooks/chat/useGetTypingStatus";
 import { LuFolderSymlink } from "react-icons/lu";
 import { PopoverContent } from "../radix-ui/Popover";
-import { Button } from "@radix-ui/themes";
 import FileShareBtns from "../FileShareBtns";
 import ImgSendWindow from "../ImgSendWindow";
 import imageCompression from "browser-image-compression";
@@ -37,7 +36,7 @@ const ChatInput = () => {
     console.log("originalFile instanceof Blob", imgFile instanceof Blob); // true
     console.log(`originalFile size ${imgFile.size / 1024 / 1024} MB`);
     const options = {
-      maxSizeMB: 1,
+      maxSizeMB: 1 / 2,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };
@@ -107,7 +106,7 @@ const ChatInput = () => {
       className="max-w-[900px] w-full mx-auto my-auto"
       onSubmit={handleSubmit}
     >
-      <label className="input input-bordered flex items-center gap-2 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
+      <label className="input input-bordered flex items-center gap-3 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
         {isFileChooses && (
           <ImgSendWindow
             {...imgObj}
@@ -117,15 +116,13 @@ const ChatInput = () => {
         )}
         <button
           type="button"
-          className="mr-2 tooltip before:bottom-12"
+          className="tooltip before:bottom-12"
           // data-tip="voice message"
         >
           <CiMicrophoneOn className="w-6 h-6" />
         </button>
         <PopoverContent>
-          <Button variant="soft" type="button">
-            <LuFolderSymlink className="w-5 h-5" />
-          </Button>
+          <LuFolderSymlink className="w-5 h-5" />
           <form action="post" enctype="multipart/form-data" ref={imgFileRef}>
             <FileShareBtns handleOnChange={handleChooseAndCompressImg} />
           </form>
