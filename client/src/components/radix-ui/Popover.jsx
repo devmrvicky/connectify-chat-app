@@ -47,7 +47,9 @@ const PopoverDemo = ({ children }) => {
 const PopoverContent = ({ children }) => {
   return (
     <Popover.Root>
-      <Popover.Trigger>{children[0]}</Popover.Trigger>
+      <Popover.Trigger className="max-[420px]:mx-2">
+        {children[0]}
+      </Popover.Trigger>
       <Popover.Content width="360px" sideOffset={20}>
         {children[1]}
       </Popover.Content>

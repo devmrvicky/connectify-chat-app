@@ -56,8 +56,8 @@ const ChatInput = () => {
 
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
+      setIsFileChooses(true);
       reader.onload = () => {
-        setIsFileChooses(true);
         setImgObj({
           src: reader.result,
           name: compressedFile.name,
@@ -106,7 +106,7 @@ const ChatInput = () => {
       className="max-w-[900px] w-full mx-auto my-auto"
       onSubmit={handleSubmit}
     >
-      <label className="input input-bordered flex items-center gap-3 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
+      <label className="input input-bordered flex items-center gap-3 max-[420px]:gap-0 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
         {isFileChooses && (
           <ImgSendWindow
             {...imgObj}

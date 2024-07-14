@@ -30,12 +30,16 @@ const Message = ({ lastMessageRef, message }) => {
           />
         </div>
       </div>
-      <div className="chat-bubble bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 flex flex-col">
-        <span className="break-words">{message.message}</span>
-        {/* {message.type === "text" && (
-        )} */}
+      <div
+        className={`chat-bubble ${
+          message.type === "img" ? "p-0 pr-1 rounded-sm" : ""
+        } bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 flex flex-col relative`}
+      >
+        {message.type === "text" && (
+          <span className="break-words">{message.message}</span>
+        )}
         {message.type === "img" && (
-          <div className="w-full max-w-[250px] h-auto relative mb-2">
+          <div className="w-full max-w-[250px] h-auto relative mb-0 rounded-l-sm overflow-hidden">
             {message?.status === "pending" && (
               <div className="uploading-indicator absolute top-0 left-0 w-full h-full bg-dark-bg2/50 z-10 flex items-center justify-center">
                 <span className="loading loading-spinner w-[60px]"></span>
@@ -63,10 +67,20 @@ const Message = ({ lastMessageRef, message }) => {
               alt={message?.fileName}
               className="w-full"
             />
-            <span>{message.caption}</span>
+            {message.caption && (
+              <span className="text-sm inline-block px-1">
+                {message.caption}
+              </span>
+            )}
           </div>
         )}
-        <span className="text-[10px] ml-auto text-zinc-500 flex items-center ">
+        <span
+          className={`text-[10px] ml-auto text-zinc-500 flex items-center ${
+            message.type === "img" &&
+            !message.caption &&
+            "absolute z-10 bottom-1 right-2 text-light-text bg-light-text2 backdrop-sm px-2 py-1 rounded-full"
+          }`}
+        >
           {format(message.createdAt, "hh:mm aa")}
           {["pending", "failed"].includes(message?.status) &&
             message?.senderId === authUser?._id && (
