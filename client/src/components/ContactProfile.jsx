@@ -105,14 +105,16 @@ const ContactProfile = ({
                   )}
               </span>
               <span className="flex items-center gap-2">
-                {lastChat?.type === "text" &&
-                  (lastChat?.message.length >= 15
-                    ? lastChat?.message.slice(0, 12) + "..."
-                    : lastChat?.message)}
-                {lastChat?.type === "img" && (
+                {lastChat?.type === "text" ? (
+                  lastChat?.message.length >= 15 ? (
+                    lastChat?.message.slice(0, 12) + "..."
+                  ) : (
+                    lastChat?.message
+                  )
+                ) : (
                   <>
-                    <FaImage />
-                    <span>image</span>
+                    <FileIcon fileType={lastChat?.type} />
+                    <span>{lastChat?.type}</span>
                   </>
                 )}
               </span>
@@ -130,6 +132,27 @@ const ContactProfile = ({
       </div>
     </div>
   );
+};
+
+import { FaCirclePlay } from "react-icons/fa6";
+import { MdAudiotrack } from "react-icons/md";
+
+const FileIcon = ({ fileType }) => {
+  switch (fileType) {
+    case "img":
+      return <FaImage />;
+    case "video":
+      return <FaCirclePlay />;
+    case "audio":
+      return <MdAudiotrack />;
+  }
+
+  // return (
+  //   <>
+  //     {fileType === "img" && <FaImage />}
+  //     {fileType === "video" && <FaCirclePlay />}
+  //   </>
+  // );
 };
 
 export default ContactProfile;

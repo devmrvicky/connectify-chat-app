@@ -7,13 +7,13 @@ import useGetTypingStatus from "../../hooks/chat/useGetTypingStatus";
 import { LuFolderSymlink } from "react-icons/lu";
 import { PopoverContent } from "../radix-ui/Popover";
 import FileShareBtns from "../FileShareBtns";
-import ImgSendWindow from "../ImgSendWindow";
+import FileSendWindow from "../FileSendWindow";
 import imageCompression from "browser-image-compression";
 
 const ChatInput = () => {
-  const [imageFile, setImageFile] = useState("");
+  const [file, setFile] = useState("");
   const [isFileChooses, setIsFileChooses] = useState(false);
-  const [imgObj, setImgObj] = useState(null);
+  const [fileObj, setFileObj] = useState(null);
 
   const [isInput, setIsInput] = useState(false);
   const [chat, setChat] = useState("");
@@ -31,8 +31,7 @@ const ChatInput = () => {
     setChat("");
   };
 
-  async function handleChooseAndCompressImg(e) {
-    const imgFile = e.target.files[0];
+  async function compressImg(imgFile) {
     console.log("originalFile instanceof Blob", imgFile instanceof Blob); // true
     console.log(`originalFile size ${imgFile.size / 1024 / 1024} MB`);
     const options = {
@@ -49,19 +48,34 @@ const ChatInput = () => {
       console.log(
         `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
       ); // smaller than maxSizeMB
+      return compressedFile;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-      setImageFile(compressedFile);
+  async function handleChooseFile(e) {
+    try {
+      let file = e.target.files[0];
+      console.log(file); // File {name: 'WhatsApp Image 2024-07-14 at 09.13.58_228cc5d7.jpg', lastModified: 1720933524640, lastModifiedDate: Sun Jul 14 2024 10:35:24 GMT+0530 (India Standard Time), webkitRelativePath: '', size: 1391, type: "image/jpeg", webkitRelativePath: ""}
 
-      // console.log(compressedFile); // Blob {name: 'warm-brown-and-cold-colour-palettes.jpg', lastModified: 1720412425444, size: 205705, type: 'image/jpeg'}
+      const fileType = file.type.split("/")[0];
+      if (fileType === "image") {
+        file = await compressImg(file);
+      }
+      setFile(file);
+
+      // console.log(file); // Blob {name: 'warm-brown-and-cold-colour-palettes.jpg', lastModified: 1720412425444, size: 205705, type: 'image/jpeg'}
 
       const reader = new FileReader();
-      reader.readAsDataURL(compressedFile);
+      reader.readAsDataURL(file);
       setIsFileChooses(true);
       reader.onload = () => {
-        setImgObj({
+        setFileObj({
           src: reader.result,
-          name: compressedFile.name,
-          size: compressedFile.size,
+          name: file.name,
+          size: file.size,
+          fileType,
         });
       };
     } catch (error) {
@@ -108,10 +122,10 @@ const ChatInput = () => {
     >
       <label className="input input-bordered flex items-center gap-3 max-[420px]:gap-0 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
         {isFileChooses && (
-          <ImgSendWindow
-            {...imgObj}
+          <FileSendWindow
+            {...fileObj}
             closeWindow={closeFileShareWindow}
-            imgFile={imageFile}
+            file={file}
           />
         )}
         <button
@@ -124,7 +138,7 @@ const ChatInput = () => {
         <PopoverContent>
           <LuFolderSymlink className="w-5 h-5" />
           <form action="post" enctype="multipart/form-data" ref={imgFileRef}>
-            <FileShareBtns handleOnChange={handleChooseAndCompressImg} />
+            <FileShareBtns handleOnChange={handleChooseFile} />
           </form>
         </PopoverContent>
         <input

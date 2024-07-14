@@ -33,12 +33,12 @@ const useSendChat = () => {
       // formData2.append("temp", "hello");
       // console.log(formData2);
 
-      if (message.type === "img") {
+      if (message.type !== "text") {
         let tempFields = { ...msgFields };
 
-        delete tempFields.imgSrc;
+        delete tempFields.fileSrc;
         delete tempFields.fileName;
-        delete tempFields.imgFile;
+        delete tempFields.file;
         // console.log(tempFields);
 
         const formData = new FormData();
@@ -46,12 +46,12 @@ const useSendChat = () => {
           formData.append(key, value);
         }
 
-        formData.append("imgFile", message.imgFile, message.imgFile.name);
+        formData.append("file", message.file, message.file.name);
 
         // Logging FormData content for debugging
-        for (let pair of formData.entries()) {
-          console.log(`${pair[0]}: ${pair[1]}`);
-        }
+        // for (let pair of formData.entries()) {
+        //   console.log(`${pair[0]}: ${pair[1]}`);
+        // }
         const res = await fetch(
           `${SERVER_URL}/api/messages/send/${selectedFriend?._id}`,
           {
@@ -66,9 +66,9 @@ const useSendChat = () => {
       }
       console.log(data);
       if (!data.status) {
-        if (!data?.imgUploadStatus) {
-          updateLastMessage({ ...msgFields, status: "failed" });
-        }
+        updateLastMessage({ ...msgFields, status: "failed" });
+        // if (!data?.imgUploadStatus) {
+        // }
         toast.error(data.message, {
           position: "bottom-right",
           id: "message error",

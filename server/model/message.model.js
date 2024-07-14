@@ -15,7 +15,7 @@ const messageSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["text", "img", "video"],
+      enum: ["text", "image", "video", "audio"],
     },
     status: {
       type: String,
@@ -27,7 +27,7 @@ const messageSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    imgSrc: {
+    fileSrc: {
       type: String,
     },
     caption: String,

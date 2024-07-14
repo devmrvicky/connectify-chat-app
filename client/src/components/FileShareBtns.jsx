@@ -1,4 +1,5 @@
 import { FaFileImage } from "react-icons/fa6";
+import { MdAudiotrack, MdOutlineOndemandVideo } from "react-icons/md";
 
 const FileShareBtns = ({ handleOnChange }) => {
   return (
@@ -10,16 +11,20 @@ const FileShareBtns = ({ handleOnChange }) => {
         acceptedFile="image/*"
         handleOnChange={handleOnChange}
       />
-      {/* <ShareBtn
+      <ShareBtn
         icon={<MdAudiotrack className="w-5 h-5" />}
         btnName="Audio"
-        disabled={true}
+        name="audioFile"
+        acceptedFile="audio/*"
+        handleOnChange={handleOnChange}
       />
       <ShareBtn
         icon={<MdOutlineOndemandVideo className="w-5 h-5" />}
         btnName="Video"
-        disabled={true}
-      /> */}
+        name="videoFile"
+        acceptedFile="video/*"
+        handleOnChange={handleOnChange}
+      />
     </div>
   );
 };
@@ -28,19 +33,19 @@ const ShareBtn = ({
   icon,
   btnName,
   disabled = false,
-  acceptedFile,
+  acceptedFile = "auto",
   handleOnChange,
   name,
 }) => {
   return (
     <label
-      htmlFor="image-file"
+      htmlFor={name}
       className="flex items-center gap-2 hover:bg-light-text2/100 px-2 py-1 rounded hover:text-dark-text2"
     >
       <input
         type="file"
         name={name}
-        id="image-file"
+        id={name}
         className="hidden"
         accept={acceptedFile}
         disabled={disabled}

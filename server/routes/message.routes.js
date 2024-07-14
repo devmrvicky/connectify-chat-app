@@ -12,7 +12,7 @@ const router = express.Router();
 router.post(
   "/send/:receiverId",
   checkUserAuthentication,
-  upload.single("imgFile"),
+  upload.single("file"),
   sendMessage
 );
 // router.post(

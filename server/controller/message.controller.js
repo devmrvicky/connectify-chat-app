@@ -33,7 +33,7 @@ const sendMessage = async (req, res) => {
 
     // here before creating message obj check message type
     // if message type is image, video or other media file then first upload it on cloud
-    let cloudinaryRes;
+    let cloudinaryRes = {};
     if (req.file) {
       console.log({ file: req.file }); //
       // file: {
@@ -47,6 +47,11 @@ const sendMessage = async (req, res) => {
       //   size: 205705
       // }
       const localFilePath = req.file.path;
+      if (!localFilePath) {
+        return res
+          .status(404)
+          .json({ status: false, message: "Didn't find file on server" });
+      }
       cloudinaryRes = await uploadOnCloudinary(localFilePath);
       console.log({ cloudinaryRes });
       if (!cloudinaryRes) {
@@ -66,7 +71,7 @@ const sendMessage = async (req, res) => {
       ...message,
       senderId,
       receiverId,
-      imgSrc: cloudinaryRes?.secure_url,
+      fileSrc: cloudinaryRes?.secure_url,
       fileName: cloudinaryRes?.original_filename,
       status: "success",
     });
@@ -83,7 +88,9 @@ const sendMessage = async (req, res) => {
 
     const receiverSocketId = getUserFromList(receiverId);
 
-    io.to(receiverSocketId).emit("newMessage", { message: newMessage });
+    io.to(receiverSocketId).emit("newMessage", {
+      message: newMessage,
+    });
 
     res.status(201).json({ status: true, message: newMessage });
   } catch (error) {
@@ -160,8 +167,6 @@ const getMessages = async (req, res) => {
     const conversation = await Conversation.findOne({
       participants: { $all: [senderId, userIdToChat] },
     }).populate("messages");
-    console.log("get all messages");
-    console.log(conversation?.messages.at(-1));
     res.status(200).json({
       status: true,
       message: "get conversation",

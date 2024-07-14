@@ -190,13 +190,11 @@ const getAllFriends = async (req, res) => {
       ],
     }).populate(["senderId", "receiverId"]);
 
-    console.log("from get all friends", friends);
     if (!friends) {
       return res
         .status(400)
         .json({ status: false, message: "Invalid request fields" });
     }
-    console.log("get all friends");
     return res
       .status(200)
       .json({ status: true, message: "get all friends", friends });
@@ -214,9 +212,9 @@ const removeFromFriendRequests = async (req, res) => {
         .status(403)
         .json({ status: false, message: "Request sender friend didn't find" });
     }
-    let removeActionType = req.body?.removeActionType
-    if(!removeActionType){
-      removeActionType = 'remove-friend-request'
+    let removeActionType = req.body?.removeActionType;
+    if (!removeActionType) {
+      removeActionType = "remove-friend-request";
       // return res.status(400).json({status: false, message: "Please provide remove action type"})
     }
     const receiverId = req.user._id;
@@ -234,7 +232,10 @@ const removeFromFriendRequests = async (req, res) => {
     });
     console.log("friend removed");
     const senderSocketId = getUserFromList(senderId);
-    io.to(senderSocketId).emit("remove-friend-request", { receiverId, removeActionType });
+    io.to(senderSocketId).emit("remove-friend-request", {
+      receiverId,
+      removeActionType,
+    });
     return res.status(200).json({
       status: true,
       message: "friend removed successfully",
