@@ -99,7 +99,7 @@ const ContactProfile = ({
           <div className="flex justify-between items-center w-full text-sm">
             <p className="last-chat flex gap-1 items-center">
               <span>
-                {(lastChat?.imgSrc || lastChat?.message) &&
+                {(lastChat?.fileSrc || lastChat?.message) &&
                   lastChat?.receiverId === _id && (
                     <BiCheckDouble className="w-5 h-5" />
                   )}
@@ -146,13 +146,6 @@ const FileIcon = ({ fileType }) => {
     case "audio":
       return <MdAudiotrack />;
   }
-
-  // return (
-  //   <>
-  //     {fileType === "img" && <FaImage />}
-  //     {fileType === "video" && <FaCirclePlay />}
-  //   </>
-  // );
 };
 
 export default ContactProfile;

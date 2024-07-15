@@ -7,6 +7,7 @@ import FileDownloadBtn from "../FileDownloadBtn";
 
 const FileMessage = ({ children, message, className = "" }) => {
   const { downloadedAssets } = useCheckDownloadedAssets();
+  console.log(downloadedAssets);
   const isDownloadedAsset = downloadedAssets.includes(message._id);
   const { authUser } = useAuthContext();
   return (
@@ -16,7 +17,10 @@ const FileMessage = ({ children, message, className = "" }) => {
       {message?.status === "pending" && <FileUploadIndicator />}
       {message?.status === "failed" && <FileUploadFailedIndicator />}
       {!isDownloadedAsset && message?.senderId !== authUser?._id && (
-        <FileDownloadBtn />
+        <FileDownloadBtn
+          fileUrl={message?.fileSrc}
+          fileMessageId={message._id}
+        />
       )}
       {children}
       {message.caption && (
