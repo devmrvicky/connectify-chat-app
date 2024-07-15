@@ -50,7 +50,7 @@ const PopoverContent = ({ children }) => {
       <Popover.Trigger className="max-[420px]:mx-2">
         {children[0]}
       </Popover.Trigger>
-      <Popover.Content width="360px" sideOffset={20}>
+      <Popover.Content width="360px" sideOffset={20} className="z-20">
         {children[1]}
       </Popover.Content>
     </Popover.Root>

@@ -6,7 +6,7 @@ import { useCheckDownloadedAssets } from "../hooks/chat/useCheckDownloadedAssets
 import { FaXmark } from "react-icons/fa6";
 import { SERVER_URL } from "../api/serverUrl";
 
-const FileDownloadBtn = ({ fileUrl, fileMessageId }) => {
+const FileDownloadBtn = ({ fileUrl, fileMessageId, className = "" }) => {
   const [downloading, setDownloading] = useState(false);
 
   const { setFileToDownloadedList } = useCheckDownloadedAssets();
@@ -49,7 +49,7 @@ const FileDownloadBtn = ({ fileUrl, fileMessageId }) => {
   return (
     <button
       type="button"
-      className="absolute bottom-2 left-2 flex items-center gap-1 bg-dark-bg2/50 text-light-text/80 backdrop-blur-md px-3 py-2 rounded-full z-20"
+      className={`${className} absolute bottom-2 left-2 flex items-center gap-1 bg-dark-bg2/50 text-light-text/80 backdrop-blur-md px-3 py-2 rounded-full z-20`}
       onClick={handleDownload}
     >
       {!downloading ? (

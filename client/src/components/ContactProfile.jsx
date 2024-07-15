@@ -139,7 +139,7 @@ import { MdAudiotrack } from "react-icons/md";
 
 const FileIcon = ({ fileType }) => {
   switch (fileType) {
-    case "img":
+    case "image":
       return <FaImage />;
     case "video":
       return <FaCirclePlay />;

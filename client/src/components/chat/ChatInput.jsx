@@ -21,8 +21,6 @@ const ChatInput = () => {
   const { sendChat, loading } = useSendChat();
   const { sendTypingStatus } = useGetTypingStatus();
 
-  const imgFileRef = useRef(null);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     chatInputRef.current.focus();
@@ -84,6 +82,9 @@ const ChatInput = () => {
   }
 
   const closeFileShareWindow = () => {
+    // console.dir(e);
+    // e.stopPropagation();
+    console.log("window close");
     setIsFileChooses(false);
   };
 
@@ -137,9 +138,7 @@ const ChatInput = () => {
         </button>
         <PopoverContent>
           <LuFolderSymlink className="w-5 h-5" />
-          <form action="post" enctype="multipart/form-data" ref={imgFileRef}>
-            <FileShareBtns handleOnChange={handleChooseFile} />
-          </form>
+          <FileShareBtns handleOnChange={handleChooseFile} />
         </PopoverContent>
         <input
           type="text"

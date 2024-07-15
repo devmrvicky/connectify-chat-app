@@ -17,10 +17,10 @@ const uploadOnCloudinary = async (localFilePath) => {
     // file has been uploaded successful
     console.log("file uploaded on cloudinary successfully ", response);
     // if file successfully upload on cloudinary then remove file from the server that is exist in ./public/temp folder
-    fs.unlinkSync(localFilePath);
+    // fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
-    fs.unlinkSync(localFilePath);
+    // fs.unlinkSync(localFilePath);
     console.log(error.message);
     return null;
   } finally {
