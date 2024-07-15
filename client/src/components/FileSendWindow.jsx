@@ -5,10 +5,11 @@ import useSendChat from "../hooks/chat/useSendChat";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import VideoPlayer from "./VideoPlayer";
 import AudioPlayer from "./AudioPlayer";
+import OtherDocMessage from "./chat/OtherDocMessage";
 
 const FileSendWindow = ({ name, size, src, fileType, closeWindow, file }) => {
   const [caption, setCaption] = useState("");
-
+  console.log({ file });
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
 
   const { sendChat } = useSendChat();
@@ -39,13 +40,12 @@ const FileSendWindow = ({ name, size, src, fileType, closeWindow, file }) => {
         {fileType === "image" && (
           <img src={src} alt={name} className="w-full h-auto" />
         )}
-        {fileType === "video" && (
-          // <video src={src} className="w-full h-auto" controls />
-          <VideoPlayer videoSrc={src} />
-        )}
+        {fileType === "video" && <VideoPlayer videoSrc={src} />}
         {fileType === "audio" && (
-          // <audio src={src} controls className="w-full" />
           <AudioPlayer message={{ fileName: name, fileSrc: src }} />
+        )}
+        {fileType === "application" && (
+          <OtherDocMessage message={{ fileName: name, fileSrc: src }} />
         )}
       </div>
       <div className="w-full flex gap-2 items-center">

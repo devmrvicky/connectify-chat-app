@@ -1,5 +1,6 @@
 import { FaFileImage } from "react-icons/fa6";
 import { MdAudiotrack, MdOutlineOndemandVideo } from "react-icons/md";
+import { IoDocument } from "react-icons/io5";
 
 const FileShareBtns = ({ handleOnChange }) => {
   return (
@@ -23,6 +24,13 @@ const FileShareBtns = ({ handleOnChange }) => {
         btnName="Video"
         name="videoFile"
         acceptedFile="video/*"
+        handleOnChange={handleOnChange}
+      />
+      <ShareBtn
+        icon={<IoDocument className="w-5 h-5" />}
+        btnName="Documents & other"
+        name="document"
+        acceptedFile="*"
         handleOnChange={handleOnChange}
       />
     </div>

@@ -8,6 +8,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import ImgMessage from "./ImgMessage";
 import VideoMessage from "./VideoMessage";
 import AudioMessage from "./AudioMessage";
+import OtherDocMessage from "./OtherDocMessage";
 
 // here message will be display according to message type (text, image, video, audio)
 
@@ -52,6 +53,9 @@ const Message = ({ lastMessageRef, message }) => {
         {message.type === "video" && <VideoMessage message={message} />}
         {/* audio */}
         {message.type === "audio" && <AudioMessage message={message} />}
+        {message.type === "application" && (
+          <OtherDocMessage message={message} />
+        )}
         <span
           className={`text-[10px] ml-auto text-zinc-500 flex items-center ${
             message.type !== "text" &&
