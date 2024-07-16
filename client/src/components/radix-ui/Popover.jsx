@@ -44,10 +44,13 @@ const PopoverDemo = ({ children }) => {
   );
 };
 
-const PopoverContent = ({ children }) => {
+const PopoverContent = ({ children, tooltip, tipStr }) => {
   return (
     <Popover.Root>
-      <Popover.Trigger className="max-[420px]:mx-2">
+      <Popover.Trigger
+        className={`max-[420px]:mx-2 ${tooltip}`}
+        data-tip={tipStr}
+      >
         {children[0]}
       </Popover.Trigger>
       <Popover.Content width="360px" sideOffset={20} className="z-20">

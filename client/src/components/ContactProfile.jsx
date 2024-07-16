@@ -137,6 +137,7 @@ const ContactProfile = ({
 import { FaCirclePlay } from "react-icons/fa6";
 import { MdAudiotrack } from "react-icons/md";
 import { IoDocument } from "react-icons/io5";
+import { MdKeyboardVoice } from "react-icons/md";
 
 const FileIcon = ({ fileType }) => {
   switch (fileType) {
@@ -148,6 +149,8 @@ const FileIcon = ({ fileType }) => {
       return <MdAudiotrack />;
     case "application":
       return <IoDocument />;
+    case "voice":
+      return <MdKeyboardVoice />;
   }
 };
 

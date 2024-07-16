@@ -9,10 +9,12 @@ import ImgMessage from "./ImgMessage";
 import VideoMessage from "./VideoMessage";
 import AudioMessage from "./AudioMessage";
 import OtherDocMessage from "./OtherDocMessage";
+import VoiceMessage from "./VoiceMessage";
 
 // here message will be display according to message type (text, image, video, audio)
 
 const Message = ({ lastMessageRef, message }) => {
+  console.log(message);
   const { authUser } = useAuthContext();
   const selectedFriend = useStore((store) => store.selectedFriend);
 
@@ -56,9 +58,10 @@ const Message = ({ lastMessageRef, message }) => {
         {message.type === "application" && (
           <OtherDocMessage message={message} />
         )}
+        {message.type === "voice" && <VoiceMessage message={message} />}
         <span
           className={`text-[10px] ml-auto text-zinc-500 flex items-center ${
-            message.type !== "text" &&
+            ["image", "video"].includes(message.type) &&
             !message.caption &&
             "absolute z-10 bottom-2 right-2 text-light-text bg-dark-bg22/50 backdrop-blur-md px-2 py-1 rounded-full"
           }`}
