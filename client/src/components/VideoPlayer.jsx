@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { CiPause1, CiPlay1 } from "react-icons/ci";
 
-const VideoPlayer = ({ videoSrc }) => {
+const VideoPlayer = ({ videoSrc, className = "" }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef(null);
   const handlePlayVideo = () => {
@@ -14,7 +14,7 @@ const VideoPlayer = ({ videoSrc }) => {
     }
   };
   return (
-    <div>
+    <div className={`${className}`}>
       <button
         type="button"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10"

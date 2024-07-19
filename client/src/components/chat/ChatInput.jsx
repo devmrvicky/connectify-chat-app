@@ -158,7 +158,7 @@ const ChatInput = () => {
             <button
               type="submit"
               disabled={loading}
-              className="tooltip before:bottom-12"
+              className="tooltip before:bottom-12 ml-auto"
               data-tip="send"
             >
               {loading ? (

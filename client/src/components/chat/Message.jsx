@@ -10,6 +10,8 @@ import VideoMessage from "./VideoMessage";
 import AudioMessage from "./AudioMessage";
 import OtherDocMessage from "./OtherDocMessage";
 import VoiceMessage from "./VoiceMessage";
+import { useNavigate } from "react-router-dom";
+import { useMedia } from "../../hooks/media/useMedia";
 
 // here message will be display according to message type (text, image, video, audio)
 
@@ -17,6 +19,8 @@ const Message = ({ lastMessageRef, message }) => {
   console.log(message);
   const { authUser } = useAuthContext();
   const selectedFriend = useStore((store) => store.selectedFriend);
+
+  const navigate = useNavigate();
 
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
 
@@ -26,6 +30,14 @@ const Message = ({ lastMessageRef, message }) => {
     authUser?._id === message.senderId
       ? authUser.profilePic
       : selectedFriend.profilePic;
+
+  const { chooseCurrentMediaFile } = useMedia();
+
+  const handleOpenMediaFile = ({ fileType, fileId }) => {
+    if (["text", "voice"].includes(fileType)) return;
+    chooseCurrentMediaFile(fileId);
+    navigate("/media");
+  };
 
   return (
     <div className={`chat ${chatType}`} ref={lastMessageRef}>
@@ -44,6 +56,9 @@ const Message = ({ lastMessageRef, message }) => {
         className={`chat-bubble ${
           message.type !== "text" ? "p-1 rounded-sm" : ""
         } bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 flex flex-col relative`}
+        onClick={() =>
+          handleOpenMediaFile({ fileType: message.type, fileId: message._id })
+        }
       >
         {/* text */}
         {message.type === "text" && (

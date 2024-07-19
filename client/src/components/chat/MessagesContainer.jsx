@@ -9,19 +9,6 @@ const MessagesContainer = () => {
   const lastMessageRef = useRef(null);
   const { messages, unreadMessages } = useStore((store) => store);
   const { loading } = useGetMessages();
-  /*
-  {
-  date: [{...message}, {...message}],
-  date2: [{...message}, {...message}]
-  }
-
-  or
-
-  [
-  [{...message}, {...message}],
-  [{...message}, {...message}]
-  ]
-  */
 
   const noMessages = Boolean(messages.length);
 
