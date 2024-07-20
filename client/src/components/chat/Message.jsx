@@ -16,9 +16,8 @@ import { useMedia } from "../../hooks/media/useMedia";
 // here message will be display according to message type (text, image, video, audio)
 
 const Message = ({ lastMessageRef, message }) => {
-  console.log(message);
   const { authUser } = useAuthContext();
-  const selectedFriend = useStore((store) => store.selectedFriend);
+  const { selectedFriend, setOpenMediaGallery } = useStore((store) => store);
 
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ const Message = ({ lastMessageRef, message }) => {
   const handleOpenMediaFile = ({ fileType, fileId }) => {
     if (["text", "voice"].includes(fileType)) return;
     chooseCurrentMediaFile(fileId);
-    navigate("/media");
+    setOpenMediaGallery(true);
   };
 
   return (

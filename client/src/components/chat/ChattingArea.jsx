@@ -3,9 +3,10 @@ import { MessagesContainer, ChatInput } from "..";
 import useStore from "../../zustand/store";
 import { IoChatbubbles } from "react-icons/io5";
 import ChatUserHead from "./ChatUserHead";
+import MediaPage from "../media/MediaPage";
 
 const ChattingArea = () => {
-  const { selectedFriend } = useStore((store) => store);
+  const { selectedFriend, openMediaGallery } = useStore((store) => store);
 
   return !selectedFriend ? (
     <NoFriendSelected />
@@ -14,6 +15,7 @@ const ChattingArea = () => {
       <ChatUserHead />
       <div className="divider divider-vertical m-0 mt-3 h-0"></div>
       <MessagesContainer />
+      {openMediaGallery && <MediaPage/>}
       <div className="divider divider-vertical m-0 mb-3 h-0"></div>
       <ChatInput />
     </div>

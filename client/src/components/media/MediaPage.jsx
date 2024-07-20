@@ -2,21 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useMedia } from "../../hooks/media/useMedia";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
-import VideoPlayer from "../../components/VideoPlayer";
+import VideoPlayer from "../VideoPlayer";
 import { BiMusic } from "react-icons/bi";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
-import { get } from "react-hook-form";
-import AudioPlayer from "../../components/AudioPlayer";
+import AudioPlayer from "../AudioPlayer";
+import useStore from "../../zustand/store";
+import FileDownloadBtn from "../FileDownloadBtn";
 
 const MediaPage = () => {
   const [currentActiveFile, setCurrentActiveFile] = useState(null);
   const [isLastFile, setIsLastFile] = useState(false);
   const [isFirstFile, setIsFirstFile] = useState(false);
   const [show, setShow] = useState(false);
+
+  const { setOpenMediaGallery } = useStore((store) => store);
+
   const { mediaFiles, currentFile, chooseCurrentMediaFile } = useMedia();
+  // console.log(currentFile);
   const navigate = useNavigate();
   const goBack = () => {
-    navigate("/");
+    // navigate("/");
+    setOpenMediaGallery(false);
   };
 
   const getCurrentFileIndex = (fileId) =>
@@ -57,6 +63,12 @@ const MediaPage = () => {
             </span>
             <span className="max-[700px]:text-sm">{currentFile.createdAt}</span>
           </div>
+          <FileDownloadBtn
+            fileMessageId={currentActiveFile._id}
+            fileUrl={currentActiveFile.fileSrc}
+            className="relative ml-auto  bottom-0 left-0"
+            iconSize="w-7 h-7"
+          />
         </div>
       )}
       <div

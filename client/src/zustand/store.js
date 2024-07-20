@@ -4,6 +4,8 @@ const useStore = create((set) => ({
   selectedFriend: null,
   messages: [],
   searchedFriends: [],
+  opeMediaGallery: false,
+  setOpenMediaGallery: status => set(() => ({openMediaGallery: status})),
   selectFriend: (friend) => set((state) => ({ selectedFriend: friend })),
   setMessages: (messages) => set(() => ({ messages: messages })),
   addMessage: (message) =>

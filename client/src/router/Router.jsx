@@ -20,7 +20,6 @@ import FriendRequests from "../pages/friends/FriendRequests";
 import NotificationsPage from "../pages/notifications/NotificationsPage";
 import ChatNotifications from "../pages/notifications/ChatNotifications";
 import FriendNotifications from "../pages/notifications/FriendNotifications";
-import MediaPage from "../pages/media/MediaPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -99,15 +98,6 @@ const router = createBrowserRouter(
         <Route path="chats" element={<ChatNotifications />} />
         <Route path="friends" element={<FriendNotifications />} />
       </Route>
-      {/* media page */}
-      <Route
-        path="media"
-        element={
-          <AuthProtectedRouter authentication={true}>
-            <MediaPage />
-          </AuthProtectedRouter>
-        }
-      />
     </Route>
   )
 );
