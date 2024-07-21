@@ -32,7 +32,6 @@ const ContactProfile = ({
     unreadMessages.filter((unreadMessage) => unreadMessage.senderId === _id),
     [unreadMessages]
   );
-  console.log({ unreadMessage });
 
   const handleSelectFriend = () => {
     if (isAuthProfile) return;

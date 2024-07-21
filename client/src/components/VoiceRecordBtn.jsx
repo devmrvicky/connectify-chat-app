@@ -14,7 +14,7 @@ const VoiceRecordBtn = ({ setIsVoiceRecording }) => {
       data-tip="voice message"
       onClick={handleVoiceRecording}
     >
-      <CiMicrophoneOn className="w-6 h-6" />
+      <CiMicrophoneOn className="w-7 h-7" />
     </button>
   );
 };

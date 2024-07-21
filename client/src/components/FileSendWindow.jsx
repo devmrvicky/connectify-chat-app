@@ -7,7 +7,18 @@ import VideoPlayer from "./VideoPlayer";
 import AudioPlayer from "./AudioPlayer";
 import OtherDocMessage from "./chat/OtherDocMessage";
 
-const FileSendWindow = ({ name, size, src, fileType, closeWindow, file }) => {
+const FileSendWindow = ({
+  name,
+  size,
+  src,
+  fileType,
+  closeWindow,
+  file,
+  className,
+  maxWidth = "max-w-[300px]",
+  fileDimension = "w-full h-auto",
+  closeCamera,
+}) => {
   const [caption, setCaption] = useState("");
   console.log({ file });
   const isSmallDevice = useMediaQuery("only screen and (max-width : 420px)");
@@ -26,21 +37,27 @@ const FileSendWindow = ({ name, size, src, fileType, closeWindow, file }) => {
     };
     sendChat(fileObj);
     closeWindow();
+    closeCamera();
   };
 
   return (
-    <div className="max-w-[300px] w-full h-auto bg-light-bg2/100 dark:bg-dark-bg2 text-dark-text2 dark:text-light-text2 flex flex-col gap-2 absolute z-30 p-2 shadow border rounded left-0 bottom-0">
+    <div
+      className={` ${maxWidth} w-full h-auto bg-light-bg2/100 dark:bg-dark-bg2 text-dark-text2 dark:text-light-text2 flex flex-col gap-2 absolute z-30 p-2 shadow border rounded left-0 bottom-0 ${className}`}
+    >
       <div className="window-head flex items-start">
         <span>
           {name} ({(size / 1024).toFixed(2)} kb)
         </span>
         <button type="button" className="ml-auto">
-          <FaXmark onClick={closeWindow} className="active:scale-95 w-6 h-6" />
+          <FaXmark
+            onClick={closeWindow}
+            className="active:scale-95 w-8 h-8 rounded-full"
+          />
         </button>
       </div>
-      <div className="w-full h-auto max-h-[500px] flex-1 overflow-y-auto">
+      <div className="w-full h-auto max-h-[500px] flex-1 overflow-y-auto flex items-center justify-center">
         {fileType === "image" && (
-          <img src={src} alt={name} className="w-full h-auto" />
+          <img src={src} alt={name} className={`${fileDimension}`} />
         )}
         {fileType === "video" && <VideoPlayer videoSrc={src} />}
         {fileType === "audio" && (
@@ -50,7 +67,7 @@ const FileSendWindow = ({ name, size, src, fileType, closeWindow, file }) => {
           <OtherDocMessage message={{ fileName: name, fileSrc: src }} />
         )}
       </div>
-      <div className="w-full flex gap-2 items-center">
+      <div className="w-full flex gap-2 items-center px-3">
         <input
           type="text"
           name="caption"

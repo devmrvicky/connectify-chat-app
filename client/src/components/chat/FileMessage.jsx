@@ -7,7 +7,7 @@ import FileDownloadBtn from "../FileDownloadBtn";
 
 const FileMessage = ({ children, message, className = "" }) => {
   const { downloadedAssets } = useCheckDownloadedAssets();
-  console.log(downloadedAssets);
+
   const isDownloadedAsset = downloadedAssets.includes(message._id);
   const { authUser } = useAuthContext();
   return (

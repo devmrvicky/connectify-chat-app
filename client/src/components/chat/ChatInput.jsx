@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CiMicrophoneOn } from "react-icons/ci";
+import { CiCamera } from "react-icons/ci";
 import { RiSendPlaneFill } from "react-icons/ri";
 import useSendChat from "../../hooks/chat/useSendChat";
 import { VscLoading } from "react-icons/vsc";
@@ -8,9 +8,10 @@ import { LuFolderSymlink } from "react-icons/lu";
 import { PopoverContent } from "../radix-ui/Popover";
 import FileShareBtns from "../FileShareBtns";
 import FileSendWindow from "../FileSendWindow";
-import imageCompression from "browser-image-compression";
 import VoiceRecordBtn from "../VoiceRecordBtn";
 import VoiceRecording from "../VoiceRecording";
+import OpenCameraBtn from "../camera/OpenCameraBtn";
+import { compressImg } from "../../utils/compressImg";
 
 const ChatInput = () => {
   const [file, setFile] = useState("");
@@ -33,29 +34,6 @@ const ChatInput = () => {
     sendChat({ message: chat, type: "text" });
     setChat("");
   };
-
-  async function compressImg(imgFile) {
-    console.log("originalFile instanceof Blob", imgFile instanceof Blob); // true
-    console.log(`originalFile size ${imgFile.size / 1024 / 1024} MB`);
-    const options = {
-      maxSizeMB: 1 / 2,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-    };
-    try {
-      const compressedFile = await imageCompression(imgFile, options);
-      console.log(
-        "compressedFile instanceof Blob",
-        compressedFile instanceof Blob
-      ); // true
-      console.log(
-        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
-      ); // smaller than maxSizeMB
-      return compressedFile;
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   async function handleChooseFile(e) {
     try {
@@ -87,8 +65,6 @@ const ChatInput = () => {
   }
 
   const closeFileShareWindow = () => {
-    // console.dir(e);
-    // e.stopPropagation();
     console.log("window close");
     setIsFileChooses(false);
   };
@@ -139,11 +115,14 @@ const ChatInput = () => {
         ) : (
           <>
             <VoiceRecordBtn setIsVoiceRecording={setIsVoiceRecording} />
+            <OpenCameraBtn>
+              <CiCamera className="w-6 h-6" />
+            </OpenCameraBtn>
             <PopoverContent
               tooltip="tooltip before:bottom-12"
               tipStr="file share"
             >
-              <LuFolderSymlink className="w-5 h-5" />
+              <LuFolderSymlink className="w-6 h-6 mx-1" />
               <FileShareBtns handleOnChange={handleChooseFile} />
             </PopoverContent>
             <input
@@ -162,9 +141,9 @@ const ChatInput = () => {
               data-tip="send"
             >
               {loading ? (
-                <VscLoading className="w-6 h-6 animate-spin" />
+                <VscLoading className="w-7 h-7 animate-spin" />
               ) : (
-                <RiSendPlaneFill className="w-6 h-6" />
+                <RiSendPlaneFill className="w-7 h-7" />
               )}
             </button>
           </>
