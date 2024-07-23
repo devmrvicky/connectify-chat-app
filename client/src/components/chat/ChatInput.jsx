@@ -12,12 +12,15 @@ import VoiceRecordBtn from "../VoiceRecordBtn";
 import VoiceRecording from "../VoiceRecording";
 import OpenCameraBtn from "../camera/OpenCameraBtn";
 import { compressImg } from "../../utils/compressImg";
+import { BsFolderSymlink } from "react-icons/bs";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 const ChatInput = () => {
   const [file, setFile] = useState("");
   const [isFileChooses, setIsFileChooses] = useState(false);
   const [fileObj, setFileObj] = useState(null);
 
+  const [isChatInputFocused, setIsChatInputFocused] = useState(false);
   const [isInput, setIsInput] = useState(false);
   const [chat, setChat] = useState("");
 
@@ -26,6 +29,8 @@ const ChatInput = () => {
   const chatInputRef = useRef(null);
   const { sendChat, loading } = useSendChat();
   const { sendTypingStatus } = useGetTypingStatus();
+
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 540px)");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -98,58 +103,85 @@ const ChatInput = () => {
   }, [chat]);
 
   return (
-    <form
-      className="max-w-[900px] w-full mx-auto my-auto"
-      onSubmit={handleSubmit}
+    <div
+      className={`flex items-center gap-1  ${
+        isSmallDevice &&
+        "border input-bordered rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2 overflow-hidden pl-3"
+      }`}
     >
-      <div className="input input-bordered flex items-center gap-3 max-[420px]:gap-0 rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2">
-        {isFileChooses && (
-          <FileSendWindow
-            {...fileObj}
-            closeWindow={closeFileShareWindow}
-            file={file}
+      {!isChatInputFocused && !isVoiceRecording && (
+        <div
+          className={`flex items-center ${isSmallDevice ? "gap-1" : "gap-1"}`}
+        >
+          <VoiceRecordBtn
+            setIsVoiceRecording={setIsVoiceRecording}
+            isSmallDevice={isSmallDevice}
           />
-        )}
-        {isVoiceRecording ? (
-          <VoiceRecording setIsVoiceRecording={setIsVoiceRecording} />
-        ) : (
-          <>
-            <VoiceRecordBtn setIsVoiceRecording={setIsVoiceRecording} />
-            <OpenCameraBtn>
-              <CiCamera className="w-6 h-6" />
-            </OpenCameraBtn>
-            <PopoverContent
-              tooltip="tooltip before:bottom-12"
-              tipStr="file share"
-            >
-              <LuFolderSymlink className="w-6 h-6 mx-1" />
-              <FileShareBtns handleOnChange={handleChooseFile} />
-            </PopoverContent>
-            <input
-              type="text"
-              className="grow"
-              placeholder="Write something"
-              value={chat}
-              onChange={(e) => setChat(e.target.value)}
-              ref={chatInputRef}
+          <OpenCameraBtn isSmallDevice={isSmallDevice}>
+            <CiCamera className="w-6 h-6" />
+          </OpenCameraBtn>
+          <PopoverContent
+            tooltip="tooltip before:bottom-12"
+            tipStr="file share"
+            triggerBtnClass={`${
+              !isSmallDevice && "btn btn-md"
+            } btn-circle flex items-center justify-center`}
+          >
+            <BsFolderSymlink className="w-6 h-6 mx-1" />
+            {/* <LuFolderSymlink className="w-6 h-6 mx-1" /> */}
+            <FileShareBtns handleOnChange={handleChooseFile} />
+          </PopoverContent>
+        </div>
+      )}
+      <form
+        className="max-w-[900px] w-full mx-auto my-auto"
+        onSubmit={handleSubmit}
+      >
+        <div
+          className={`input max-[540px]:p-0 flex items-center gap-3 max-[420px]:gap-0 ${
+            !isSmallDevice &&
+            " input-bordered rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2"
+          }`}
+        >
+          {isFileChooses && (
+            <FileSendWindow
+              {...fileObj}
+              closeWindow={closeFileShareWindow}
+              file={file}
             />
+          )}
+          {isVoiceRecording ? (
+            <VoiceRecording setIsVoiceRecording={setIsVoiceRecording} />
+          ) : (
+            <>
+              <input
+                type="text"
+                className="grow"
+                placeholder="Write something"
+                value={chat}
+                onChange={(e) => setChat(e.target.value)}
+                ref={chatInputRef}
+                onFocus={() => setIsChatInputFocused(true)}
+                onBlur={() => setIsChatInputFocused(false)}
+              />
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="tooltip before:bottom-12 ml-auto"
-              data-tip="send"
-            >
-              {loading ? (
-                <VscLoading className="w-7 h-7 animate-spin" />
-              ) : (
-                <RiSendPlaneFill className="w-7 h-7" />
-              )}
-            </button>
-          </>
-        )}
-      </div>
-    </form>
+              <button
+                type="submit"
+                disabled={loading}
+                className="tooltip before:bottom-12 ml-auto"
+                data-tip="send"
+              >
+                {loading ? (
+                  <VscLoading className="w-7 h-7 animate-spin" />
+                ) : (
+                  <RiSendPlaneFill className="w-7 h-7" />
+                )}
+              </button>
+            </>
+          )}
+        </div>
+      </form>
+    </div>
   );
 };
 

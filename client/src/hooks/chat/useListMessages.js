@@ -9,9 +9,13 @@ import MessageToast from "../../components/MessageToast";
 // this hook called by home component
 const useListMessages = () => {
   const { socket } = useSocketContext();
-  const { addMessage, selectedFriend, messages, addUnreadMessage } = useStore(
-    (store) => store
-  );
+  const {
+    addMessage,
+    removeMessage,
+    selectedFriend,
+    messages,
+    addUnreadMessage,
+  } = useStore((store) => store);
   const { myContacts } = useFriendStore((store) => store);
 
   useEffect(() => {
@@ -30,8 +34,18 @@ const useListMessages = () => {
     };
     socket?.on("newMessage", updateNewMessage);
 
+    // delete chat
+    const deleteMessage = async ({ messageId, remoteUserId }) => {
+      if (selectedFriend?._id === remoteUserId) {
+        console.log({ messageId, remoteUserId });
+        removeMessage(messageId);
+      }
+    };
+    socket?.on("deleteMessage", deleteMessage);
+
     return () => {
       socket?.off("newMessage", updateNewMessage);
+      socket?.off("deleteMessage", deleteMessage);
     };
   }, [socket, selectedFriend?._id, messages.length]);
 };

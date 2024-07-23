@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteMessage,
   getMessages,
   sendMessage,
   // uploadFile,
@@ -15,12 +16,7 @@ router.post(
   upload.single("file"),
   sendMessage
 );
-// router.post(
-//   "/file/upload",
-//   checkUserAuthentication,
-//   upload.single("imgFile"),
-//   uploadFile
-// );
+router.delete("/delete/:messageId", checkUserAuthentication, deleteMessage);
 router.get("/:id", checkUserAuthentication, getMessages);
 
 export default router;

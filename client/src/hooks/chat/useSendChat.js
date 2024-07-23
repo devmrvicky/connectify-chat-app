@@ -25,7 +25,6 @@ const useSendChat = () => {
     try {
       setLoading(true);
       addMessage(msgFields);
-      console.log(msgFields);
       let data;
 
       if (message.type !== "text") {
@@ -40,8 +39,6 @@ const useSendChat = () => {
         for (let [key, value] of Object.entries(tempFields)) {
           formData.append(key, value);
         }
-        console.log(message.file);
-        // return;
         formData.append("file", message.file, message.file?.name || Date.now());
         const res = await fetch(
           `${SERVER_URL}/api/messages/send/${selectedFriend?._id}`,

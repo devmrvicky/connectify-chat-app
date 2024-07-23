@@ -35,6 +35,10 @@ const messageSchema = new mongoose.Schema(
     message: {
       type: String,
     },
+    duration: Number,
+    publicId: String,
+    dimension: [String, String],
+    size: Number,
   },
   { timestamps: true }
 );

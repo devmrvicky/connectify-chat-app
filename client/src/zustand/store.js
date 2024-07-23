@@ -10,6 +10,7 @@ const useStore = create((set) => ({
   setMessages: (messages) => set(() => ({ messages: messages })),
   addMessage: (message) =>
     set((state) => ({ messages: [...state.messages, message] })),
+  removeMessage: (messageId) => set((state) => ({messages: state.messages.filter(message => message._id !== messageId)})),
   updateLastMessage: (updatedMessage) =>
     set((state) => {
       if (state.messages.length === 0) return;

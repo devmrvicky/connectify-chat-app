@@ -4,16 +4,19 @@ import useGetMessages from "../../hooks/chat/useGetMessages";
 import useStore from "../../zustand/store";
 import ChatSkeleton from "../skeleton/ChatSkeleton";
 import MessagesGroup from "./MessagesGroup";
+import { useDeleteChat } from "../../hooks/chat/useDeleteChat";
 
 const MessagesContainer = () => {
   const lastMessageRef = useRef(null);
   const { messages, unreadMessages } = useStore((store) => store);
   const { loading } = useGetMessages();
+  const { deletion } = useDeleteChat();
 
   const noMessages = Boolean(messages.length);
 
   useEffect(() => {
     setTimeout(() => {
+      if (deletion) return;
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   }, [messages.length]);

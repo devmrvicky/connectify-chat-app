@@ -44,11 +44,11 @@ const PopoverDemo = ({ children }) => {
   );
 };
 
-const PopoverContent = ({ children, tooltip, tipStr }) => {
+const PopoverContent = ({ children, tooltip, tipStr, triggerBtnClass }) => {
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={`max-[420px]:mx-2 ${tooltip}`}
+        className={`max-[420px]:mx-0 ${tooltip} ${triggerBtnClass}`}
         data-tip={tipStr}
       >
         {children[0]}

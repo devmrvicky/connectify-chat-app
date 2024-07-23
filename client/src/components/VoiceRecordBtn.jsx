@@ -1,7 +1,7 @@
 import React from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
 
-const VoiceRecordBtn = ({ setIsVoiceRecording }) => {
+const VoiceRecordBtn = ({ setIsVoiceRecording, isSmallDevice }) => {
   const handleVoiceRecording = () => {
     setIsVoiceRecording(true);
     // console.log("start voice recording...");
@@ -10,7 +10,9 @@ const VoiceRecordBtn = ({ setIsVoiceRecording }) => {
   return (
     <button
       type="button"
-      className="tooltip before:bottom-12 inline-block"
+      className={`tooltip before:bottom-12 ${
+        !isSmallDevice && "btn btn-md btn-circle"
+      } flex items-center justify-center`}
       data-tip="voice message"
       onClick={handleVoiceRecording}
     >

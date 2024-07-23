@@ -6,7 +6,7 @@ import FileSendWindow from "../FileSendWindow";
 import { MdCameraswitch } from "react-icons/md";
 import { IoMdVideocam } from "react-icons/io";
 
-const OpenCameraBtn = ({ children }) => {
+const OpenCameraBtn = ({ children, isSmallDevice }) => {
   const {
     openCamera,
     closeCamera,
@@ -24,8 +24,13 @@ const OpenCameraBtn = ({ children }) => {
   return (
     <div className="flex items-center justify-center">
       <button
-        className="tooltip before:bottom-12"
-        onClick={() => {
+        type="button"
+        className={`${
+          !isSmallDevice && "btn btn-md btn-circle"
+        } tooltip before:bottom-12 flex items-center justify-center`}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
           document.getElementById("my_modal_3").showModal();
           openCamera();
         }}
@@ -36,7 +41,6 @@ const OpenCameraBtn = ({ children }) => {
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box p-0 w-full h-full max-w-full max-h-full rounded-none">
           <form method="dialog" className="absolute right-5 top-2 z-10">
-            {/* if there is a button in form, it will close the modal */}
             <button
               className="btn btn-md btn-circle btn-ghost text-xl"
               onClick={closeCamera}

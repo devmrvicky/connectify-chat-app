@@ -2,7 +2,10 @@ import { Conversation } from "../model/conversation.model.js";
 import { Message } from "../model/message.model.js";
 import { getUserFromList } from "../service/user.service.js";
 import { io } from "../app.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  deleteAssetFromCloudinary,
+} from "../utils/cloudinary.js";
 
 const sendMessage = async (req, res) => {
   try {
@@ -53,7 +56,7 @@ const sendMessage = async (req, res) => {
           .json({ status: false, message: "Didn't find file on server" });
       }
       cloudinaryRes = await uploadOnCloudinary(localFilePath);
-      console.log({ cloudinaryRes });
+      // console.log({ cloudinaryRes });
       if (!cloudinaryRes) {
         return res.status(404).json({
           status: false,
@@ -73,6 +76,10 @@ const sendMessage = async (req, res) => {
       receiverId,
       fileSrc: cloudinaryRes?.secure_url,
       fileName: cloudinaryRes?.original_filename,
+      publicId: cloudinaryRes?.public_id,
+      dimension: [cloudinaryRes?.width, cloudinaryRes?.height],
+      size: cloudinaryRes?.bytes,
+      duration: cloudinaryRes?.duration,
       status: "success",
     });
 
@@ -92,72 +99,14 @@ const sendMessage = async (req, res) => {
       message: newMessage,
     });
 
+    console.log("new message", newMessage);
+
     res.status(201).json({ status: true, message: newMessage });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ status: false, message: error.message });
   }
 };
-
-// const resendFileMessage = async (req, res) => {
-//   try {
-//     const { receiverId } = req.params;
-//     if (!receiverId) {
-//       return res
-//         .status(400)
-//         .json({ status: false, message: "Didn't found message receiver" });
-//     }
-//     const senderId = req.user._id;
-//     const {localFilePath} = req.body;
-//     if(!localFilePath){
-//       return res.status(404).json({status: false, message: "Didn't find file on server"})
-//     }
-//     // find conversation between sender usr and receiver user
-//     let conversation = await Conversation.findOne({
-//       participants: { $all: [senderId, receiverId] },
-//     });
-//     if(!conversation){
-//       return res.status(404).json({status: false, message: "Didn't not file conversation between sender and receiver"})
-//     }
-//     let cloudinaryRes = await uploadOnCloudinary(localFilePath);
-//     console.log({ cloudinaryRes });
-//     if (!cloudinaryRes) {
-//       return res.status(404).json({
-//         status: false,
-//         imgUploadStatus: false,
-//         // fileName: req.file.filename,
-//         localFilePath,
-//         message: "error in reuploading file on cloudinary",
-//       });
-//     }
-//     console.log("upload successfully on cloud");
-//   } catch (error) {
-
-//   }
-// }
-
-// const uploadFile = async (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(404).json({ status: false, message: "file not found" });
-//     }
-//     const imgLocalPath = req?.file?.path;
-//     console.log(imgLocalPath);
-//     if (!imgLocalPath) {
-//       return res
-//         .status(404)
-//         .json({ status: false, message: "error in img upload" });
-//     }
-//     const imgSrc = await uploadOnCloudinary(imgLocalPath);
-//     console.log("uploadFile controller ", imgSrc);
-//     res
-//       .status(200)
-//       .json({ status: true, message: "everything is good", imgSrc });
-//   } catch (error) {
-//     console.log("error in upload file controller ", error.message);
-//     res.status(500).json({ status: false, message: error.message });
-//   }
-// };
 
 const getMessages = async (req, res) => {
   try {
@@ -179,4 +128,55 @@ const getMessages = async (req, res) => {
   }
 };
 
-export { sendMessage, getMessages };
+const deleteMessage = async (req, res) => {
+  try {
+    const { remoteUserId, publicId } = req.body;
+    const { messageId } = req.params;
+    if (!messageId) {
+      return res
+        .status(404)
+        .json({ status: false, message: "message not found" });
+    }
+    if (!remoteUserId) {
+      return res.status(404).json({ status: false, message: "req denied" });
+    }
+    const authUserId = req.user._id;
+    if (!authUserId) {
+      return res
+        .status(404)
+        .json({ status: false, message: "user unauthorized" });
+    }
+    if (publicId) {
+      // delete from cloudinary
+      const cloudinaryRes = await deleteAssetFromCloudinary(publicId);
+      console.log(cloudinaryRes);
+      if (!cloudinaryRes) {
+        return res
+          .status(400)
+          .status({ status: false, message: "could not delete file" });
+      }
+    }
+    const deleteRes = await Message.findByIdAndDelete({ _id: messageId });
+    console.log(deleteRes);
+    if (!deleteRes) {
+      return res
+        .status(400)
+        .json({ status: false, message: "couldn't delete message" });
+    }
+
+    const remoteUserSocketId = getUserFromList(remoteUserId);
+    io.to(remoteUserSocketId).emit("deleteMessage", {
+      messageId,
+      remoteUserId: authUserId,
+    });
+
+    return res
+      .status(200)
+      .json({ status: true, message: "successfully deleted" });
+  } catch (error) {
+    console.log("error in delete message ", error.message);
+    return res.status(500).json({ status: true, message: error.message });
+  }
+};
+
+export { sendMessage, getMessages, deleteMessage };
