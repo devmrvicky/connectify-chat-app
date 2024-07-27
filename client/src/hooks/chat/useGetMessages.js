@@ -33,7 +33,7 @@ const useGetMessages = () => {
         setLoading(false);
       }
     })();
-  }, [selectedFriend?._id, messages.length]);
+  }, [selectedFriend?._id]);
 
   return { loading };
 };

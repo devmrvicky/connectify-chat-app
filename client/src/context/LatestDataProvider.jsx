@@ -87,7 +87,7 @@ const LatestDataProvider = ({ children }) => {
     <LatestDataContext.Provider value={{ isDataLoading }}>
       {children}
       {isDataLoading && (
-        <div className="w-10 h-10 rounded-full flex items-center justify-center fixed bottom-3 right-3 bg-while/50 backdrop-blur-lg">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center fixed bottom-3 right-3 z-50 bg-while/50 backdrop-blur-lg">
           <VscLoading className="animate-spin text-white" />
         </div>
       )}
