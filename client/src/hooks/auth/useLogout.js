@@ -3,14 +3,18 @@ import { toast } from "react-hot-toast";
 import { useAuthContext } from "../../context/AuthContext";
 import { removeUserFromClient } from "../../utils/removeUserFromClient";
 import { useState } from "react";
+import { clearData } from "../../indexDB/indexdb";
 
 const useLogout = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
 
   const logout = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
+      await clearData({
+        storeName: `contacts_list`,
+      });
       setAuthUser(null);
       removeUserFromClient();
       const res = await apiPost("user/logout");
@@ -30,8 +34,9 @@ const useLogout = () => {
       toast.error(error.message, {
         id: "logout error",
       });
-    } finally {}
-    setLoading(false)
+    } finally {
+      setLoading(false);
+    }
   };
 
   return { logout, loading };

@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import { apiGet } from "../../api/api";
 import toast from "react-hot-toast";
 import useStore from "../../zustand/store";
+import { getAllData } from "../../indexDB/indexdb";
 
 const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
 
-  const { selectedFriend, setMessages } = useStore((store) => ({
-    selectedFriend: store.selectedFriend,
-    setMessages: store.setMessages,
-  }));
+  const { selectedFriend, setMessages, messages } = useStore((store) => store);
 
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
+        // const data = await getAllData({
+        //   storeName: "chats",
+        // });
+        // console.log(data);
         const data = await apiGet(`messages/${selectedFriend._id}`);
         if (!data.status) {
           toast.error(data.message);
@@ -31,7 +33,7 @@ const useGetMessages = () => {
         setLoading(false);
       }
     })();
-  }, [selectedFriend?._id]);
+  }, [selectedFriend?._id, messages.length]);
 
   return { loading };
 };

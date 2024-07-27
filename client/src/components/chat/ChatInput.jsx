@@ -138,7 +138,7 @@ const ChatInput = () => {
         onSubmit={handleSubmit}
       >
         <div
-          className={`input max-[540px]:p-0 flex items-center gap-3 max-[420px]:gap-0 ${
+          className={`input bg-transparent focus-within:outline-none focus-within:border-0 max-[540px]:p-0 flex items-center gap-3 max-[420px]:gap-0 ${
             !isSmallDevice &&
             " input-bordered rounded-full bg-light-bg2 dark:bg-dark-bg2 dark:text-light-text2 text-dark-text2"
           }`}
@@ -156,7 +156,7 @@ const ChatInput = () => {
             <>
               <input
                 type="text"
-                className="grow"
+                className="grow focus:outline-none dark:text-light-text2 text-dark-text2 placeholder"
                 placeholder="Write something"
                 value={chat}
                 onChange={(e) => setChat(e.target.value)}

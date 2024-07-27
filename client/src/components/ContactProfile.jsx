@@ -46,7 +46,7 @@ const ContactProfile = ({
         toast.error(data.message);
         throw new Error(data.message);
       }
-      console.log(data);
+      // console.log(data);
       // console.log({ lastMessage: data.lastMessage });
       // this last chat is showing on contact profile
       // if user have unread messages then user's last is last message from unread messages
