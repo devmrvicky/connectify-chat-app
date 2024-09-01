@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateJWTTokenAndSetCookie } from "../utils/generateJWTToken.js";
 import { createOtpDoc, verifyOtp } from "./otp.controller.js";
 import { verifiedUsers } from "../service/user.service.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // user signup
 const signup = async (req, res) => {
@@ -26,9 +27,8 @@ const signup = async (req, res) => {
     if (password !== confirmPassword) {
       return res
         .status(400)
-        .json({ status: false, message: "Password don't match" });
+        .json({ status: false, message: "Passwords don't match" });
     }
-
     // check if any user don't exist with this username
     const user = await User.findOne({ username });
     if (user) {
@@ -37,13 +37,29 @@ const signup = async (req, res) => {
         .json({ status: false, message: "This username doesn't exits" });
     }
 
+    let cloudinaryRes;
     // if all validation will be checked then create user and set cookie
+    if (req.file) {
+      const localFilePath = req.file.path;
+      if (!localFilePath) {
+        return res
+          .status(404)
+          .json({ status: false, message: "Didn't find file on server" });
+      }
+      cloudinaryRes = await uploadOnCloudinary(localFilePath);
+      // console.log({ cloudinaryRes });
+      if (!cloudinaryRes) {
+        return res.status(404).json({
+          status: false,
+          imgUploadStatus: false,
+          message: "failed to upload profile image",
+        });
+      }
+      console.log("profile image upload successfully");
+    }
 
-    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
-
-    // get email or phone
-    // const {email, phone} = getEmailOrPhoneFromList()
+    // let boyProfilePic = cloudinaryRes?.secure_url ? cloudinaryRes?.secure_url : `https://avatar.iran.liara.run/public/boy?username=${username}`;
+    // let girlProfilePic = cloudinaryRes?.secure_url ? cloudinaryRes?.secure_url : `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
     // hash password
     const salt = await bcrypt.genSalt(10);
@@ -61,7 +77,11 @@ const signup = async (req, res) => {
       fullName,
       username,
       password: hashPassword,
-      profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
+      profilePic: cloudinaryRes?.secure_url
+        ? cloudinaryRes?.secure_url
+        : gender === "male"
+        ? `https://avatar.iran.liara.run/public/boy?username=${username}`
+        : `https://avatar.iran.liara.run/public/girl?username=${username}`,
       gender,
       email,
       phone,

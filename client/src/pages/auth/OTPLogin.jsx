@@ -4,6 +4,7 @@ import useStore from "../../zustand/store";
 import { useAuthContext } from "../../context/AuthContext";
 import { setUserToClient } from "../../utils/setUserToClient";
 import toast from "react-hot-toast";
+import Countdown from "react-countdown";
 
 const OTPLogin = () => {
   const [email, setEmail] = useState("");
@@ -112,6 +113,13 @@ const OTPLogin = () => {
               required
             />
           </label>
+          <p className="pb-3">
+            otp resend in{" "}
+            <Countdown
+              date={Date.now() + 5000}
+              onComplete={() => setSendOtp(false)}
+            />{" "}
+          </p>
           <button type="submit" className="btn btn-accent" disabled={verifying}>
             {verifying && <span className="loading loading-spinner"></span>}
             Verify OTP

@@ -9,10 +9,7 @@ const SignupProtectedRouter = ({ children }) => {
   useEffect(() => {
     switch (USER_STATUS) {
       case "UNAUTHORIZE":
-        return navigate("/send-otp");
-        break;
-      case "REQUEST_AUTHORIZE":
-        navigate("/verify-otp");
+        navigate("/email-verify");
         break;
       case "VERIFIED_AUTHORIZE":
         navigate("/signup");
@@ -21,7 +18,7 @@ const SignupProtectedRouter = ({ children }) => {
         navigate("/");
         break;
     }
-  }, []);
+  }, [navigate, USER_STATUS]);
 
   return <>{children}</>;
 };

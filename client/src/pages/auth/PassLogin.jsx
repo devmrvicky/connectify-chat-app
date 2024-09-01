@@ -35,7 +35,7 @@ const PassLogin = () => {
       />
       <p className="italic py-2">
         I haven't account. please{" "}
-        <Link to="/signup" className="hover:text-blue-500 hover:underline">
+        <Link to="/signup" className="hover:text-blue-500 underline">
           signup
         </Link>{" "}
       </p>
@@ -44,7 +44,9 @@ const PassLogin = () => {
         className="btn w-full my-3 bg-green-500 text-black hover:bg-green-600 flex items-center gap-2"
         disabled={loading}
       >
-      {loading && <span className="loading loading-spinner loading-md"></span>}
+        {loading && (
+          <span className="loading loading-spinner loading-md"></span>
+        )}
         Login user
       </button>
     </form>

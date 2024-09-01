@@ -1,79 +1,150 @@
 const getEmailHTMLStr = (otp) => {
   const htmlBody = `<!DOCTYPE html>
-  <html lang="en">
+<html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Your OTP Code</title>
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-              background-color: #f4f4f4;
-              margin: 0;
-              padding: 0;
-          }
-          .container {
-              width: 100%;
-              max-width: 600px;
-              margin: 0 auto;
-              background-color: #ffffff;
-              padding: 20px;
-              border-radius: 8px;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          }
-          .header {
-              text-align: center;
-              padding: 20px 0;
-          }
-          .header h1 {
-              margin: 0;
-              font-size: 24px;
-              color: #333333;
-          }
-          .content {
-              padding: 20px;
-              text-align: center;
-          }
-          .content p {
-              font-size: 18px;
-              color: #555555;
-              margin: 0 0 20px;
-          }
-          .otp {
-              display: inline-block;
-              font-size: 22px;
-              color: #333333;
-              background-color: #f7f7f7;
-              border: 1px solid #dddddd;
-              padding: 10px 20px;
-              border-radius: 4px;
-              margin: 0 0 20px;
-          }
-          .footer {
-              text-align: center;
-              padding: 20px 0;
-              font-size: 14px;
-              color: #aaaaaa;
-          }
-      </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .logo{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        
+      }
+    .logo b {
+        font-size: 1rem;
+        color: #fff;
+    }
+    </style>
   </head>
-  <body>
-      <div class="container">
-          <div class="header">
-              <h1>Your OTP Code</h1>
+  <body
+    style="
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      font-size: 14px;
+    "
+  >
+    <div
+      style="
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 45px 30px 60px;
+        background: #f4f7ff;
+        background-image: url(https://archisketch-resources.s3.ap-northeast-2.amazonaws.com/vrstyler/1661497957196_595865/email-template-background-banner);
+        background-repeat: no-repeat;
+        background-size: 800px 452px;
+        background-position: top center;
+        font-size: 14px;
+        color: #434343;
+      "
+    >
+      <header>
+        <table style="width: 100%;">
+          <tbody>
+            <tr style="height: 0;">
+              <td class="logo">
+                <img
+                  alt="connectify_logo"
+                  src="https://connectify-rosy.vercel.app/assets/chat-DeD00oHE.png"
+                  height="30px"
+                />
+                <b>CONNECTIFY</b>
+              </td>
+              <td style="text-align: right;">
+                <span
+                  style="font-size: 16px; line-height: 30px; color: #ffffff;"
+                  >12 Nov, 2021</span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </header>
+
+      <main>
+        <div
+          style="
+            margin: 0;
+            margin-top: 70px;
+            padding: 92px 30px 115px;
+            background: #ffffff;
+            border-radius: 30px;
+            text-align: center;
+          "
+        >
+          <div style="width: 100%; max-width: 489px; margin: 0 auto;">
+            <h1
+              style="
+                margin: 0;
+                font-size: 24px;
+                font-weight: 500;
+                color: #1f1f1f;
+              "
+            >
+              Your OTP
+            </h1>
+            <p
+              style="
+                margin: 0;
+                margin-top: 17px;
+                font-size: 16px;
+                font-weight: 500;
+              "
+            >
+            </p>
+            <p
+              style="
+                margin: 0;
+                margin-top: 17px;
+                font-weight: 500;
+                letter-spacing: 0.56px;
+              "
+            >
+              Thank you for choosing connectify. Stay connected to your friends. Use the following OTP to complete email verification . OTP is
+              valid for
+              <b>5 minutes</b>.
+              Do not share this code with others
+            </p>
+            <p
+              style="
+                margin: 0;
+                margin-top: 60px;
+                font-size: 40px;
+                font-weight: 600;
+                letter-spacing: 25px;
+                color: #ba3d4f;
+              "
+            >
+              ${otp}
+            </p>
           </div>
-          <div class="content">
-              <p>Hello,</p>
-              <p>Your One-Time Password (OTP) is:</p>
-              <div class="otp">${otp}</div>
-              <p>Please use this code to complete your verification. This code is valid for 5 minutes.</p>
-          </div>
-          <div class="footer">
-              <p>If you did not request this code, please ignore this email.</p>
-          </div>
-      </div>
+        </div>
+      </main>
+
+      <footer
+        style="
+          width: 100%;
+          max-width: 490px;
+          margin: 20px auto 0;
+          text-align: center;
+          border-top: 1px solid #e6ebf1;
+        "
+      >
+        <p style="margin: 0; margin-top: 16px; color: #434343;">
+          Copyright © 2024 Company. All rights reserved.
+        </p>
+      </footer>
+    </div>
   </body>
-  </html>
+</html>
 `;
   return htmlBody;
 };

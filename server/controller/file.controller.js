@@ -70,6 +70,29 @@
 
 import axios from "axios";
 import { basename, extname } from "path";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+// handle upload file
+const uploadFile = async (req, res) => {
+  try {
+    const file = req.file;
+    if (file) {
+      const localFilePath = req.file.path;
+      if (!localFilePath) {
+        return res
+          .status(404)
+          .json({ status: false, message: "Didn't find file on server" });
+      }
+      const cloudinaryRes = await uploadOnCloudinary(localFilePath);
+      return res.status(200).json({});
+    } else {
+      console.log("an error occur while file upload on server");
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ status: false, message: error.message });
+  }
+};
 
 // Route to handle file download
 const fileDownload = async (req, res) => {
@@ -109,4 +132,4 @@ const fileDownload = async (req, res) => {
   }
 };
 
-export { fileDownload };
+export { fileDownload, uploadFile };

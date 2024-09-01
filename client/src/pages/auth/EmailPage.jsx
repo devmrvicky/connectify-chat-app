@@ -1,30 +1,30 @@
 import { useState } from "react";
 import { useOTP } from "../../hooks/auth/useOTP";
-import useStore from "../../zustand/store";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Logo from "../../components/Logo";
+import VerifyOtp from "./VerifyOtp";
 
 const EmailPage = () => {
+  const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState("");
   const { sendOtpOnEmail, loading } = useOTP();
-  const { changeUserStatus } = useStore((store) => store);
-
-  const navigate = useNavigate();
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
     const isEmailSend = await sendOtpOnEmail(email, "generate-otp");
     if (isEmailSend) {
-      changeUserStatus("REQUEST_AUTHORIZE");
-      navigate("/verify-otp");
+      setOtpSent(true);
     }
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <form
-        className="max-w-[500px] w-full mx-auto flex flex-col gap-2"
-        onSubmit={handleSendOtp}
-      >
+    <div className="max-w-[500px] w-full mx-auto h-full flex justify-center flex-col">
+      <div className="w-full flex justify-center">
+        <Logo />
+      </div>
+      <form className=" flex flex-col gap-2" onSubmit={handleSendOtp}>
+        <h2 className="self-start text-3xl p-2">Verify email</h2>
+        <p>"Connect with the world. Start chatting."</p>
         <div className="label">
           <span className="label-text">Enter email</span>
         </div>
@@ -44,14 +44,25 @@ const EmailPage = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
+            disabled={loading || otpSent}
           />
         </label>
-        <button type="submit" className="btn btn-accent" disabled={loading}>
-          {loading && <span className="loading loading-spinner"></span>}
-          Send OTP
-        </button>
+        {!otpSent && (
+          <button type="submit" className="btn btn-accent" disabled={loading}>
+            {loading && <span className="loading loading-spinner"></span>}
+            Send OTP
+          </button>
+        )}
       </form>
+      {otpSent && <VerifyOtp setOtpSent={setOtpSent} />}
+      {!otpSent && (
+        <p className="italic py-2">
+          I haven already account. please{" "}
+          <Link to="/login" className="hover:text-blue-500 underline">
+            login
+          </Link>{" "}
+        </p>
+      )}
     </div>
   );
 };

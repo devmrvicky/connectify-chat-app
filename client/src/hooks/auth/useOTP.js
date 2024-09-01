@@ -14,13 +14,13 @@ const useOTP = () => {
     try {
       setLoading(true);
       const res = await apiPost(`otp/${endpoint}`, { email });
+      console.log(res);
       if (!res.status) {
         toast.error(res.message, {
           id: "otp-send-error",
         });
         return res.status;
       }
-      console.log(res.message);
       toast.success(res.message, {
         id: "otp-send",
       });

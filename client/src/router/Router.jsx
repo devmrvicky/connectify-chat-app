@@ -41,21 +41,11 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="send-otp"
+        path="email-verify"
         element={
           <AuthProtectedRouter authentication={false}>
             <SignupProtectedRouter>
               <EmailPage />
-            </SignupProtectedRouter>
-          </AuthProtectedRouter>
-        }
-      />
-      <Route
-        path="verify-otp"
-        element={
-          <AuthProtectedRouter authentication={false}>
-            <SignupProtectedRouter>
-              <VerifyOtp />
             </SignupProtectedRouter>
           </AuthProtectedRouter>
         }
