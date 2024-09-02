@@ -58,9 +58,6 @@ const signup = async (req, res) => {
       console.log("profile image upload successfully");
     }
 
-    // let boyProfilePic = cloudinaryRes?.secure_url ? cloudinaryRes?.secure_url : `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    // let girlProfilePic = cloudinaryRes?.secure_url ? cloudinaryRes?.secure_url : `https://avatar.iran.liara.run/public/girl?username=${username}`;
-
     // hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -82,6 +79,7 @@ const signup = async (req, res) => {
         : gender === "male"
         ? `https://avatar.iran.liara.run/public/boy?username=${username}`
         : `https://avatar.iran.liara.run/public/girl?username=${username}`,
+      profilePicPublicId: cloudinaryRes?.public_id,
       gender,
       email,
       phone,

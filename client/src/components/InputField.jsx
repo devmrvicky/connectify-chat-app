@@ -8,6 +8,7 @@ const InputField = ({
   error = false,
   errorMessage = "",
   register,
+  ...prop
 }) => {
   return (
     <label className="form-control w-full">
@@ -20,6 +21,7 @@ const InputField = ({
         name={name}
         className="input input-bordered w-full"
         {...register(name, { require: true })}
+        {...prop}
       />
       {error && (
         <div className="label">

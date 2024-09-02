@@ -8,6 +8,7 @@ import {
 import {
   getAllUsers,
   getUserTypingStatus,
+  updateUserProfile,
 } from "../controller/user.controller.js";
 import { checkUserAuthentication } from "../middleware/user.middleware.js";
 import { upload } from "../middleware/multer.middleware.js";
@@ -21,6 +22,12 @@ router.post("/logout", checkUserAuthentication, logout);
 router.post("/login-with-otp", verifyAndLogin);
 
 // user router
+router.put(
+  "/update-profile",
+  checkUserAuthentication,
+  upload.single("profileImg"),
+  updateUserProfile
+);
 router.get("/all-users", checkUserAuthentication, getAllUsers);
 router.post(
   "/typing-status/:receiverId",
