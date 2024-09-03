@@ -5,6 +5,7 @@ import { useAuthContext } from "./context/AuthContext";
 import useListMessages from "./hooks/chat/useListMessages";
 import { useFriendRequestsUpdate } from "./hooks/friend/useFriendRequestsUpdate";
 import chatBg from "./assets/bg.jpeg";
+import PWABadge from "./PWABadge";
 
 function App() {
   const { authUser } = useAuthContext();
@@ -20,6 +21,7 @@ function App() {
         {authUser && <AsideMenus />}
         <Outlet />
         <Toaster />
+        <PWABadge />
       </div>
     </main>
   );
