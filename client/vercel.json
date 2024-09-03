@@ -4,15 +4,6 @@
       "NODE_VERSION": "14.x"
     }
   },
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/.*",
-      "dest": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*).html",
