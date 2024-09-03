@@ -8,5 +8,8 @@ export default defineConfig({
     preset: "2023",
   },
   preset,
-  images: ["public/favicon.svg"],
+  images: [
+    "public/android-chrome-192x192.png",
+    "public/android-chrome-512x512.png",
+  ],
 });
